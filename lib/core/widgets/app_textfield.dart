@@ -36,7 +36,7 @@ class AppTextField extends StatelessWidget {
             fontWeight: FontWeight.w900,
           ),
         ),
-        Gap(3.h),
+        Gap(2.h),
         TextFormField(
           controller: textEditingController,
           readOnly: readOnly,
@@ -52,6 +52,7 @@ class AppTextField extends StatelessWidget {
               horizontal: 12.w,
               vertical: maxLines > 1 ? 12.h : 0,
             ),
+            prefixIcon: prefixIcon,
             hintStyle: AppTextstyle.subtextSemibold().copyWith(
               color: AppColors.textGrayLight,
             ),
