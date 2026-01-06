@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gap/gap.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 
@@ -35,7 +36,7 @@ class AppButton extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              if (prefixIcon != null) ...[prefixIcon!],
+              if (prefixIcon != null) ...[prefixIcon!, Gap(3.w)],
               Text(
                 title,
                 style: AppTextstyle.bodySemibold(color: Colors.white),
