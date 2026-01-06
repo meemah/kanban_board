@@ -42,6 +42,7 @@ class AppTextField extends StatelessWidget {
           readOnly: readOnly,
           maxLines: maxLines,
           onTap: onTap,
+          style: AppTextstyle.subtextSemibold(),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.primary, width: 2),
@@ -51,6 +52,10 @@ class AppTextField extends StatelessWidget {
               horizontal: 12.w,
               vertical: maxLines > 1 ? 12.h : 0,
             ),
+            hintStyle: AppTextstyle.subtextSemibold().copyWith(
+              color: AppColors.textGrayLight,
+            ),
+            hintText: hintText,
             fillColor: Colors.white,
             filled: true,
             border: OutlineInputBorder(
