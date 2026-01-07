@@ -186,7 +186,12 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                                         style: AppTextstyle.captionSemibold(),
                                       ),
                                       Gap(4.h),
-                                      Text("Testing the kanban app"),
+                                      Text(
+                                        "Testing the kanban app",
+                                        style: AppTextstyle.captionSemibold(
+                                          color: AppColors.textGray,
+                                        ),
+                                      ),
                                       Gap(2.h),
                                       Divider(
                                         color: AppColors.textGrayLight
@@ -195,9 +200,18 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                                       Gap(2.h),
                                       Row(
                                         children: [
-                                          Icon(Icons.schedule, size: 16),
+                                          Icon(
+                                            Icons.schedule,
+                                            size: 16,
+                                            color: AppColors.textGray,
+                                          ),
                                           const Gap(3),
-                                          Text("Oct 26"),
+                                          Text(
+                                            "Oct 26",
+                                            style: AppTextstyle.captionSemibold(
+                                              color: AppColors.textGray,
+                                            ),
+                                          ),
                                           const Spacer(),
                                           Container(
                                             height: 25.h,
