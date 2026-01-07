@@ -13,40 +13,38 @@ class TaskDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      bottomSheet: SafeArea(
-        child: Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                keyboardType: TextInputType.multiline,
-                textInputAction: TextInputAction.newline,
-                minLines: 1,
-                maxLines: 5,
-                style: AppTextstyle.captionMedium(),
-                decoration: InputDecoration(
-                  suffixIcon: Container(
-                    margin: EdgeInsets.only(right: 20.w),
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.primary,
-                    ),
-                    child: Icon(Icons.send, size: 16, color: Colors.white),
+      bottomNavigationBar: Row(
+        children: [
+          Expanded(
+            child: TextFormField(
+              keyboardType: TextInputType.multiline,
+              textInputAction: TextInputAction.newline,
+              minLines: 1,
+              maxLines: 5,
+              style: AppTextstyle.captionMedium(),
+              decoration: InputDecoration(
+                suffixIcon: Container(
+                  margin: EdgeInsets.only(right: 20.w),
+                  height: 40,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.primary,
                   ),
-                  border: InputBorder.none,
-                  fillColor: AppColors.textGrayLight.withValues(alpha: 0.2),
-                  filled: true,
-                  hintText: "Add a comment..",
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 25.w,
-                    vertical: 8.h,
-                  ).copyWith(bottom: 20.h),
+                  child: Icon(Icons.send, size: 16, color: Colors.white),
                 ),
+                border: InputBorder.none,
+                fillColor: AppColors.textGrayLight.withValues(alpha: 0.2),
+                filled: true,
+                hintText: "Add a comment..",
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 25.w,
+                  vertical: 8.h,
+                ).copyWith(bottom: 20.h),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       appBar: AppBar(
         backgroundColor: AppColors.backgroundLight,
