@@ -39,6 +39,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   gap: 
   stop_watch_timer: ^3.2.2
+  boardview: ^1.0.0
 
 dev_dependencies:
   flutter_test:
