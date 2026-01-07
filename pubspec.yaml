@@ -38,6 +38,7 @@ dependencies:
   go_router: ^17.0.0
   flutter_screenutil: ^5.9.3
   gap: 
+  stop_watch_timer: ^3.2.2
 
 dev_dependencies:
   flutter_test:

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class AppColors {
   AppColors._();
 
-  static const Color primary = Color(0xff137fec);
+  static const Color primary = Color(0xFF137FEC);
   static const Color backgroundLight = Color(0xfff6f7f8);
   static const Color backgroundDark = Color(0xff101922);
   static const Color rose = Color(0xffF43F5E);

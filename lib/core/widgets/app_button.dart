@@ -11,6 +11,7 @@ class AppButton extends StatelessWidget {
   final double? width;
   final double? height;
   final Color? backgroundColor;
+  final Color? textColor;
   const AppButton({
     super.key,
     required this.title,
@@ -19,6 +20,7 @@ class AppButton extends StatelessWidget {
     this.backgroundColor,
     this.height,
     this.width,
+    this.textColor,
   });
 
   @override
@@ -39,7 +41,9 @@ class AppButton extends StatelessWidget {
               if (prefixIcon != null) ...[prefixIcon!, Gap(3.w)],
               Text(
                 title,
-                style: AppTextstyle.bodySemibold(color: Colors.white),
+                style: AppTextstyle.bodySemibold(
+                  color: textColor ?? Colors.white,
+                ),
               ),
             ],
           ),

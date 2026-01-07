@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
+import 'package:kanban_board/core/widgets/app_card.dart';
 
 class CompletedHistoryView extends StatelessWidget {
   const CompletedHistoryView({super.key});
@@ -17,17 +18,7 @@ class CompletedHistoryView extends StatelessWidget {
           padding: EdgeInsetsGeometry.all(15),
           child: Column(
             children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      offset: Offset(0, 2),
-                      color: Colors.black.withValues(alpha: 0.03),
-                    ),
-                  ],
-                  borderRadius: BorderRadius.circular(8.r),
-                ),
+              AppCard(
                 child: Padding(
                   padding: EdgeInsets.all(12),
                   child: Row(
