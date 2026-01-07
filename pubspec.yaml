@@ -86,6 +86,10 @@ flutter:
     - family: Raleway
       fonts:
         - asset: asset/font/Raleway-Regular.ttf
+    - family: WorkSans
+      fonts:
+        - asset: asset/font/WorkSans-Regular.ttf
+
         
   #   - family: Trajan Pro
   #     fonts:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kanban_board/core/theme/font_family.dart';
-import 'package:kanban_board/feature/kanban_board/presentation/kanban_board_view.dart';
+import 'package:kanban_board/feature/add_task/presentation/add_task_view.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
       builder: (_, child) {
         return MaterialApp(
           title: 'Kanban Board',
-          theme: ThemeData(fontFamily: FontFamily.raleway.value),
-          home: KanbanBoardView(),
+          theme: ThemeData(fontFamily: FontFamily.worksans.value),
+          home: AddTaskView(),
         );
       },
     );

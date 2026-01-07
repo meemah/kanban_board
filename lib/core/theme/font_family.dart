@@ -1,5 +1,6 @@
 enum FontFamily {
   merriweather("merriweather"),
+  worksans("worksans"),
   raleway("raleway");
 
   final String value;
