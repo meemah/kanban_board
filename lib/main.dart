@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kanban_board/core/theme/font_family.dart';
-import 'package:kanban_board/feature/add_task/presentation/add_task_view.dart';
+import 'package:kanban_board/core/util/navigation/app_router.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: false,
       builder: (_, child) {
-        return MaterialApp(
+        return MaterialApp.router(
           title: 'Kanban Board',
           theme: ThemeData(fontFamily: FontFamily.worksans.value),
-          home: AddTaskView(),
+          routerConfig: appRouter,
         );
       },
     );
