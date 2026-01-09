@@ -33,8 +33,8 @@ class CommentModel extends Equatable {
     };
   }
 
-  Comment toEntity() {
-    return Comment(
+  CommentEntity toEntity() {
+    return CommentEntity(
       id: id,
       taskId: taskId,
       content: content,

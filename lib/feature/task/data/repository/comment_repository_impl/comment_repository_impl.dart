@@ -12,7 +12,7 @@ class CommentRepositoryImpl implements CommentRepository {
   CommentRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<Comment>>> getComments(
+  Future<Either<Failure, List<CommentEntity>>> getComments(
     GetCommentsParams getCommentParams,
   ) async {
     try {
@@ -26,7 +26,7 @@ class CommentRepositoryImpl implements CommentRepository {
   }
 
   @override
-  Future<Either<Failure, Comment>> addComment(
+  Future<Either<Failure, CommentEntity>> addComment(
     AddCommentParams addCommentParams,
   ) async {
     try {

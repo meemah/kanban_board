@@ -5,12 +5,12 @@ import 'package:kanban_board/core/util/usecase/usecase.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/repositories/comment_repository.dart';
 
-class AddComentUsecase implements UseCase<Comment, AddCommentParams> {
+class AddComentUsecase implements UseCase<CommentEntity, AddCommentParams> {
   final CommentRepository _commentRepository;
 
   const AddComentUsecase(this._commentRepository);
   @override
-  Future<Either<Failure, Comment>> call(AddCommentParams params) async {
+  Future<Either<Failure, CommentEntity>> call(AddCommentParams params) async {
     return await _commentRepository.addComment(params);
   }
 }

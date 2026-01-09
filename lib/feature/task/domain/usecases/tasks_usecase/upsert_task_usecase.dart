@@ -10,18 +10,19 @@ class UpsertTaskParams extends Equatable {
   final String content;
   final String? description;
   final int priority;
-  final List<String>? labels;
+
+  final DateTime? dueDate;
 
   const UpsertTaskParams({
     this.id,
     required this.content,
     this.description,
     this.priority = 1,
-    this.labels,
+    this.dueDate,
   });
 
   @override
-  List<Object?> get props => [id, content, description, priority, labels];
+  List<Object?> get props => [id, content, description, priority];
 }
 
 class UpsertTaskUseCase implements UseCase<TaskEntity, UpsertTaskParams> {
@@ -32,20 +33,9 @@ class UpsertTaskUseCase implements UseCase<TaskEntity, UpsertTaskParams> {
   @override
   Future<Either<Failure, TaskEntity>> call(UpsertTaskParams params) async {
     if (params.id == null) {
-      return await _repository.createTask(
-        content: params.content,
-        description: params.description,
-        priority: params.priority,
-        labels: params.labels,
-      );
+      return await _repository.createTask(upsertTaskParams: params);
     } else {
-      return await _repository.updateTask(
-        params.id!,
-        content: params.content,
-        description: params.description,
-        priority: params.priority,
-        labels: params.labels,
-      );
+      return await _repository.updateTask(upsertTaskParams: params);
     }
   }
 }

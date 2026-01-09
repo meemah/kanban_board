@@ -12,7 +12,7 @@ final class TaskDetailInitial extends TaskDetailState {}
 final class GetCommentsLoading extends TaskDetailState {}
 
 final class GetCommentsSuccess extends TaskDetailState {
-  final List<Comment> comment;
+  final List<CommentEntity> comment;
 
   const GetCommentsSuccess(this.comment);
 

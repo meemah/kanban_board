@@ -5,10 +5,10 @@ import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_c
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
 
 abstract class CommentRepository {
-  Future<Either<Failure, List<Comment>>> getComments(
+  Future<Either<Failure, List<CommentEntity>>> getComments(
     GetCommentsParams getCommentParams,
   );
-  Future<Either<Failure, Comment>> addComment(
+  Future<Either<Failure, CommentEntity>> addComment(
     AddCommentParams addCommentParams,
   );
 }

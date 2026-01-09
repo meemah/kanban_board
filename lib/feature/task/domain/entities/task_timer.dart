@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class TaskTimer extends Equatable {
+class TaskTimerEntity extends Equatable {
   final String taskId;
   final int totalSeconds;
   final DateTime? startTime;
   final bool isRunning;
 
-  const TaskTimer({
+  const TaskTimerEntity({
     required this.taskId,
     required this.totalSeconds,
     this.startTime,
@@ -19,12 +19,12 @@ class TaskTimer extends Equatable {
     return totalSeconds + elapsed;
   }
 
-  TaskTimer copyWith({
+  TaskTimerEntity copyWith({
     int? totalSeconds,
     DateTime? startTime,
     bool? isRunning,
   }) {
-    return TaskTimer(
+    return TaskTimerEntity(
       taskId: taskId,
       totalSeconds: totalSeconds ?? this.totalSeconds,
       startTime: startTime,
@@ -32,7 +32,7 @@ class TaskTimer extends Equatable {
     );
   }
 
-  TaskTimer stop() {
+  TaskTimerEntity stop() {
     return copyWith(
       totalSeconds: currentElapsedSeconds,
       startTime: null,
@@ -40,11 +40,11 @@ class TaskTimer extends Equatable {
     );
   }
 
-  TaskTimer pause() {
+  TaskTimerEntity pause() {
     return copyWith(totalSeconds: currentElapsedSeconds, isRunning: false);
   }
 
-  TaskTimer resume() {
+  TaskTimerEntity resume() {
     return copyWith(startTime: DateTime.now(), isRunning: true);
   }
 

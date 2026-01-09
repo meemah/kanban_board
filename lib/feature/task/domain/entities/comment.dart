@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
 
-class Comment extends Equatable {
+class CommentEntity extends Equatable {
   final String id;
   final String taskId;
   final String content;
   final DateTime postedAt;
 
-  const Comment({
+  const CommentEntity({
     required this.id,
     required this.taskId,
     required this.content,

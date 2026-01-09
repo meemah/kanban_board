@@ -43,8 +43,8 @@ class TaskTimerModel extends Equatable {
     };
   }
 
-  TaskTimer toEntity() {
-    return TaskTimer(
+  TaskTimerEntity toEntity() {
+    return TaskTimerEntity(
       taskId: taskId,
       totalSeconds: totalSeconds,
       startTime: startTime,
@@ -52,7 +52,7 @@ class TaskTimerModel extends Equatable {
     );
   }
 
-  factory TaskTimerModel.fromEntity(TaskTimer timer) {
+  factory TaskTimerModel.fromEntity(TaskTimerEntity timer) {
     return TaskTimerModel(
       taskId: timer.taskId,
       totalSeconds: timer.totalSeconds,

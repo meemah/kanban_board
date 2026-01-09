@@ -9,14 +9,14 @@ class TimerRepositoryImpl implements TimerRepository {
   TimerRepositoryImpl(this.localDataSource);
 
   @override
-  Future<TaskTimer?> getTimer(String taskId) async {
+  Future<TaskTimerEntity?> getTimer(String taskId) async {
     final model = await localDataSource.getTimer(taskId);
     return model?.toEntity();
   }
 
   @override
   Future<void> startTimer(String taskId) async {
-    final timer = TaskTimer(
+    final timer = TaskTimerEntity(
       taskId: taskId,
       totalSeconds: 0,
       startTime: DateTime.now(),
@@ -26,17 +26,17 @@ class TimerRepositoryImpl implements TimerRepository {
   }
 
   @override
-  Future<void> stopTimer(TaskTimer timer) async {
+  Future<void> stopTimer(TaskTimerEntity timer) async {
     await _saveTimer(timer.stop());
   }
 
   @override
-  Future<void> pauseTimer(TaskTimer timer) async {
+  Future<void> pauseTimer(TaskTimerEntity timer) async {
     await _saveTimer(timer.pause());
   }
 
   @override
-  Future<void> resumeTimer(TaskTimer timer) async {
+  Future<void> resumeTimer(TaskTimerEntity timer) async {
     await _saveTimer(timer.resume());
   }
 
@@ -45,7 +45,7 @@ class TimerRepositoryImpl implements TimerRepository {
     await localDataSource.deleteTimer(taskId);
   }
 
-  Future<void> _saveTimer(TaskTimer timer) async {
+  Future<void> _saveTimer(TaskTimerEntity timer) async {
     await localDataSource.saveTimer(TaskTimerModel.fromEntity(timer));
   }
 }
