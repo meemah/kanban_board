@@ -6,9 +6,11 @@ import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/theme/font_family.dart';
+import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_card.dart';
 
 class KanbanBoardView extends StatefulWidget {
@@ -87,6 +89,18 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: GestureDetector(
+        onTap: () => context.pushNamed(AppRouteName.taskCreate),
+        child: Container(
+          height: 50.h,
+          width: 50.w,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.primary,
+          ),
+          child: Icon(Icons.add, color: Colors.white),
+        ),
+      ),
       body: SafeArea(
         child: Container(
           color: Colors.grey[100],

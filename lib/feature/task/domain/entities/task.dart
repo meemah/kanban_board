@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class Task extends Equatable {
+class TaskEntity extends Equatable {
   final String id;
   final String content;
   final String? description;
@@ -11,7 +11,7 @@ class Task extends Equatable {
   final DateTime? completedAt;
   final bool isCompleted;
 
-  const Task({
+  const TaskEntity({
     required this.id,
     required this.content,
     this.description,

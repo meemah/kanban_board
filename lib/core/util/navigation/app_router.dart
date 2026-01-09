@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
-import 'package:kanban_board/feature/task/presentation/views/add_task/add_task_view.dart';
 import 'package:kanban_board/feature/task/presentation/views/completed_history/completed_history_view.dart';
 import 'package:kanban_board/feature/task/presentation/views/kanban_board/kanban_board_view.dart';
 import 'package:kanban_board/feature/task/presentation/views/task_detail/task_details_view.dart';
+import 'package:kanban_board/feature/task/presentation/views/upsert_task/upsert_task_view.dart';
 
 final GoRouter appRouter = GoRouter(
   routes: [
@@ -15,7 +15,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: "/tasks/new",
       name: AppRouteName.taskCreate,
-      builder: (context, state) => const AddTaskView(),
+      builder: (context, state) => const UpsertTaskView(),
     ),
     GoRoute(
       path: "/tasks/completed",

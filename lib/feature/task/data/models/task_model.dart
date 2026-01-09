@@ -55,8 +55,8 @@ class TaskModel extends Equatable {
     };
   }
 
-  Task toEntity() {
-    return Task(
+  TaskEntity toEntity() {
+    return TaskEntity(
       id: id,
       content: content,
       description: description,
@@ -69,7 +69,7 @@ class TaskModel extends Equatable {
     );
   }
 
-  factory TaskModel.fromEntity(Task task) {
+  factory TaskModel.fromEntity(TaskEntity task) {
     return TaskModel(
       id: task.id,
       content: task.content,

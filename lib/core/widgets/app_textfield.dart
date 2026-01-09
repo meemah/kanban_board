@@ -5,23 +5,25 @@ import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 
 class AppTextField extends StatelessWidget {
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
   final String textFieldTitle;
   final Widget? prefixIcon;
   final bool readOnly;
   final VoidCallback? onTap;
   final int maxLines;
   final String? hintText;
+  final Function(String)? onChanged;
 
   const AppTextField({
     super.key,
-    required this.textEditingController,
+    this.textEditingController,
     required this.textFieldTitle,
     this.prefixIcon,
     this.readOnly = false,
     this.maxLines = 1,
     this.onTap,
     this.hintText,
+    this.onChanged,
   });
 
   @override
@@ -42,6 +44,7 @@ class AppTextField extends StatelessWidget {
           readOnly: readOnly,
           maxLines: maxLines,
           onTap: onTap,
+          onChanged: onChanged,
           style: AppTextstyle.subtextSemibold(),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
