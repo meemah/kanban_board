@@ -19,12 +19,33 @@ class TaskTimer extends Equatable {
     return totalSeconds + elapsed;
   }
 
-  String get formattedTime {
-    final seconds = currentElapsedSeconds;
-    final hours = seconds ~/ 3600;
-    final minutes = (seconds % 3600) ~/ 60;
-    final secs = seconds % 60;
-    return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+  TaskTimer copyWith({
+    int? totalSeconds,
+    DateTime? startTime,
+    bool? isRunning,
+  }) {
+    return TaskTimer(
+      taskId: taskId,
+      totalSeconds: totalSeconds ?? this.totalSeconds,
+      startTime: startTime,
+      isRunning: isRunning ?? this.isRunning,
+    );
+  }
+
+  TaskTimer stop() {
+    return copyWith(
+      totalSeconds: currentElapsedSeconds,
+      startTime: null,
+      isRunning: false,
+    );
+  }
+
+  TaskTimer pause() {
+    return copyWith(totalSeconds: currentElapsedSeconds, isRunning: false);
+  }
+
+  TaskTimer resume() {
+    return copyWith(startTime: DateTime.now(), isRunning: true);
   }
 
   @override

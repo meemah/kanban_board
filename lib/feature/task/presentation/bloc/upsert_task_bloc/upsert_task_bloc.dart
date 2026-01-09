@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
-import 'package:kanban_board/feature/task/domain/usecases/upsert_task_usecase.dart';
+import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
 
 part 'upsert_task_event.dart';
 part 'upsert_task_state.dart';

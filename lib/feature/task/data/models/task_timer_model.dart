@@ -1,11 +1,19 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
 import '../../domain/entities/task_timer.dart';
 
+part 'task_timer_model.g.dart';
+
+@HiveType(typeId: 1)
 class TaskTimerModel extends Equatable {
+  @HiveField(0)
   final String taskId;
+  @HiveField(1)
   final int totalSeconds;
+  @HiveField(2)
   final DateTime? startTime;
+  @HiveField(3)
   final bool isRunning;
 
   const TaskTimerModel({

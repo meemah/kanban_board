@@ -9,10 +9,9 @@ abstract class TaskRemoteDataSource {
     required String content,
     String? description,
     int priority = 1,
-    List<String>? labels,
+    DateTime? dueDate,
   });
   Future<TaskModel> updateTask(String id, Map<String, dynamic> updates);
-  Future<void> deleteTask(String id);
   Future<void> completeTask(String id);
 }
 
@@ -33,13 +32,13 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     required String content,
     String? description,
     int priority = 1,
-    List<String>? labels,
+    DateTime? dueDate,
   }) async {
     final data = {
       'content': content,
       if (description != null) 'description': description,
       'priority': priority,
-      if (labels != null && labels.isNotEmpty) 'labels': labels,
+      if (dueDate != null) 'due_datetime': dueDate,
     };
 
     final response = await networkService.post(
@@ -56,11 +55,6 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       data: updates,
     );
     return TaskModel.fromJson(response.data);
-  }
-
-  @override
-  Future<void> deleteTask(String id) async {
-    await networkService.delete('${ApiConstants.tasksEndpoint}/$id');
   }
 
   @override
