@@ -48,6 +48,8 @@ dependencies:
 
   dartz: ^0.10.1
   get_it: ^9.2.0
+  flutter_dotenv: ^6.0.0
+
 
 dev_dependencies:
   flutter_test:
@@ -97,6 +99,9 @@ flutter:
     - family: WorkSans
       fonts:
         - asset: asset/font/WorkSans-Regular.ttf
+    
+  assets:
+    - .env
 
         
   #   - family: Trajan Pro
