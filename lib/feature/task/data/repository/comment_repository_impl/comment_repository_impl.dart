@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:kanban_board/core/error/failures.dart';
-import 'package:kanban_board/feature/task_detail/data/datasource/comment_remote_datasource.dart';
-import 'package:kanban_board/feature/task_detail/domain/entities/comment.dart';
-import 'package:kanban_board/feature/task_detail/domain/repositories/comment_repository.dart';
+import 'package:kanban_board/feature/task/data/datasource/comment_remote_datasource.dart';
+import 'package:kanban_board/feature/task/domain/entities/comment.dart';
+import 'package:kanban_board/feature/task/domain/repositories/comment_repository.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   final CommentRemoteDataSource remoteDataSource;

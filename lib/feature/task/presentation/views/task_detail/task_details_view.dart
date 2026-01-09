@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
-import 'package:kanban_board/feature/add_task/presentation/add_task_view.dart';
-import 'package:kanban_board/feature/task_detail/presentation/widget/task_stopwatch_card.dart';
+import 'package:kanban_board/feature/task/presentation/views/add_task/add_task_view.dart';
+import 'package:kanban_board/feature/task/presentation/views/task_detail/widget/task_stopwatch_card.dart';
 
 class TaskDetailsView extends StatelessWidget {
   const TaskDetailsView({super.key});
