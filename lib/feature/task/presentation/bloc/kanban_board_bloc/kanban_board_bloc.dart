@@ -5,6 +5,7 @@ import 'package:kanban_board/feature/task/domain/entities/task.dart'
     show TaskEntity, TaskStatus;
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task_status_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_tasks_usecase.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 part 'kanban_board_event.dart';
 part 'kanban_board_state.dart';
@@ -43,7 +44,7 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
         emit(KanbanBoardSuccess(tasksByStatus));
       });
     } catch (e) {
-      emit(KanbanBoardFailure("Opps, error occured"));
+      emit(KanbanBoardFailure(S.current.oppsErrorOccured));
     }
   }
 }

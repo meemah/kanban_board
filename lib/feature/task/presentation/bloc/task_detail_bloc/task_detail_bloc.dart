@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 part 'task_detail_event.dart';
 part 'task_detail_state.dart';
@@ -55,7 +56,7 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
         },
       );
     } catch (e) {
-      emit(AddCommentFailure("Opps, Error occured"));
+      emit(AddCommentFailure(S.current.oppsErrorOccured));
     }
   }
 
@@ -68,7 +69,7 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
         (data) => emit(GetCommentsSuccess(data)),
       );
     } catch (e) {
-      emit(GetCommentsFailure("Opps, an error occured"));
+      emit(GetCommentsFailure(S.current.oppsErrorOccured));
     }
   }
 }

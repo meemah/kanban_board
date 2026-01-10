@@ -39,5 +39,6 @@
     }
   },
   "update": "Update",
-  "add": "Add"
+  "add": "Add",
+  "oppsErrorOccured": "Opps, error occured"
 }

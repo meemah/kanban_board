@@ -319,6 +319,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Opps, error occured`
+  String get oppsErrorOccured {
+    return Intl.message(
+      'Opps, error occured',
+      name: 'oppsErrorOccured',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

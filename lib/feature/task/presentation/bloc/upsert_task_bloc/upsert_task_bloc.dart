@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 part 'upsert_task_event.dart';
 part 'upsert_task_state.dart';
@@ -30,7 +31,7 @@ class UpsertTaskBloc extends Bloc<UpsertTaskEvent, UpsertTaskState> {
         (task) => emit(UpsertTaskSuccess(task)),
       );
     } catch (e) {
-      emit(UpsertTaskFailure("Opps, an error occured"));
+      emit(UpsertTaskFailure(S.current.oppsErrorOccured));
     }
   }
 }

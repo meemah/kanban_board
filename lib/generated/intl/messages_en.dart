@@ -44,6 +44,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("No data available"),
         "noDescription": MessageLookupByLibrary.simpleMessage("No description"),
+        "oppsErrorOccured":
+            MessageLookupByLibrary.simpleMessage("Opps, error occured"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "settingUpYourTasks":
             MessageLookupByLibrary.simpleMessage("Setting up your tasks"),
