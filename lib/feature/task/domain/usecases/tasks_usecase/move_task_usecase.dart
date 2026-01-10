@@ -19,7 +19,7 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskUsecase> {
     try {
       TaskEntity task = params.taskEntity;
       TaskStatus status = params.status;
-      final timer = await timerRepo.getTimer(task.id);
+      final timer = timerRepo.getTimer(task.id);
 
       switch (status) {
         case TaskStatus.todo:

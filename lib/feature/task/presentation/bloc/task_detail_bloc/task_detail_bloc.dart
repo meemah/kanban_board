@@ -1,5 +1,5 @@
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
@@ -54,7 +54,9 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
           emit(GetCommentsSuccess(updatedComments));
         },
       );
-    } catch (e) {}
+    } catch (e) {
+      emit(AddCommentFailure("Opps, Error occured"));
+    }
   }
 
   _onGetComments(GetCommentsEvent event, Emitter<TaskDetailState> emit) async {
