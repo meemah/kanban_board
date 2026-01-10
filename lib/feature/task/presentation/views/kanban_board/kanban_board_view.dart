@@ -69,6 +69,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
       floatingActionButton: GestureDetector(
         onTap: () => context.pushNamed(AppRouteName.taskUpsert),
         child: Container(
@@ -89,79 +90,89 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
       ),
       body: SafeArea(
         child: Container(
-          color: Colors.grey[100],
+          margin: EdgeInsets.symmetric(horizontal: 10.w),
           child: BlocBuilder<KanbanBoardBloc, KanbanBoardState>(
             builder: (context, state) {
               if (state is KanbanBoardLoading) {
                 return LoadingStateWidget(message: "Setting up your tasks");
               }
               if (state is KanbanBoardFailure) {
-                return ErrorStateWidget(message: state.errorMessage);
+                return ErrorStateWidget(
+                  message: state.errorMessage,
+                  onRetry: () =>
+                      context.read<KanbanBoardBloc>().add(GetAllTaskEvent()),
+                );
               }
               if (state is KanbanBoardSuccess) {
                 if (state.tasks.values.isEmpty) {
                   EmptyStateWidget(message: "You have no task yet");
                 }
-                return BoardView(
-                  lists: TaskStatus.values.map((status) {
-                    final tasks = state.getTasksByStatus(status);
-                    return BoardList(
-                      headerBackgroundColor: Colors.blue[100],
-                      backgroundColor: Colors.grey[50],
-                      header: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8),
-                            child: Text(
-                              status.title,
-                              style: TextStyle(
-                                fontFamily: FontFamily.merriweather.value,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue[800],
+                return RefreshIndicator(
+                  onRefresh: () async =>
+                      context.read<KanbanBoardBloc>().add(GetAllTaskEvent()),
+                  child: BoardView(
+                    lists: TaskStatus.values.map((status) {
+                      final tasks = state.getTasksByStatus(status);
+                      return BoardList(
+                        headerBackgroundColor: AppColors.primary.withValues(
+                          alpha: 0.3,
+                        ),
+                        backgroundColor: Colors.grey[50],
+                        header: [
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: Text(
+                                status.title,
+                                style: TextStyle(
+                                  fontFamily: FontFamily.merriweather.value,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                      items: tasks.map((task) {
-                        return BoardItem(
-                          item: KanbanBoardCard(taskEntity: task),
-                          onStartDragItem: (listIndex, itemIndex, state) {
-                            boardController.notifyDragStart(
-                              listIndex!,
-                              itemIndex!,
-                            );
-                          },
-                          onDropItem:
-                              (
-                                newListIndex,
-                                newItemIndex,
-                                oldListIndex,
-                                oldItemIndex,
-                                state,
-                              ) {
-                                // context.read<KanbanBoardBloc>().add(
-                                //   MoveTaskEvent(
-                                //     task: task,
-                                //     toStatus: TaskStatus.values[newListIndex!],
-                                //   ),
-                                // );
+                        ],
+                        items: tasks.map((task) {
+                          return BoardItem(
+                            item: KanbanBoardCard(taskEntity: task),
+                            onStartDragItem: (listIndex, itemIndex, state) {
+                              boardController.notifyDragStart(
+                                listIndex!,
+                                itemIndex!,
+                              );
+                            },
+                            onDropItem:
+                                (
+                                  newListIndex,
+                                  newItemIndex,
+                                  oldListIndex,
+                                  oldItemIndex,
+                                  state,
+                                ) {
+                                  // context.read<KanbanBoardBloc>().add(
+                                  //   MoveTaskEvent(
+                                  //     task: task,
+                                  //     toStatus: TaskStatus.values[newListIndex!],
+                                  //   ),
+                                  // );
 
-                                boardController.notifyDragEnd(
-                                  oldListIndex!,
-                                  oldItemIndex!,
-                                  newListIndex!,
-                                  newItemIndex!,
-                                );
-                              },
-                        );
-                      }).toList(),
-                    );
-                  }).toList(),
-                  boardController: boardController,
-                  width: 300,
-                  scrollbar: true,
+                                  boardController.notifyDragEnd(
+                                    oldListIndex!,
+                                    oldItemIndex!,
+                                    newListIndex!,
+                                    newItemIndex!,
+                                  );
+                                },
+                          );
+                        }).toList(),
+                      );
+                    }).toList(),
+                    boardController: boardController,
+                    width: 300,
+                    scrollbar: true,
+                  ),
                 );
               }
               return SizedBox.shrink();

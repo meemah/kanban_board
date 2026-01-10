@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
+import 'package:kanban_board/core/widgets/app_bar.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
@@ -93,16 +94,15 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
           ),
         ],
       ),
-      appBar: AppBar(
-        backgroundColor: AppColors.backgroundLight,
-        title: Text("Task Details"),
+      appBar: CustomAppBar(
+        title: "Task Details",
         actions: [
           GestureDetector(
             onTap: () =>
                 context.pushNamed(AppRouteName.taskUpsert, extra: widget.task),
             child: Container(
               margin: EdgeInsets.only(right: 10.w),
-              child: Icon(Icons.edit, color: AppColors.primary, size: 17.sp),
+              child: Icon(Icons.edit, color: AppColors.primary, size: 20.sp),
             ),
           ),
         ],
@@ -165,34 +165,44 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                       ),
                       const Gap(3),
                       if (state is GetCommentsSuccess) ...[
-                        ListView.separated(
-                          reverse: true,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: state.comments.length,
-                          separatorBuilder: (context, index) => Gap(10.h),
-                          itemBuilder: (ctx, index) {
-                            CommentEntity commentEntity = state.comments[index];
-                            return Opacity(
-                              opacity: commentEntity.isPending ? 0.5 : 1,
-                              child: Row(
-                                children: [
-                                  CircleAvatar(child: Icon(Icons.person)),
-                                  Gap(10),
-                                  Expanded(
-                                    child: Text(
-                                      commentEntity.content,
-                                      maxLines: 3,
-                                      style: AppTextstyle.subtextRegular(
-                                        color: AppColors.textDark,
+                        if (state.comments.isEmpty) ...[
+                          Text(
+                            "No comments yet....",
+                            style: AppTextstyle.subtextRegular(
+                              color: AppColors.textDark,
+                            ),
+                          ),
+                        ] else ...[
+                          ListView.separated(
+                            reverse: true,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: state.comments.length,
+                            separatorBuilder: (context, index) => Gap(10.h),
+                            itemBuilder: (ctx, index) {
+                              CommentEntity commentEntity =
+                                  state.comments[index];
+                              return Opacity(
+                                opacity: commentEntity.isPending ? 0.5 : 1,
+                                child: Row(
+                                  children: [
+                                    CircleAvatar(child: Icon(Icons.person)),
+                                    Gap(10),
+                                    Expanded(
+                                      child: Text(
+                                        commentEntity.content,
+                                        maxLines: 3,
+                                        style: AppTextstyle.subtextSemibold(
+                                          color: AppColors.textDark,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ],
                       ],
                     ],
                   );

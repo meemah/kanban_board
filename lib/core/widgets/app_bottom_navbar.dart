@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:kanban_board/core/theme/app_colors.dart';
 
 class ScaffoldWithNavBar extends StatelessWidget {
   const ScaffoldWithNavBar({required this.navigationShell, super.key});
@@ -11,6 +12,8 @@ class ScaffoldWithNavBar extends StatelessWidget {
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: AppColors.primary,
+        backgroundColor: AppColors.borderLight,
         currentIndex: navigationShell.currentIndex,
         onTap: (index) {
           navigationShell.goBranch(

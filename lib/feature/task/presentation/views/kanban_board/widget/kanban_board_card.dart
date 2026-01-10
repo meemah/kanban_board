@@ -27,7 +27,12 @@ class KanbanBoardCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(taskEntity.content, style: AppTextstyle.captionSemibold()),
+                Text(
+                  taskEntity.content,
+                  style: AppTextstyle.captionSemibold(),
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
                 if (taskEntity.description != null &&
                     taskEntity.description!.isNotEmpty) ...[
                   Gap(4.h),
