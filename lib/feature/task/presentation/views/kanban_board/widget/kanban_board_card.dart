@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
@@ -50,10 +51,14 @@ class KanbanBoardCard extends StatelessWidget {
                 Gap(2.h),
                 Row(
                   children: [
-                    Icon(Icons.schedule, size: 16, color: AppColors.textGray),
+                    Icon(
+                      Icons.calendar_month,
+                      size: 16,
+                      color: AppColors.textGray,
+                    ),
                     const Gap(3),
                     Text(
-                      "Oct 26",
+                      DateFormat('MMM d').format(taskEntity.createdAt),
                       style: AppTextStyle.captionSemibold(
                         color: AppColors.textGray,
                       ),
