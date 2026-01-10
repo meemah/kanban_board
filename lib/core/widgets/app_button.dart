@@ -12,6 +12,7 @@ class AppButton extends StatelessWidget {
   final double? height;
   final Color? backgroundColor;
   final Color? textColor;
+  final bool isLoading;
   const AppButton({
     super.key,
     required this.title,
@@ -21,6 +22,7 @@ class AppButton extends StatelessWidget {
     this.height,
     this.width,
     this.textColor,
+    this.isLoading = false,
   });
 
   @override
@@ -35,18 +37,26 @@ class AppButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Center(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (prefixIcon != null) ...[prefixIcon!, Gap(3.w)],
-              Text(
-                title,
-                style: AppTextstyle.bodySemibold(
-                  color: textColor ?? Colors.white,
+          child: isLoading
+              ? SizedBox(
+                  height: 20.h,
+                  width: 20.w,
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: Colors.white,
+                  ),
+                )
+              : Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (prefixIcon != null) ...[prefixIcon!, Gap(3.w)],
+                    Text(
+                      title,
+                      style: AppTextstyle.bodySemibold(
+                        color: textColor ?? Colors.white,
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
         ),
       ),
     );

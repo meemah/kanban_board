@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kanban_board/core/theme/font_family.dart';
 import 'package:kanban_board/core/util/navigation/app_router.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 
 import "core/util/di/injection_container.dart" as di;
 
@@ -28,10 +32,17 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: false,
       builder: (_, child) {
-        return MaterialApp.router(
-          title: 'Kanban Board',
-          theme: ThemeData(fontFamily: FontFamily.worksans.value),
-          routerConfig: appRouter,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => di.sl<UpsertTaskBloc>()),
+            BlocProvider(create: (_) => di.sl<KanbanBoardBloc>()),
+            BlocProvider(create: (_) => di.sl<CompletedHistoryBloc>()),
+          ],
+          child: MaterialApp.router(
+            title: 'Kanban Board',
+            theme: ThemeData(fontFamily: FontFamily.worksans.value),
+            routerConfig: appRouter,
+          ),
         );
       },
     );

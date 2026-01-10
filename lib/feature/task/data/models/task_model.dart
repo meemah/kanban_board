@@ -23,6 +23,7 @@ class TaskModel extends Equatable {
     required this.createdAt,
     this.completedAt,
     this.isCompleted = false,
+    t,
   });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {

@@ -13,6 +13,5 @@ abstract class TaskRepository {
     required UpsertTaskParams upsertTaskParams,
   });
 
-  Future<Either<Failure, void>> completeTask(String id);
-  Future<Either<Failure, List<TaskEntity>>> getCompletedTasks();
+  Future<Either<Failure, bool>> completeTask(String id);
 }

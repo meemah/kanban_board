@@ -11,24 +11,26 @@ part 'upsert_task_state.dart';
 class UpsertTaskBloc extends Bloc<UpsertTaskEvent, UpsertTaskState> {
   final UpsertTaskUseCase _upsertTaskUseCase;
   UpsertTaskBloc(this._upsertTaskUseCase) : super(UpsertTaskInitial()) {
-    on<UpsertTaskEvent>((event, emit) {
-      on<UpsertTask>(_onUpsertTask);
-    });
+    on<UpsertTask>(_onUpsertTask);
   }
 
   Future<void> _onUpsertTask(
     UpsertTask event,
     Emitter<UpsertTaskState> emit,
   ) async {
-    emit(UpsertTaskLoading());
+    try {
+      emit(UpsertTaskLoading());
 
-    final Either<Failure, TaskEntity> result = await _upsertTaskUseCase(
-      event.task,
-    );
+      final Either<Failure, TaskEntity> result = await _upsertTaskUseCase(
+        event.task,
+      );
 
-    result.fold(
-      (failure) => emit(UpsertTaskFailure(failure.message)),
-      (task) => emit(UpsertTaskSuccess(task)),
-    );
+      result.fold(
+        (failure) => emit(UpsertTaskFailure(failure.message)),
+        (task) => emit(UpsertTaskSuccess(task)),
+      );
+    } catch (e) {
+      emit(UpsertTaskFailure("Opps, an error occured"));
+    }
   }
 }

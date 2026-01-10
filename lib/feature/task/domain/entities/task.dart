@@ -23,12 +23,6 @@ class TaskEntity extends Equatable {
     this.isCompleted = false,
   });
 
-  String get columnStatus {
-    if (isCompleted) return 'Done';
-    if (priority == 2) return 'In Progress';
-    return 'To Do';
-  }
-
   @override
   List<Object?> get props => [
     id,
@@ -41,4 +35,13 @@ class TaskEntity extends Equatable {
     completedAt,
     isCompleted,
   ];
+}
+
+enum TaskStatus {
+  todo("To Do"),
+  inprogess("In Progress"),
+  completed("Completed");
+
+  final String title;
+  const TaskStatus(this.title);
 }

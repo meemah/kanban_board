@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 
-import '../../domain/entities/task_timer.dart';
+import '../../../domain/entities/task_timer.dart';
 
 part 'task_timer_model.g.dart';
 

@@ -11,14 +11,11 @@ class UpsertTaskParams extends Equatable {
   final String? description;
   final int priority;
 
-  final DateTime? dueDate;
-
   const UpsertTaskParams({
     this.id,
     required this.content,
     this.description,
     this.priority = 1,
-    this.dueDate,
   });
 
   @override

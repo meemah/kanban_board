@@ -1,5 +1,5 @@
 import 'package:kanban_board/feature/task/data/datasource/timer_local_datasource.dart';
-import 'package:kanban_board/feature/task/data/models/task_timer_model.dart';
+import 'package:kanban_board/feature/task/data/models/task_timer_model/task_timer_model.dart';
 import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
 import 'package:kanban_board/feature/task/domain/repositories/timer_repository.dart';
 

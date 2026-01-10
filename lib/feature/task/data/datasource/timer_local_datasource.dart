@@ -1,5 +1,5 @@
 import 'package:kanban_board/core/local/box_provider.dart';
-import 'package:kanban_board/feature/task/data/models/task_timer_model.dart';
+import 'package:kanban_board/feature/task/data/models/task_timer_model/task_timer_model.dart';
 
 abstract class TimerLocalDatasource {
   Future<TaskTimerModel?> getTimer(String taskId);

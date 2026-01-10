@@ -10,10 +10,10 @@ abstract class CommentRemoteDataSource {
   Future<CommentModel> addComment(AddCommentParams addCommentParams);
 }
 
-class TaskRemoteDataSourceImpl implements CommentRemoteDataSource {
+class CommentRemoteDatasourceImpl implements CommentRemoteDataSource {
   final NetworkService networkService;
 
-  TaskRemoteDataSourceImpl({required this.networkService});
+  CommentRemoteDatasourceImpl({required this.networkService});
 
   @override
   Future<List<CommentModel>> getComments(

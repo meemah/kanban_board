@@ -29,11 +29,10 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
   }) async {
     final data = {
       'content': upsertTaskParams.content,
-      if (upsertTaskParams.description != null)
+      if (upsertTaskParams.description != null &&
+          upsertTaskParams.description!.isNotEmpty)
         'description': upsertTaskParams.description,
       'priority': upsertTaskParams.priority,
-      if (upsertTaskParams.dueDate != null)
-        'due_datetime': upsertTaskParams.dueDate,
     };
 
     final response = await networkService.post(
@@ -51,11 +50,10 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
       '${ApiConstants.tasksEndpoint}/$upsertTaskParams.id',
       data: {
         'content': upsertTaskParams.content,
-        if (upsertTaskParams.description != null)
+        if (upsertTaskParams.description != null &&
+            upsertTaskParams.description!.isNotEmpty)
           'description': upsertTaskParams.description,
         'priority': upsertTaskParams.priority,
-        if (upsertTaskParams.dueDate != null)
-          'due_datetime': upsertTaskParams.dueDate,
       },
     );
     return TaskModel.fromJson(response.data);

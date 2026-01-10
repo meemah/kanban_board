@@ -1,17 +1,17 @@
 import 'package:boardview/board_callbacks.dart';
-import 'package:boardview/board_item.dart';
-import 'package:boardview/board_list.dart';
 import 'package:boardview/boardview.dart';
 import 'package:boardview/boardview_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
-import 'package:kanban_board/core/theme/font_family.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_card.dart';
+import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
 
 class KanbanBoardView extends StatefulWidget {
   const KanbanBoardView({super.key});
@@ -22,32 +22,6 @@ class KanbanBoardView extends StatefulWidget {
 
 class _KanbanBoardViewState extends State<KanbanBoardView> {
   late BoardController boardController;
-  final List<BoardListObject> _listData = [
-    BoardListObject(
-      title: "To Do",
-      items: [
-        BoardItemObject(title: "Task 1"),
-        BoardItemObject(title: "Task 2"),
-        BoardItemObject(title: "Task 3"),
-      ],
-    ),
-    BoardListObject(
-      title: "In Progress",
-      items: [
-        BoardItemObject(title: "Task 4"),
-        BoardItemObject(title: "Task 5"),
-      ],
-    ),
-    BoardListObject(
-      title: "Done",
-      items: [
-        BoardItemObject(title: "Task 6"),
-        BoardItemObject(title: "Task 7"),
-        BoardItemObject(title: "Task 8"),
-        BoardItemObject(title: "Task 9"),
-      ],
-    ),
-  ];
 
   int _currentListIndex = 0;
 
@@ -90,7 +64,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: GestureDetector(
-        onTap: () => context.pushNamed(AppRouteName.taskCreate),
+        onTap: () => context.pushNamed(AppRouteName.taskUpsert),
         child: Container(
           height: 50.h,
           width: 50.w,
@@ -104,154 +78,106 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
       body: SafeArea(
         child: Container(
           color: Colors.grey[100],
-          child: BoardView(
-            lists: _listData
-                .map(
-                  (BoardListObject listObject) => BoardList(
-                    onStartDragList: (int? listIndex) {},
-                    onTapList: (int? listIndex) async {},
-                    onDropList: (int? listIndex, int? oldListIndex) {
-                      var list = _listData[oldListIndex!];
-                      _listData.removeAt(oldListIndex);
-                      _listData.insert(listIndex!, list);
+          child: BlocBuilder<KanbanBoardBloc, KanbanBoardState>(
+            builder: (context, state) {
+              return BoardView(
+                lists: [],
+                // lists: _listData
+                //     .map(
+                //       (BoardListObject listObject) => BoardList(
+                //         onStartDragList: (int? listIndex) {},
+                //         onTapList: (int? listIndex) async {},
+                //         onDropList: (int? listIndex, int? oldListIndex) {
+                //           var list = _listData[oldListIndex!];
+                //           _listData.removeAt(oldListIndex);
+                //           _listData.insert(listIndex!, list);
 
-                      boardController.notifyListReorder(
-                        oldListIndex,
-                        listIndex,
-                      );
+                //           boardController.notifyListReorder(
+                //             oldListIndex,
+                //             listIndex,
+                //           );
 
-                      setState(() {});
-                    },
-                    headerBackgroundColor: Colors.blue[100],
-                    backgroundColor: Colors.grey[50],
-                    header: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(5),
-                          child: Text(
-                            listObject.title!,
-                            style: TextStyle(
-                              fontFamily: FontFamily.merriweather.value,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.blue[800],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                    items: listObject.items!
-                        .map(
-                          (boardListObject) => BoardItem(
-                            onStartDragItem:
-                                (
-                                  int? listIndex,
-                                  int? itemIndex,
-                                  BoardItemState? state,
-                                ) {
-                                  boardController.notifyDragStart(
-                                    listIndex!,
-                                    itemIndex!,
-                                  );
-                                },
-                            onDropItem:
-                                (
-                                  int? listIndex,
-                                  int? itemIndex,
-                                  int? oldListIndex,
-                                  int? oldItemIndex,
-                                  BoardItemState? state,
-                                ) {
-                                  var item = _listData[oldListIndex!]
-                                      .items![oldItemIndex!];
-                                  _listData[oldListIndex].items!.removeAt(
-                                    oldItemIndex,
-                                  );
-                                  _listData[listIndex!].items!.insert(
-                                    itemIndex!,
-                                    item,
-                                  );
+                //           setState(() {});
+                //         },
+                //         headerBackgroundColor: Colors.blue[100],
+                //         backgroundColor: Colors.grey[50],
+                //         header: [
+                //           Expanded(
+                //             child: Padding(
+                //               padding: EdgeInsets.all(5),
+                //               child: Text(
+                //                 listObject.title!,
+                //                 style: TextStyle(
+                //                   fontFamily: FontFamily.merriweather.value,
+                //                   fontSize: 18,
+                //                   fontWeight: FontWeight.bold,
+                //                   color: Colors.blue[800],
+                //                 ),
+                //               ),
+                //             ),
+                //           ),
+                //         ],
+                //         items: listObject.items!
+                //             .map(
+                //               (boardListObject) => BoardItem(
+                //                 onStartDragItem:
+                //                     (
+                //                       int? listIndex,
+                //                       int? itemIndex,
+                //                       BoardItemState? state,
+                //                     ) {
+                //                       boardController.notifyDragStart(
+                //                         listIndex!,
+                //                         itemIndex!,
+                //                       );
+                //                     },
+                //                 onDropItem:
+                //                     (
+                //                       int? listIndex,
+                //                       int? itemIndex,
+                //                       int? oldListIndex,
+                //                       int? oldItemIndex,
+                //                       BoardItemState? state,
+                //                     ) {
+                //                       var item = _listData[oldListIndex!]
+                //                           .items![oldItemIndex!];
+                //                       _listData[oldListIndex].items!.removeAt(
+                //                         oldItemIndex,
+                //                       );
+                //                       _listData[listIndex!].items!.insert(
+                //                         itemIndex!,
+                //                         item,
+                //                       );
 
-                                  boardController.notifyDragEnd(
-                                    oldListIndex,
-                                    oldItemIndex,
-                                    listIndex,
-                                    itemIndex,
-                                  );
+                //                       boardController.notifyDragEnd(
+                //                         oldListIndex,
+                //                         oldItemIndex,
+                //                         listIndex,
+                //                         itemIndex,
+                //                       );
 
-                                  setState(() {});
-                                },
-                            item: Container(
-                              margin: EdgeInsets.symmetric(
-                                horizontal: 4.w,
-                                vertical: 5.h,
-                              ),
-                              child: AppCard(
-                                shadowAlpha: 0.04,
-                                radius: 4,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        boardListObject.title!,
-                                        style: AppTextstyle.captionSemibold(),
-                                      ),
-                                      Gap(4.h),
-                                      Text(
-                                        "Testing the kanban app",
-                                        style: AppTextstyle.captionSemibold(
-                                          color: AppColors.textGray,
-                                        ),
-                                      ),
-                                      Gap(2.h),
-                                      Divider(
-                                        color: AppColors.textGrayLight
-                                            .withValues(alpha: 0.2),
-                                      ),
-                                      Gap(2.h),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.schedule,
-                                            size: 16,
-                                            color: AppColors.textGray,
-                                          ),
-                                          const Gap(3),
-                                          Text(
-                                            "Oct 26",
-                                            style: AppTextstyle.captionSemibold(
-                                              color: AppColors.textGray,
-                                            ),
-                                          ),
-                                          const Spacer(),
-                                          Container(
-                                            height: 25.h,
-                                            width: 25.w,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.backgroundLight,
-                                              shape: BoxShape.circle,
-                                            ),
-                                            child: Icon(Icons.person, size: 18),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                )
-                .toList(),
-            boardController: boardController,
-            width: 300,
-            scrollbar: true,
+                //                       setState(() {});
+                //                     },
+                //                 item: KanbanBoardCard(
+                //                   taskEntity: TaskEntity(
+                //                     id: "1",
+                //                     content: "content",
+                //                     priority: 1,
+                //                     labels: [],
+                //                     createdAt: DateTime.now(),
+                //                   ),
+                //                 ),
+                //               ),
+                //             )
+                //             .toList(),
+                //       ),
+                //     )
+                //     .toList(),
+                boardController: boardController,
+                width: 300,
+                scrollbar: true,
+              );
+            },
           ),
         ),
       ),
@@ -259,26 +185,111 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
   }
 }
 
-class BoardItemObject {
-  String? title;
+class KanbanBoardCard extends StatelessWidget {
+  final TaskEntity taskEntity;
+  const KanbanBoardCard({super.key, required this.taskEntity});
 
-  BoardItemObject({this.title}) {
-    if (this.title == null) {
-      this.title = "";
-    }
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 4.w, vertical: 5.h),
+      child: AppCard(
+        shadowAlpha: 0.04,
+        radius: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(taskEntity.content, style: AppTextstyle.captionSemibold()),
+              if (taskEntity.description != null) ...[
+                Gap(4.h),
+                Text(
+                  taskEntity.description!,
+                  style: AppTextstyle.captionSemibold(
+                    color: AppColors.textGray,
+                  ),
+                ),
+              ],
+              Gap(2.h),
+              Divider(color: AppColors.textGrayLight.withValues(alpha: 0.2)),
+              Gap(2.h),
+              Row(
+                children: [
+                  Icon(Icons.schedule, size: 16, color: AppColors.textGray),
+                  const Gap(3),
+                  Text(
+                    "Oct 26",
+                    style: AppTextstyle.captionSemibold(
+                      color: AppColors.textGray,
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    height: 25.h,
+                    width: 25.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundLight,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.person, size: 18),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
-class BoardListObject {
-  String? title;
-  List<BoardItemObject>? items;
+// class BoardItemObject {
+//   String? title;
 
-  BoardListObject({this.title, this.items}) {
-    if (this.title == null) {
-      this.title = "";
-    }
-    if (this.items == null) {
-      this.items = [];
-    }
-  }
-}
+//   BoardItemObject({this.title}) {
+//     if (this.title == null) {
+//       this.title = "";
+//     }
+//   }
+// }
+
+// class BoardListObject {
+//   String? title;
+//   List<BoardItemObject>? items;
+
+//   BoardListObject({this.title, this.items}) {
+//     if (this.title == null) {
+//       this.title = "";
+//     }
+//     if (this.items == null) {
+//       this.items = [];
+//     }
+//   }
+// }
+// final List<BoardListObject> _listData = [
+//   BoardListObject(
+//     title: "To Do",
+//     items: [
+//       BoardItemObject(title: "Task 1"),
+//       BoardItemObject(title: "Task 2"),
+//       BoardItemObject(title: "Task 3"),
+//     ],
+//   ),
+//   BoardListObject(
+//     title: "In Progress",
+//     items: [
+//       BoardItemObject(title: "Task 4"),
+//       BoardItemObject(title: "Task 5"),
+//     ],
+//   ),
+//   BoardListObject(
+//     title: "Done",
+//     items: [
+//       BoardItemObject(title: "Task 6"),
+//       BoardItemObject(title: "Task 7"),
+//       BoardItemObject(title: "Task 8"),
+//       BoardItemObject(title: "Task 9"),
+//     ],
+//   ),
+// ];

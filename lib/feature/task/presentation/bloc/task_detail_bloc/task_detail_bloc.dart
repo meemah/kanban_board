@@ -26,11 +26,15 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
   }
 
   _onGetComments(GetCommentsEvent event, Emitter<TaskDetailState> emit) async {
-    emit(GetCommentsLoading());
-    var response = await _getCommentsUsecase.call(event.params);
-    response.fold(
-      (error) => emit(GetCommentsFailure(error.message)),
-      (data) => emit(GetCommentsSuccess(data)),
-    );
+    try {
+      emit(GetCommentsLoading());
+      var response = await _getCommentsUsecase.call(event.params);
+      response.fold(
+        (error) => emit(GetCommentsFailure(error.message)),
+        (data) => emit(GetCommentsSuccess(data)),
+      );
+    } catch (e) {
+      emit(GetCommentsFailure("Opps, an error occured"));
+    }
   }
 }
