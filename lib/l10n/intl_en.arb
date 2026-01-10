@@ -40,5 +40,7 @@
   },
   "update": "Update",
   "add": "Add",
-  "oppsErrorOccured": "Opps, error occured"
+  "oppsErrorOccured": "Opps, error occured",
+  "settings": "Settings",
+  "language": "Language"
 }

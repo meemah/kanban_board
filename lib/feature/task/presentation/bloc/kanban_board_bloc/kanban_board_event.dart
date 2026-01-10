@@ -8,3 +8,5 @@ sealed class KanbanBoardEvent extends Equatable {
 }
 
 final class GetAllTaskEvent extends KanbanBoardEvent {}
+
+final class MoveTaskEvent extends KanbanBoardEvent {}

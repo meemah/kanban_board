@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_bottom_navbar.dart';
+import 'package:kanban_board/feature/settings/presentation/settings_view.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/presentation/views/completed_history/completed_history_view.dart';
 import 'package:kanban_board/feature/task/presentation/views/kanban_board/kanban_board_view.dart';
@@ -30,6 +31,15 @@ final GoRouter appRouter = GoRouter(
               path: "/tasks/completed",
               name: AppRouteName.taskCompletedHistory,
               builder: (context, state) => const CompletedHistoryView(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: "/settings",
+              name: AppRouteName.settings,
+              builder: (context, state) => const SettingsView(),
             ),
           ],
         ),

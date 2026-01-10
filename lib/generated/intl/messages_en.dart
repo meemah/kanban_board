@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("DESCRIPTION"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "language": MessageLookupByLibrary.simpleMessage("Language"),
         "loadingCompletedTasks":
             MessageLookupByLibrary.simpleMessage("Loading Completed Tasks"),
         "loadingData": MessageLookupByLibrary.simpleMessage("Loading data.."),
@@ -49,6 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
         "settingUpYourTasks":
             MessageLookupByLibrary.simpleMessage("Setting up your tasks"),
+        "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "taskAction": m0,
         "taskDetails": MessageLookupByLibrary.simpleMessage("Task Details"),
         "taskTitle": MessageLookupByLibrary.simpleMessage("Task Title"),

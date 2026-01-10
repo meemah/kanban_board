@@ -31,6 +31,10 @@ class ScaffoldWithNavBar extends StatelessWidget {
             icon: Icon(Icons.history),
             label: S.current.history,
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: S.current.settings,
+          ),
         ],
       ),
     );
