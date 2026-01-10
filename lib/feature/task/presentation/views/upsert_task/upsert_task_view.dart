@@ -20,16 +20,35 @@ class UpsertTaskView extends StatefulWidget {
 }
 
 class _UpsertTaskViewState extends State<UpsertTaskView> {
+  final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.taskEntity != null) {
+      _titleController.text = widget.taskEntity!.content;
+      _descriptionController.text = widget.taskEntity!.description ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descriptionController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final isEditing = widget.taskEntity != null;
     return BlocListener<UpsertTaskBloc, UpsertTaskState>(
       listener: (context, state) {
         if (state is UpsertTaskSuccess) {
           AppSnackBar.show(
             context,
-            message: "Task added",
+            message: "Task ${isEditing ? "Updated" : "Added"}",
             appSnackbarType: AppSnackbarType.success,
           );
         }
@@ -43,57 +62,61 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: CustomAppBar(title: "Add Task"),
+        appBar: CustomAppBar(title: "${isEditing ? "Update" : "Adde"} Task"),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AppTextField(
-                textEditingController: _titleController,
-                textFieldTitle: "Task Title",
-                hintText: "What needs to be done?",
-              ),
-              Gap(15.h),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //       child: AppTextField(
-              //         textFieldTitle: "Due Date",
-              //         prefixIcon: Icon(Icons.calendar_month),
-              //       ),
-              //     ),
-              //     Gap(10.w),
-              //     Expanded(child: AppTextField(textFieldTitle: "Priority")),
-              //   ],
-              // ),
-              // Gap(15.h),
-              AppTextField(
-                textFieldTitle: "Description",
-                maxLines: 8,
-                textEditingController: _descriptionController,
-              ),
-              const Spacer(),
-              BlocBuilder<UpsertTaskBloc, UpsertTaskState>(
-                builder: (context, state) {
-                  return AppButton(
-                    isLoading: state is UpsertTaskLoading,
-                    title: "Create Task",
-                    onTap: () => context.read<UpsertTaskBloc>().add(
-                      UpsertTask(
-                        UpsertTaskParams(
-                          description: _titleController.text,
-                          content: _descriptionController.text,
-                          id: widget.taskEntity?.id,
-                        ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AppTextField(
+                  textEditingController: _titleController,
+                  textFieldTitle: "Task Title",
+                  hintText: "What needs to be done?",
+                  validator: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "Task title is required";
+                    }
+                    return null;
+                  },
+                ),
+                Gap(15.h),
+                AppTextField(
+                  textFieldTitle: "Description",
+                  maxLines: 8,
+                  textEditingController: _descriptionController,
+                ),
+                const Spacer(),
+                BlocBuilder<UpsertTaskBloc, UpsertTaskState>(
+                  builder: (context, state) {
+                    return AppButton(
+                      isLoading: state is UpsertTaskLoading,
+                      title: "Create Task",
+                      onTap: () {
+                        if (!_formKey.currentState!.validate()) return;
+                        context.read<UpsertTaskBloc>().add(
+                          UpsertTask(
+                            UpsertTaskParams(
+                              priority: widget.taskEntity?.priority ?? 1,
+                              description: _descriptionController.text,
+                              content: _titleController.text,
+                              id: widget.taskEntity?.id,
+                            ),
+                          ),
+                        );
+                      },
+                      prefixIcon: Icon(
+                        Icons.save,
+                        color: Colors.white,
+                        size: 18,
                       ),
-                    ),
-                    prefixIcon: Icon(Icons.save, color: Colors.white, size: 18),
-                  );
-                },
-              ),
-              Gap(10.h),
-            ],
+                    );
+                  },
+                ),
+                Gap(10.h),
+              ],
+            ),
           ),
         ),
       ),

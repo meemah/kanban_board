@@ -13,6 +13,7 @@ class AppButton extends StatelessWidget {
   final Color? backgroundColor;
   final Color? textColor;
   final bool isLoading;
+
   const AppButton({
     super.key,
     required this.title,
@@ -33,7 +34,7 @@ class AppButton extends StatelessWidget {
         height: (height ?? 40).h,
         width: (width ?? double.infinity).w,
         decoration: BoxDecoration(
-          color: backgroundColor ?? AppColors.primary,
+          color: (backgroundColor ?? AppColors.primary),
           borderRadius: BorderRadius.circular(10.r),
         ),
         child: Center(

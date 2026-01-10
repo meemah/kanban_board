@@ -13,6 +13,7 @@ class AppTextField extends StatelessWidget {
   final int maxLines;
   final String? hintText;
   final Function(String)? onChanged;
+  final String? Function(String?)? validator;
 
   const AppTextField({
     super.key,
@@ -24,6 +25,7 @@ class AppTextField extends StatelessWidget {
     this.onTap,
     this.hintText,
     this.onChanged,
+    this.validator,
   });
 
   @override
@@ -45,6 +47,7 @@ class AppTextField extends StatelessWidget {
           maxLines: maxLines,
           onTap: onTap,
           onChanged: onChanged,
+          validator: validator,
           style: AppTextstyle.subtextSemibold(),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
