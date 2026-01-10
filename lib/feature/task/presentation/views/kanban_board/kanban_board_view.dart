@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
-import 'package:kanban_board/core/theme/font_family.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_snackbar.dart';
 import 'package:kanban_board/core/widgets/app_states/empty_state_widget.dart';
@@ -125,7 +124,6 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                               child: Text(
                                 status.title,
                                 style: TextStyle(
-                                  fontFamily: FontFamily.merriweather.value,
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                   color: AppColors.primary,

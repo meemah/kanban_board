@@ -7,7 +7,6 @@ class NetworkService {
 
   NetworkService({required this.apiToken}) {
     _dio = Dio(_baseOptions);
-    _dio.interceptors.add(_loggingInterceptor);
   }
 
   BaseOptions get _baseOptions => BaseOptions(
@@ -18,18 +17,6 @@ class NetworkService {
     },
     connectTimeout: const Duration(seconds: 10),
     receiveTimeout: const Duration(seconds: 10),
-  );
-
-  Interceptor get _loggingInterceptor => InterceptorsWrapper(
-    onRequest: (options, handler) {
-      return handler.next(options);
-    },
-    onResponse: (response, handler) {
-      return handler.next(response);
-    },
-    onError: (error, handler) {
-      return handler.next(error);
-    },
   );
 
   Future<Response<T>> get<T>(

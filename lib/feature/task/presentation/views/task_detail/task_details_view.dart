@@ -70,7 +70,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                       }
                       context.read<TaskDetailBloc>().add(
                         AddCommentEvent(
-                          params: AddCommentParams(
+                          addCommentParams: AddCommentParams(
                             taskId: widget.task.id,
                             content: _commentController.text.trim(),
                           ),

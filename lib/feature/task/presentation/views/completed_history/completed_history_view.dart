@@ -40,14 +40,14 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
               }
               if (state is CompletedHistoryFailure) {
                 return ErrorStateWidget(
-                  message: state.message,
+                  message: state.errorMessage,
                   onRetry: () => context.read<CompletedHistoryBloc>().add(
                     GetCompletedHistoryEvent(),
                   ),
                 );
               }
               if (state is CompletedHistorySuccess) {
-                if (state.data.isEmpty) {
+                if (state.completedTasks.isEmpty) {
                   return EmptyStateWidget();
                 }
                 return RefreshIndicator.adaptive(
@@ -57,7 +57,7 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
                     );
                   },
                   child: GroupedListView<TaskEntity, String>(
-                    elements: state.data,
+                    elements: state.completedTasks,
                     groupBy: (task) => task.createdAt.formatCompletedDate,
                     groupSeparatorBuilder: (String groupByValue) => Padding(
                       padding: const EdgeInsets.all(8.0),

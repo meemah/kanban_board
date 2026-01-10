@@ -12,19 +12,19 @@ final class CompletedHistoryInitial extends CompletedHistoryState {}
 final class CompletedHistoryLoading extends CompletedHistoryState {}
 
 final class CompletedHistoryFailure extends CompletedHistoryState {
-  final String message;
+  final String errorMessage;
 
-  const CompletedHistoryFailure({required this.message});
+  const CompletedHistoryFailure({required this.errorMessage});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [errorMessage];
 }
 
 final class CompletedHistorySuccess extends CompletedHistoryState {
-  final List<TaskEntity> data;
+  final List<TaskEntity> completedTasks;
 
-  const CompletedHistorySuccess({required this.data});
+  const CompletedHistorySuccess({required this.completedTasks});
 
   @override
-  List<Object> get props => [data];
+  List<Object> get props => [completedTasks];
 }

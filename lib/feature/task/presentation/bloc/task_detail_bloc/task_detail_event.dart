@@ -17,10 +17,10 @@ final class GetCommentsEvent extends TaskDetailEvent {
 }
 
 final class AddCommentEvent extends TaskDetailEvent {
-  final AddCommentParams params;
+  final AddCommentParams addCommentParams;
 
-  const AddCommentEvent({required this.params});
+  const AddCommentEvent({required this.addCommentParams});
 
   @override
-  List<Object> get props => [params];
+  List<Object> get props => [addCommentParams];
 }

@@ -22,15 +22,15 @@ class CompletedHistoryBloc
       emit(CompletedHistoryLoading());
       var result = await getTasksUsecase.call(NoParams());
       result.fold(
-        (error) => emit(CompletedHistoryFailure(message: error.message)),
+        (error) => emit(CompletedHistoryFailure(errorMessage: error.message)),
         (data) => emit(
           CompletedHistorySuccess(
-            data: data.where((item) => item.isCompleted).toList(),
+            completedTasks: data.where((item) => item.isCompleted).toList(),
           ),
         ),
       );
     } catch (e) {
-      emit(CompletedHistoryFailure(message: "Opps, an error occured"));
+      emit(CompletedHistoryFailure(errorMessage: "Opps, an error occured"));
     }
   }
 }

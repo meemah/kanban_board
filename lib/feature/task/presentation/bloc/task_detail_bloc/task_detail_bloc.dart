@@ -29,15 +29,15 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
 
       final optimisticComment = CommentEntity(
         id: tempId,
-        taskId: event.params.taskId,
-        content: event.params.content,
+        taskId: event.addCommentParams.taskId,
+        content: event.addCommentParams.content,
         postedAt: DateTime.now(),
         isPending: true,
       );
 
       emit(GetCommentsSuccess([...currentState.comments, optimisticComment]));
 
-      final result = await _addComentUsecase(event.params);
+      final result = await _addComentUsecase(event.addCommentParams);
 
       if (emit.isDone) return;
 

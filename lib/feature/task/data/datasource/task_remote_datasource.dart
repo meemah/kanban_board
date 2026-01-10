@@ -51,9 +51,8 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     };
 
     data.removeWhere((key, value) => value == null);
-
     final response = await networkService.post(
-      '${ApiConstants.tasksEndpoint}/$upsertTaskParams.id',
+      '${ApiConstants.tasksEndpoint}/${upsertTaskParams.id}',
       data: data,
     );
     return TaskModel.fromJson(response.data);

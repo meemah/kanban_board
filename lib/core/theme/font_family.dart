@@ -1,7 +1,5 @@
 enum FontFamily {
-  merriweather("merriweather"),
-  worksans("worksans"),
-  raleway("raleway");
+  worksans("worksans");
 
   final String value;
   const FontFamily(this.value);
