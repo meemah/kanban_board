@@ -138,7 +138,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               ),
               Gap(30.h),
               Text(
-                S.current.description,
+                S.current.description.toUpperCase(),
                 style: AppTextStyle.captionMedium(color: AppColors.textGray),
               ),
               const Gap(3),

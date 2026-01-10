@@ -190,10 +190,10 @@ class S {
     );
   }
 
-  /// `DESCRIPTION`
+  /// `Description`
   String get description {
     return Intl.message(
-      'DESCRIPTION',
+      'Description',
       name: 'description',
       desc: '',
       args: [],
