@@ -140,16 +140,14 @@ class _TaskStopWatchCardState extends State<TaskStopWatchCard> {
               children: [
                 Expanded(
                   child: AppButton(
-                    backgroundColor: AppColors.textGrayLight.withValues(
-                      alpha: 0.2,
-                    ),
+                    backgroundColor: AppColors.gray400,
                     title: _isRunning ? 'Pause' : 'Resume',
                     onTap: _togglePlayPause,
-                    textColor: AppColors.textGrayLight,
+                    textColor: AppColors.white,
                     prefixIcon: Icon(
                       _isRunning ? Icons.pause : Icons.play_arrow,
                       size: 24,
-                      color: AppColors.textGrayLight,
+                      color: AppColors.white,
                     ),
                   ),
                 ),

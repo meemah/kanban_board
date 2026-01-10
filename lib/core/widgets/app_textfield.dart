@@ -51,8 +51,7 @@ class AppTextField extends StatelessWidget {
           style: AppTextStyle.subtextSemibold(),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primary, width: 2),
-              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: AppColors.primary, width: 1),
             ),
             contentPadding: EdgeInsets.symmetric(
               horizontal: 12.w,
@@ -65,9 +64,11 @@ class AppTextField extends StatelessWidget {
             hintText: hintText,
             fillColor: AppColors.white,
             filled: true,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: AppColors.borderLight, width: 1),
+            ),
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: AppColors.textGray, width: 2),
-              borderRadius: BorderRadius.circular(8.r),
+              borderSide: BorderSide(color: AppColors.borderLight, width: 1),
             ),
           ),
         ),

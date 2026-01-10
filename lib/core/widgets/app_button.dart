@@ -52,7 +52,7 @@ class AppButton extends StatelessWidget {
                     if (prefixIcon != null) ...[prefixIcon!, Gap(3.w)],
                     Text(
                       title,
-                      style: AppTextStyle.bodySemibold(
+                      style: AppTextStyle.subtextSemibold(
                         color: textColor ?? AppColors.white,
                       ),
                     ),
