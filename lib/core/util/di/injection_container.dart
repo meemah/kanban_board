@@ -26,14 +26,15 @@ import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/tas
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 
 final sl = GetIt.I;
-
+String taskDB = "taskDb";
 Future<void> init({required String apiToken}) async {
   await Hive.initFlutter();
   Hive.registerAdapter(TaskTimerModelAdapter());
+
   sl.registerLazySingleton<BoxProvider<TaskTimerModel>>(
     () => HiveBoxProvider<TaskTimerModel>(),
   );
-
+  await Hive.openBox<TaskTimerModel?>(taskDB);
   sl.registerLazySingleton(() => NetworkService(apiToken: apiToken));
 
   sl.registerFactory(() => TaskDetailBloc(sl(), sl()));

@@ -7,14 +7,14 @@ class GetTaskStatusUsecase {
 
   const GetTaskStatusUsecase(this._repository);
 
-  Future<TaskStatus> call(TaskEntity params) async {
-    TaskTimerEntity? timer = await _repository.getTimer(params.id);
+  TaskStatus call(TaskEntity params) {
+    TaskTimerEntity? timer = _repository.getTimer(params.id);
+    if (params.isCompleted) {
+      return TaskStatus.completed;
+    }
     if (timer == null) {
       return TaskStatus.todo;
     } else {
-      if (params.isCompleted) {
-        return TaskStatus.completed;
-      }
       return TaskStatus.inprogess;
     }
   }

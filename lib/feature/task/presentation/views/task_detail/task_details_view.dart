@@ -1,14 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
+import 'package:kanban_board/core/util/navigation/app_routes.dart';
+import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
+import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/views/task_detail/widget/task_stopwatch_card.dart';
 
-class TaskDetailsView extends StatelessWidget {
+class TaskDetailsView extends StatefulWidget {
   final TaskEntity task;
   const TaskDetailsView({super.key, required this.task});
+
+  @override
+  State<TaskDetailsView> createState() => _TaskDetailsViewState();
+}
+
+class _TaskDetailsViewState extends State<TaskDetailsView> {
+  final _commentController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<TaskDetailBloc>().add(
+      GetCommentsEvent(params: GetCommentsParams(taskId: widget.task.id)),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _commentController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +46,7 @@ class TaskDetailsView extends StatelessWidget {
         children: [
           Expanded(
             child: TextFormField(
+              controller: _commentController,
               keyboardType: TextInputType.multiline,
               textInputAction: TextInputAction.newline,
               minLines: 1,
@@ -32,7 +61,23 @@ class TaskDetailsView extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: AppColors.primary,
                   ),
-                  child: Icon(Icons.send, size: 16, color: Colors.white),
+                  child: GestureDetector(
+                    onTap: () {
+                      if (_commentController.text.isEmpty) {
+                        return;
+                      }
+                      context.read<TaskDetailBloc>().add(
+                        AddCommentEvent(
+                          params: AddCommentParams(
+                            taskId: widget.task.id,
+                            content: _commentController.text.trim(),
+                          ),
+                        ),
+                      );
+                      _commentController.clear();
+                    },
+                    child: Icon(Icons.send, size: 16, color: Colors.white),
+                  ),
                 ),
                 border: InputBorder.none,
                 fillColor: AppColors.textGrayLight.withValues(alpha: 0.2),
@@ -51,9 +96,13 @@ class TaskDetailsView extends StatelessWidget {
         backgroundColor: AppColors.backgroundLight,
         title: Text("Task Details"),
         actions: [
-          Container(
-            margin: EdgeInsets.only(right: 10.w),
-            child: Icon(Icons.edit, color: AppColors.primary, size: 17.sp),
+          GestureDetector(
+            onTap: () =>
+                context.pushNamed(AppRouteName.taskUpsert, extra: widget.task),
+            child: Container(
+              margin: EdgeInsets.only(right: 10.w),
+              child: Icon(Icons.edit, color: AppColors.primary, size: 17.sp),
+            ),
           ),
         ],
       ),
@@ -78,10 +127,7 @@ class TaskDetailsView extends StatelessWidget {
                 ),
               ),
               Gap(10.h),
-              Text(
-                "Work on kanban board assessment",
-                style: AppTextstyle.headingBold(),
-              ),
+              Text(widget.task.content, style: AppTextstyle.headingBold()),
               Gap(30.h),
               TaskStopWatchCard(
                 startDateTime: DateTime.now().subtract(
@@ -95,38 +141,61 @@ class TaskDetailsView extends StatelessWidget {
               ),
               const Gap(3),
               Text(
-                "Hello, I am keeping Loreem ipsum here as a placeholder. Hello, I am keeping Loreem ipsum here as a placeholder. Hello, I am keeping Loreem ipsum here as a placeholder.Hello, I am keeping Loreem ipsum here as a placeholder",
+                widget.task.description == null ||
+                        widget.task.description!.isEmpty
+                    ? "N/A"
+                    : widget.task.description!,
                 style: AppTextstyle.subtextRegular(
                   color: AppColors.textDark,
                 ).copyWith(height: 1.5),
               ),
               Gap(30.h),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "COMMENTS",
-                    style: AppTextstyle.captionMedium(
-                      color: AppColors.textGray,
-                    ),
-                  ),
-                  const Gap(3),
-                  Row(
+
+              BlocBuilder<TaskDetailBloc, TaskDetailState>(
+                builder: (context, state) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CircleAvatar(child: Icon(Icons.person)),
-                      Gap(10),
-                      Expanded(
-                        child: Text(
-                          "Hello, I am keeping Loreem ipsum here as a placeholder. Hello, I am keeping Loreem ipsum here as a placeholder. Hello, I am keeping Loreem ipsum here as a placeholder.Hello, I am keeping Loreem ipsum here as a placeholder",
-                          maxLines: 3,
-                          style: AppTextstyle.subtextRegular(
-                            color: AppColors.textDark,
-                          ),
+                      Text(
+                        "COMMENTS",
+                        style: AppTextstyle.captionMedium(
+                          color: AppColors.textGray,
                         ),
                       ),
+                      const Gap(3),
+                      if (state is GetCommentsSuccess) ...[
+                        ListView.separated(
+                          reverse: true,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: state.comments.length,
+                          separatorBuilder: (context, index) => Gap(10.h),
+                          itemBuilder: (ctx, index) {
+                            CommentEntity commentEntity = state.comments[index];
+                            return Opacity(
+                              opacity: commentEntity.isPending ? 0.5 : 1,
+                              child: Row(
+                                children: [
+                                  CircleAvatar(child: Icon(Icons.person)),
+                                  Gap(10),
+                                  Expanded(
+                                    child: Text(
+                                      commentEntity.content,
+                                      maxLines: 3,
+                                      style: AppTextstyle.subtextRegular(
+                                        color: AppColors.textDark,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ],
                     ],
-                  ),
-                ],
+                  );
+                },
               ),
             ],
           ),

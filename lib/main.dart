@@ -6,6 +6,7 @@ import 'package:kanban_board/core/theme/font_family.dart';
 import 'package:kanban_board/core/util/navigation/app_router.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 
 import "core/util/di/injection_container.dart" as di;
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => di.sl<UpsertTaskBloc>()),
             BlocProvider(create: (_) => di.sl<KanbanBoardBloc>()),
             BlocProvider(create: (_) => di.sl<CompletedHistoryBloc>()),
+            BlocProvider(create: (_) => di.sl<TaskDetailBloc>()),
           ],
           child: MaterialApp.router(
             title: 'Kanban Board',

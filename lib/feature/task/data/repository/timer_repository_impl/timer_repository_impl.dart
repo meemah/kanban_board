@@ -9,8 +9,8 @@ class TimerRepositoryImpl implements TimerRepository {
   TimerRepositoryImpl(this.localDataSource);
 
   @override
-  Future<TaskTimerEntity?> getTimer(String taskId) async {
-    final model = await localDataSource.getTimer(taskId);
+  TaskTimerEntity? getTimer(String taskId) {
+    final model = localDataSource.getTimer(taskId);
     return model?.toEntity();
   }
 

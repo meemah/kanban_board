@@ -12,17 +12,49 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
   final AddComentUsecase _addComentUsecase;
   TaskDetailBloc(this._addComentUsecase, this._getCommentsUsecase)
     : super(TaskDetailInitial()) {
-    on<TaskDetailEvent>((event, emit) {
-      on<AddCommentEvent>(_onAddComment);
-    });
+    on<AddCommentEvent>(_onAddCommentOptimistic);
+    on<GetCommentsEvent>(_onGetComments);
   }
 
-  _onAddComment(AddCommentEvent event, Emitter<TaskDetailState> emit) async {
-    var response = await _addComentUsecase.call(event.params);
-    // response.fold(
-    //   (error) => emit(GetCommentsFailure(error.message)),
-    //   (data) => emit(GetCommentsSuccess(data)),
-    // );
+  _onAddCommentOptimistic(
+    AddCommentEvent event,
+    Emitter<TaskDetailState> emit,
+  ) async {
+    try {
+      final currentState = state;
+
+      if (currentState is! GetCommentsSuccess) return;
+
+      final tempId = DateTime.now().millisecondsSinceEpoch.toString();
+
+      final optimisticComment = CommentEntity(
+        id: tempId,
+        taskId: event.params.taskId,
+        content: event.params.content,
+        postedAt: DateTime.now(),
+        isPending: true,
+      );
+
+      emit(GetCommentsSuccess([...currentState.comments, optimisticComment]));
+
+      final result = await _addComentUsecase(event.params);
+
+      if (emit.isDone) return;
+
+      result.fold(
+        (failure) {
+          emit(GetCommentsSuccess(currentState.comments));
+          emit(AddCommentFailure(failure.message));
+        },
+        (savedComment) {
+          final updatedComments =
+              currentState.comments.where((c) => c.id != tempId).toList()
+                ..add(savedComment);
+
+          emit(GetCommentsSuccess(updatedComments));
+        },
+      );
+    } catch (e) {}
   }
 
   _onGetComments(GetCommentsEvent event, Emitter<TaskDetailState> emit) async {

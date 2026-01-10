@@ -9,12 +9,15 @@ sealed class KanbanBoardState extends Equatable {
 
 final class KanbanBoardInitial extends KanbanBoardState {}
 
-final class KanbanBoardLoading extends KanbanBoardState {}
+class KanbanBoardLoading extends KanbanBoardState {}
 
 final class KanbanBoardSuccess extends KanbanBoardState {
-  final List<TaskEntity> tasks;
-
+  final Map<TaskStatus, List<TaskEntity>> tasks;
   const KanbanBoardSuccess(this.tasks);
+
+  List<TaskEntity> getTasksByStatus(TaskStatus status) {
+    return tasks[status] ?? [];
+  }
 
   @override
   List<Object> get props => [tasks];

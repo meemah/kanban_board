@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:kanban_board/core/util/usecase/usecase.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart'
-    show TaskEntity;
+    show TaskEntity, TaskStatus;
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task_status_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_tasks_usecase.dart';
 
@@ -21,25 +21,29 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
     KanbanBoardEvent event,
     Emitter<KanbanBoardState> emit,
   ) async {
-    emit(KanbanBoardLoading());
+    try {
+      emit(KanbanBoardLoading());
 
-    final result = await _getTasksUsecase.call(NoParams());
+      final result = await _getTasksUsecase.call(NoParams());
 
-    result.fold(
-      (failure) => emit(KanbanBoardFailure(failure.message)),
-      (task) => emit(KanbanBoardSuccess(task)),
-    );
+      result.fold((failure) => emit(KanbanBoardFailure(failure.message)), (
+        tasks,
+      ) async {
+        final Map<TaskStatus, List<TaskEntity>> tasksByStatus = {
+          TaskStatus.todo: [],
+          TaskStatus.inprogess: [],
+          TaskStatus.completed: [],
+        };
+
+        for (final task in tasks) {
+          final status = _getTaskStatusUsecase.call(task);
+          tasksByStatus[status]!.add(task);
+        }
+
+        emit(KanbanBoardSuccess(tasksByStatus));
+      });
+    } catch (e) {
+      emit(KanbanBoardFailure("Opps, error occured"));
+    }
   }
-
-  // Map<TaskStatus, List<TaskEntity>> _groupTasks(List<TaskEntity> tasks) {
-  //   return {
-  //     TaskStatus.todo: tasks
-  //         .where((t) => t.taskStatus == TaskStatus.todo)
-  //         .toList(),
-  //     TaskStatus.inprogess: tasks
-  //         .where((t) => t.taskStatus == TaskStatus.inprogess)
-  //         .toList(),
-  //     TaskStatus.completed: tasks.where((t) => t.isCompleted).toList(),
-  //   };
-  // }
 }

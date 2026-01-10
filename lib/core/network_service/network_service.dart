@@ -110,7 +110,8 @@ class NetworkService {
         return Exception('Connection timeout');
       case DioExceptionType.badResponse:
         final statusCode = e.response?.statusCode;
-        final message = e.response?.data?['error'] ?? 'Server error';
+        final message =
+            e.response?.data ?? e.response?.data?['error'] ?? 'Server error';
         return Exception('[$statusCode] $message');
       case DioExceptionType.cancel:
         return Exception('Request cancelled');
