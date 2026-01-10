@@ -9,7 +9,8 @@ import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/core/widgets/app_snackbar.dart';
 import 'package:kanban_board/core/widgets/app_textfield.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
+import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart'
+    show UpsertTaskParams;
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 import 'package:kanban_board/generated/l10n.dart';
 

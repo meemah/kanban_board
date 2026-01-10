@@ -10,8 +10,7 @@ import 'package:kanban_board/core/widgets/app_bar.dart';
 import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
-import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
-import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
+import 'package:kanban_board/feature/task/domain/params/add_comment_params.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/views/task_detail/widget/task_stopwatch_card.dart';
 import 'package:kanban_board/generated/l10n.dart';
@@ -31,7 +30,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
   void initState() {
     super.initState();
     context.read<TaskDetailBloc>().add(
-      GetCommentsEvent(params: GetCommentsParams(taskId: widget.task.id)),
+      GetCommentsEvent(taskId: widget.task.id),
     );
   }
 

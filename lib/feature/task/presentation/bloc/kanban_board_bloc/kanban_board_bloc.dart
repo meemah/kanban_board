@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/core/util/usecase/usecase.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart'
     show TaskEntity, TaskStatus;
+import 'package:kanban_board/feature/task/domain/params/move_task_params.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task_status_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_tasks_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/move_task_usecase.dart';

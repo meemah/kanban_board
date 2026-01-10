@@ -1,6 +1,6 @@
 import 'package:kanban_board/core/network_service/api_constants.dart';
 import 'package:kanban_board/core/network_service/network_service.dart';
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
+import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart';
 
 import '../models/task_model.dart';
 

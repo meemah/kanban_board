@@ -1,26 +1,9 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/core/util/usecase/usecase.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart';
 import 'package:kanban_board/feature/task/domain/repositories/task_repository.dart';
-
-class UpsertTaskParams extends Equatable {
-  final String? id;
-  final String content;
-  final String? description;
-  final int priority;
-
-  const UpsertTaskParams({
-    this.id,
-    required this.content,
-    this.description,
-    this.priority = 1,
-  });
-
-  @override
-  List<Object?> get props => [id, content, description, priority];
-}
 
 class UpsertTaskUseCase implements UseCase<TaskEntity, UpsertTaskParams> {
   final TaskRepository _repository;

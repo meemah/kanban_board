@@ -2,8 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/feature/task/data/datasource/task_remote_datasource.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart';
 import 'package:kanban_board/feature/task/domain/repositories/task_repository.dart';
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
 
 class TaskRepositoryImpl extends TaskRepository {
   final TaskRemoteDataSource remoteDataSource;

@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart' hide Task;
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
+import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart';
 
 import '../../../../core/error/failures.dart';
 import '../entities/task.dart';

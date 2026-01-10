@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:equatable/equatable.dart';
 import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/domain/params/move_task_params.dart';
 import 'package:kanban_board/feature/task/domain/repositories/task_repository.dart';
 import 'package:kanban_board/feature/task/domain/repositories/timer_repository.dart';
 
@@ -51,14 +51,4 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskParams> {
       return Left(ServerFailure(e.toString()));
     }
   }
-}
-
-class MoveTaskParams extends Equatable {
-  final TaskEntity taskEntity;
-  final TaskStatus status;
-
-  const MoveTaskParams({required this.taskEntity, required this.status});
-
-  @override
-  List<Object?> get props => [taskEntity, status];
 }

@@ -8,12 +8,12 @@ sealed class TaskDetailEvent extends Equatable {
 }
 
 final class GetCommentsEvent extends TaskDetailEvent {
-  final GetCommentsParams params;
+  final String taskId;
 
-  const GetCommentsEvent({required this.params});
+  const GetCommentsEvent({required this.taskId});
 
   @override
-  List<Object> get props => [params];
+  List<Object> get props => [taskId];
 }
 
 final class AddCommentEvent extends TaskDetailEvent {

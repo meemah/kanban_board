@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
+import 'package:kanban_board/feature/task/domain/params/add_comment_params.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
 import 'package:kanban_board/generated/l10n.dart';
@@ -63,7 +64,7 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
   _onGetComments(GetCommentsEvent event, Emitter<TaskDetailState> emit) async {
     try {
       emit(GetCommentsLoading());
-      var response = await _getCommentsUsecase.call(event.params);
+      var response = await _getCommentsUsecase.call(event.taskId);
       response.fold(
         (error) => emit(GetCommentsFailure(error.message)),
         (data) => emit(GetCommentsSuccess(data)),

@@ -2,9 +2,8 @@ import 'package:dartz/dartz.dart';
 import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/feature/task/data/datasource/comment_remote_datasource.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
+import 'package:kanban_board/feature/task/domain/params/add_comment_params.dart';
 import 'package:kanban_board/feature/task/domain/repositories/comment_repository.dart';
-import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
-import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   final CommentRemoteDataSource remoteDataSource;
@@ -13,12 +12,10 @@ class CommentRepositoryImpl implements CommentRepository {
 
   @override
   Future<Either<Failure, List<CommentEntity>>> getComments(
-    GetCommentsParams getCommentParams,
+    String taskId,
   ) async {
     try {
-      final commentModels = await remoteDataSource.getComments(
-        getCommentParams,
-      );
+      final commentModels = await remoteDataSource.getComments(taskId);
       return Right(commentModels.map((model) => model.toEntity()).toList());
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString()));
