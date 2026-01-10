@@ -97,12 +97,6 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: Merriweather
-      fonts:
-        - asset: asset/font/Merriweather-Regular.ttf
-    - family: Raleway
-      fonts:
-        - asset: asset/font/Raleway-Regular.ttf
     - family: WorkSans
       fonts:
         - asset: asset/font/WorkSans-Regular.ttf
