@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/generated/l10n.dart';
 
@@ -15,7 +16,7 @@ class EmptyStateWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.inbox, size: 50.sp, color: Colors.grey[400]),
+          Icon(Icons.inbox, size: 50.sp, color: AppColors.gray400),
           Gap(12.h),
           Text(
             message ?? S.current.noDataAvailable,

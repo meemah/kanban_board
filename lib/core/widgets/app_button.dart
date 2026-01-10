@@ -43,7 +43,7 @@ class AppButton extends StatelessWidget {
                   height: 20.h,
                   width: 20.w,
                   child: CircularProgressIndicator.adaptive(
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.white,
                   ),
                 )
               : Row(
@@ -53,7 +53,7 @@ class AppButton extends StatelessWidget {
                     Text(
                       title,
                       style: AppTextStyle.bodySemibold(
-                        color: textColor ?? Colors.white,
+                        color: textColor ?? AppColors.white,
                       ),
                     ),
                   ],

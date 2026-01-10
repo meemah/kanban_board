@@ -83,7 +83,11 @@ class _TaskStopWatchCardState extends State<TaskStopWatchCard> {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.schedule, size: 16.sp, color: Colors.grey),
+                    Icon(
+                      Icons.schedule,
+                      size: 14.sp,
+                      color: AppColors.textGrayDark,
+                    ),
                     Gap(3.w),
                     Text('Total Time', style: AppTextStyle.captionSemibold()),
                   ],
@@ -157,7 +161,7 @@ class _TaskStopWatchCardState extends State<TaskStopWatchCard> {
                     prefixIcon: const Icon(
                       Icons.stop,
                       size: 24,
-                      color: Colors.white,
+                      color: AppColors.white,
                     ),
                   ),
                 ),

@@ -81,13 +81,13 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
             boxShadow: [
               BoxShadow(
                 offset: Offset(1, 1),
-                color: Colors.black.withValues(alpha: 0.1),
+                color: AppColors.black.withValues(alpha: 0.1),
               ),
             ],
             shape: BoxShape.circle,
             color: AppColors.primary,
           ),
-          child: Icon(Icons.add, color: Colors.white),
+          child: Icon(Icons.add, color: AppColors.white),
         ),
       ),
       body: SafeArea(
@@ -121,7 +121,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                         headerBackgroundColor: AppColors.primary.withValues(
                           alpha: 0.3,
                         ),
-                        backgroundColor: Colors.grey[50],
+                        backgroundColor: AppColors.gray50,
                         header: [
                           Expanded(
                             child: Padding(

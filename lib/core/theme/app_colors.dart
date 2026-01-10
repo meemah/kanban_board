@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
@@ -14,4 +14,13 @@ class AppColors {
   static const Color textGrayDark = Color(0xFF4B5563);
 
   static const Color borderLight = Color(0xFFE5E7EB);
+
+  static const Color white = Colors.white;
+  static const Color black = Colors.black;
+
+  static const Color green = Colors.green;
+  static const Color red = Colors.redAccent;
+  static const Color amber = Colors.amber;
+  static Color gray400 = Colors.grey.shade400;
+  static Color gray50 = Colors.grey.shade50;
 }

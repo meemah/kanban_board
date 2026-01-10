@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kanban_board/core/theme/app_colors.dart';
 
 enum AppSnackbarType { failed, success }
 
@@ -22,8 +23,8 @@ class AppSnackBar {
         duration: duration,
         action: action,
         backgroundColor: appSnackbarType == AppSnackbarType.success
-            ? Colors.green
-            : Colors.redAccent,
+            ? AppColors.green
+            : AppColors.red,
       ),
     );
   }

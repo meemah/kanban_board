@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/widgets/app_button.dart';
 import 'package:kanban_board/generated/l10n.dart';
@@ -19,7 +20,7 @@ class ErrorStateWidget extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline, size: 50, color: Colors.red[400]),
+            Icon(Icons.error_outline, size: 50, color: AppColors.red),
             Gap(12.h),
             Text(
               message,

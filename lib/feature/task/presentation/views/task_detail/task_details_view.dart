@@ -79,7 +79,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                       );
                       _commentController.clear();
                     },
-                    child: Icon(Icons.send, size: 16, color: Colors.white),
+                    child: Icon(Icons.send, size: 16, color: AppColors.white),
                   ),
                 ),
                 border: InputBorder.none,
