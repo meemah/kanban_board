@@ -42,5 +42,6 @@
   "add": "Add",
   "oppsErrorOccured": "Opps, error occured",
   "settings": "Settings",
-  "language": "Language"
+  "language": "Language",
+  "kanbanBoard": "Kanban Board"
 }

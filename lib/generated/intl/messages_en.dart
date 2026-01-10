@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "description": MessageLookupByLibrary.simpleMessage("DESCRIPTION"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
+        "kanbanBoard": MessageLookupByLibrary.simpleMessage("Kanban Board"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "loadingCompletedTasks":
             MessageLookupByLibrary.simpleMessage("Loading Completed Tasks"),

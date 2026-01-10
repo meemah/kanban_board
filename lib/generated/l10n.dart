@@ -349,6 +349,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Kanban Board`
+  String get kanbanBoard {
+    return Intl.message(
+      'Kanban Board',
+      name: 'kanbanBoard',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
