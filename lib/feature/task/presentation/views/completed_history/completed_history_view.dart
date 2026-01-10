@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:kanban_board/core/extensions/date_extension.dart';
-import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/widgets/app_bar.dart';
+import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/core/widgets/app_states/empty_state_widget.dart';
 import 'package:kanban_board/core/widgets/app_states/error_state_widget.dart';
 import 'package:kanban_board/core/widgets/app_states/loading_state_widget.dart';
@@ -28,8 +28,7 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+    return AppScaffold(
       appBar: CustomAppBar(
         title: S.current.completedHistory,
         showBackButton: false,

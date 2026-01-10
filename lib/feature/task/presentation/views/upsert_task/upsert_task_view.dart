@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/widgets/app_bar.dart';
 import 'package:kanban_board/core/widgets/app_button.dart';
+import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/core/widgets/app_snackbar.dart';
 import 'package:kanban_board/core/widgets/app_textfield.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
@@ -63,8 +63,7 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
           );
         }
       },
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundLight,
+      child: AppScaffold(
         appBar: CustomAppBar(
           title: S.current.upsertTaskPageTitle(
             isEditing ? S.current.update : S.current.add,

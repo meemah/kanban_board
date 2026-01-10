@@ -9,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
+import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/core/widgets/app_snackbar.dart';
 import 'package:kanban_board/core/widgets/app_states/empty_state_widget.dart';
 import 'package:kanban_board/core/widgets/app_states/error_state_widget.dart';
@@ -68,8 +69,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+    return AppScaffold(
       floatingActionButton: GestureDetector(
         onTap: () => context.pushNamed(AppRouteName.taskUpsert),
         child: Container(

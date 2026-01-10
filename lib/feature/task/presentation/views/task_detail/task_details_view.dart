@@ -7,6 +7,7 @@ import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_bar.dart';
+import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
@@ -42,8 +43,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+    return AppScaffold(
       bottomNavigationBar: Row(
         children: [
           Expanded(
