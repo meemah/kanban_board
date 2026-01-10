@@ -37,7 +37,7 @@ dependencies:
 
   go_router: ^17.0.0
   flutter_screenutil: ^5.9.3
-  gap: 
+  gap: ^3.0.1
   stop_watch_timer: ^3.2.2
   boardview: ^1.0.0
 

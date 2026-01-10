@@ -51,6 +51,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               textInputAction: TextInputAction.newline,
               minLines: 1,
               maxLines: 5,
+
               style: AppTextstyle.captionMedium(),
               decoration: InputDecoration(
                 suffixIcon: Container(
@@ -63,7 +64,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      if (_commentController.text.isEmpty) {
+                      if (_commentController.text.trim().isEmpty) {
                         return;
                       }
                       context.read<TaskDetailBloc>().add(

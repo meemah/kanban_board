@@ -1,12 +1,8 @@
 import 'package:get_it/get_it.dart';
-import 'package:hive_flutter/hive_flutter.dart';
-import 'package:kanban_board/core/local/box_provider.dart';
-import 'package:kanban_board/core/local/hivebox_provider.dart';
 import 'package:kanban_board/core/network_service/network_service.dart';
 import 'package:kanban_board/feature/task/data/datasource/comment_remote_datasource.dart';
 import 'package:kanban_board/feature/task/data/datasource/task_remote_datasource.dart';
 import 'package:kanban_board/feature/task/data/datasource/timer_local_datasource.dart';
-import 'package:kanban_board/feature/task/data/models/task_timer_model/task_timer_model.dart';
 import 'package:kanban_board/feature/task/data/repository/comment_repository_impl/comment_repository_impl.dart';
 import 'package:kanban_board/feature/task/data/repository/task_repository_impl/task_repository_impl.dart';
 import 'package:kanban_board/feature/task/data/repository/timer_repository_impl/timer_repository_impl.dart';
@@ -26,15 +22,8 @@ import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/tas
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 
 final sl = GetIt.I;
-String taskDB = "taskDb";
-Future<void> init({required String apiToken}) async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(TaskTimerModelAdapter());
 
-  sl.registerLazySingleton<BoxProvider<TaskTimerModel>>(
-    () => HiveBoxProvider<TaskTimerModel>(),
-  );
-  await Hive.openBox<TaskTimerModel?>(taskDB);
+Future<void> setupServiceLocator({required String apiToken}) async {
   sl.registerLazySingleton(() => NetworkService(apiToken: apiToken));
 
   sl.registerFactory(() => TaskDetailBloc(sl(), sl()));
@@ -59,7 +48,7 @@ Future<void> init({required String apiToken}) async {
   );
 
   sl.registerLazySingleton<TimerLocalDatasource>(
-    () => TimerLocalDatasourceImpl(sl()),
+    () => TimerLocalDatasourceImpl(),
   );
 
   sl.registerLazySingleton(() => AddComentUsecase(sl()));

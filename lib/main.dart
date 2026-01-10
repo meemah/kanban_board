@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kanban_board/core/local/setup_hive.dart';
 import 'package:kanban_board/core/theme/font_family.dart';
 import 'package:kanban_board/core/util/navigation/app_router.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
@@ -19,7 +20,8 @@ void main() async {
     throw Exception('TODOIST_API_TOKEN not found');
   }
 
-  await di.init(apiToken: apiToken);
+  await di.setupServiceLocator(apiToken: apiToken);
+  await setupHive();
   runApp(const MyApp());
 }
 
