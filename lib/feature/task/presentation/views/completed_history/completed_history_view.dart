@@ -10,6 +10,7 @@ import 'package:kanban_board/core/widgets/app_states/loading_state_widget.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/views/completed_history/widget/completed_history_card.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class CompletedHistoryView extends StatefulWidget {
   const CompletedHistoryView({super.key});
@@ -29,14 +30,19 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(title: "Completed History", showBackButton: false),
+      appBar: CustomAppBar(
+        title: S.current.completedHistory,
+        showBackButton: false,
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsetsGeometry.all(15),
           child: BlocBuilder<CompletedHistoryBloc, CompletedHistoryState>(
             builder: (context, state) {
               if (state is CompletedHistoryLoading) {
-                return LoadingStateWidget(message: "Loading Completed Tasks");
+                return LoadingStateWidget(
+                  message: S.current.loadingCompletedTasks,
+                );
               }
               if (state is CompletedHistoryFailure) {
                 return ErrorStateWidget(

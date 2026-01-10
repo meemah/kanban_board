@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class EmptyStateWidget extends StatelessWidget {
   final String? message;
@@ -17,7 +18,7 @@ class EmptyStateWidget extends StatelessWidget {
           Icon(Icons.inbox, size: 50.sp, color: Colors.grey[400]),
           Gap(12.h),
           Text(
-            message ?? "No data available",
+            message ?? S.current.noDataAvailable,
             style: AppTextstyle.bodyMedium(),
             textAlign: TextAlign.center,
           ),

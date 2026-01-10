@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kanban_board/core/local/setup_hive.dart';
 import 'package:kanban_board/core/theme/font_family.dart';
@@ -9,11 +11,13 @@ import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bl
 import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 import "core/util/di/injection_container.dart" as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterLocalization.instance.ensureInitialized();
   await dotenv.load(fileName: '.env');
   final apiToken = dotenv.env['TODOIST_API_TOKEN'] ?? '';
   if (apiToken.isEmpty) {
@@ -46,6 +50,12 @@ class MyApp extends StatelessWidget {
             title: 'Kanban Board',
             theme: ThemeData(fontFamily: FontFamily.worksans.value),
             routerConfig: appRouter,
+            supportedLocales: S.delegate.supportedLocales,
+            localizationsDelegates: const [
+              S.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+            ],
           ),
         );
       },

@@ -16,6 +16,7 @@ import 'package:kanban_board/core/widgets/app_states/loading_state_widget.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/views/kanban_board/widget/kanban_board_card.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class KanbanBoardView extends StatefulWidget {
   const KanbanBoardView({super.key});
@@ -93,7 +94,9 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
           child: BlocBuilder<KanbanBoardBloc, KanbanBoardState>(
             builder: (context, state) {
               if (state is KanbanBoardLoading) {
-                return LoadingStateWidget(message: "Setting up your tasks");
+                return LoadingStateWidget(
+                  message: S.current.settingUpYourTasks,
+                );
               }
               if (state is KanbanBoardFailure) {
                 return ErrorStateWidget(
@@ -104,7 +107,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
               }
               if (state is KanbanBoardSuccess) {
                 if (state.tasks.values.isEmpty) {
-                  EmptyStateWidget(message: "You have no task yet");
+                  EmptyStateWidget(message: S.current.youHaveNoTaskYet);
                 }
                 return RefreshIndicator(
                   onRefresh: () async =>

@@ -1,0 +1,43 @@
+{
+  "unknown": "Unknown",
+  "today": "Today",
+  "noDataAvailable": "No data available",
+  "retry": "Retry",
+  "loadingData": "Loading data..",
+  "home": "Home",
+  "history": "History",
+  "completedHistory": "Completed History",
+  "loadingCompletedTasks": "Loading Completed Tasks",
+  "noDescription": "No description",
+  "youHaveNoTaskYet": "You have no task yet",
+  "settingUpYourTasks": "Setting up your tasks",
+  "addAComment": "Add a comment..",
+  "taskDetails": "Task Details",
+  "description": "DESCRIPTION",
+  "comments": "COMMENTS",
+  "noCommentsYet": "No comments yet....",
+  "taskTitle": "Task Title",
+  "whatNeedsToBeDone": "What needs to be done?",
+  "taskTitleIsRequired": "Task title is required",
+  "createTask": "Create Task",
+  "taskAction": "Task {action}",
+  "@taskAction": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "added": "Added",
+  "updated": "Updated",
+  "upsertTaskPageTitle": "${action} Task",
+  "@upsertTaskPageTitle": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "update": "Update",
+  "add": "Add"
+}

@@ -13,6 +13,7 @@ import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_c
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/views/task_detail/widget/task_stopwatch_card.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class TaskDetailsView extends StatefulWidget {
   final TaskEntity task;
@@ -84,7 +85,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                 border: InputBorder.none,
                 fillColor: AppColors.textGrayLight.withValues(alpha: 0.2),
                 filled: true,
-                hintText: "Add a comment..",
+                hintText: S.current.addAComment,
                 contentPadding: EdgeInsets.symmetric(
                   horizontal: 25.w,
                   vertical: 8.h,
@@ -95,7 +96,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
         ],
       ),
       appBar: CustomAppBar(
-        title: "Task Details",
+        title: S.current.taskDetails,
         actions: [
           GestureDetector(
             onTap: () =>
@@ -137,7 +138,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               ),
               Gap(30.h),
               Text(
-                "DESCRIPTION",
+                S.current.description,
                 style: AppTextstyle.captionMedium(color: AppColors.textGray),
               ),
               const Gap(3),
@@ -158,7 +159,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "COMMENTS",
+                        S.current.comments,
                         style: AppTextstyle.captionMedium(
                           color: AppColors.textGray,
                         ),
@@ -167,7 +168,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                       if (state is GetCommentsSuccess) ...[
                         if (state.comments.isEmpty) ...[
                           Text(
-                            "No comments yet....",
+                            S.current.noCommentsYet,
                             style: AppTextstyle.subtextRegular(
                               color: AppColors.textDark,
                             ),

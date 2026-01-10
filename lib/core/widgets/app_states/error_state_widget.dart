@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/widgets/app_button.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   final String message;
@@ -27,7 +28,7 @@ class ErrorStateWidget extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               Gap(20.h),
-              AppButton(title: "Retry", onTap: onRetry!),
+              AppButton(title: S.current.retry, onTap: onRetry!),
             ],
           ],
         ),

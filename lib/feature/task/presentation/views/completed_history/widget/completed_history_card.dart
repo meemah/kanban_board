@@ -6,6 +6,7 @@ import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/widgets/app_card.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class CompletedHistoryCard extends StatelessWidget {
   final TaskEntity taskEntity;
@@ -49,7 +50,7 @@ class CompletedHistoryCard extends StatelessWidget {
                     if (taskEntity.description != null) ...[
                       Gap(2.h),
                       Text(
-                        taskEntity.description ?? "No description",
+                        taskEntity.description ?? S.current.noDescription,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextstyle.captionRegular(

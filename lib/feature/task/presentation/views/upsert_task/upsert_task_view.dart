@@ -10,6 +10,7 @@ import 'package:kanban_board/core/widgets/app_textfield.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class UpsertTaskView extends StatefulWidget {
   final TaskEntity? taskEntity;
@@ -48,7 +49,9 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
         if (state is UpsertTaskSuccess) {
           AppSnackBar.show(
             context,
-            message: "Task ${isEditing ? "Updated" : "Added"}",
+            message: S.current.taskAction(
+              isEditing ? S.current.updated : S.current.added,
+            ),
             appSnackbarType: AppSnackbarType.success,
           );
         }
@@ -62,7 +65,11 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: CustomAppBar(title: "${isEditing ? "Update" : "Adde"} Task"),
+        appBar: CustomAppBar(
+          title: S.current.upsertTaskPageTitle(
+            isEditing ? S.current.update : S.current.add,
+          ),
+        ),
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: Form(
@@ -72,18 +79,18 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
               children: [
                 AppTextField(
                   textEditingController: _titleController,
-                  textFieldTitle: "Task Title",
-                  hintText: "What needs to be done?",
+                  textFieldTitle: S.current.taskTitle,
+                  hintText: S.current.whatNeedsToBeDone,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
-                      return "Task title is required";
+                      return S.current.taskTitleIsRequired;
                     }
                     return null;
                   },
                 ),
                 Gap(15.h),
                 AppTextField(
-                  textFieldTitle: "Description",
+                  textFieldTitle: S.current.description,
                   maxLines: 8,
                   textEditingController: _descriptionController,
                 ),
@@ -92,7 +99,7 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
                   builder: (context, state) {
                     return AppButton(
                       isLoading: state is UpsertTaskLoading,
-                      title: "Create Task",
+                      title: S.current.createTask,
                       onTap: () {
                         if (!_formKey.currentState!.validate()) return;
                         context.read<UpsertTaskBloc>().add(
