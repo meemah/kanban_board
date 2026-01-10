@@ -9,4 +9,17 @@ sealed class KanbanBoardEvent extends Equatable {
 
 final class GetAllTaskEvent extends KanbanBoardEvent {}
 
-final class MoveTaskEvent extends KanbanBoardEvent {}
+class MoveTaskEvent extends KanbanBoardEvent {
+  final TaskEntity task;
+  final TaskStatus oldStatus;
+  final TaskStatus newStatus;
+
+  const MoveTaskEvent({
+    required this.task,
+    required this.oldStatus,
+    required this.newStatus,
+  });
+
+  @override
+  List<Object> get props => [task, oldStatus, newStatus];
+}

@@ -28,7 +28,7 @@ Future<void> setupServiceLocator({required String apiToken}) async {
 
   sl.registerFactory(() => TaskDetailBloc(sl(), sl()));
   sl.registerFactory(() => UpsertTaskBloc(sl()));
-  sl.registerFactory(() => KanbanBoardBloc(sl(), sl()));
+  sl.registerFactory(() => KanbanBoardBloc(sl(), sl(), sl()));
   sl.registerFactory(() => CompletedHistoryBloc(sl()));
 
   sl.registerLazySingleton<TaskRepository>(

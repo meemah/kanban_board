@@ -152,19 +152,35 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                                   newItemIndex,
                                   oldListIndex,
                                   oldItemIndex,
-                                  state,
+                                  BoardItemState state,
                                 ) {
-                                  // context.read<KanbanBoardBloc>().add(
-                                  //   MoveTaskEvent(
-                                  //     task: task,
-                                  //     toStatus: TaskStatus.values[newListIndex!],
-                                  //   ),
-                                  // );
+                                  final blocState = context
+                                      .read<KanbanBoardBloc>()
+                                      .state;
+
+                                  if (blocState is! KanbanBoardSuccess) return;
+
+                                  final oldStatus =
+                                      TaskStatus.values[oldListIndex!];
+                                  final newStatus =
+                                      TaskStatus.values[newListIndex!];
+
+                                  final task = blocState.getTasksByStatus(
+                                    oldStatus,
+                                  )[oldItemIndex!];
+
+                                  context.read<KanbanBoardBloc>().add(
+                                    MoveTaskEvent(
+                                      task: task,
+                                      oldStatus: oldStatus,
+                                      newStatus: newStatus,
+                                    ),
+                                  );
 
                                   boardController.notifyDragEnd(
-                                    oldListIndex!,
-                                    oldItemIndex!,
-                                    newListIndex!,
+                                    oldListIndex,
+                                    oldItemIndex,
+                                    newListIndex,
                                     newItemIndex!,
                                   );
                                 },

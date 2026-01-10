@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:kanban_board/feature/task/data/datasource/timer_local_datasource.dart';
 import 'package:kanban_board/feature/task/data/models/task_timer_model/task_timer_model.dart';
 import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
@@ -46,6 +48,7 @@ class TimerRepositoryImpl implements TimerRepository {
   }
 
   Future<void> _saveTimer(TaskTimerEntity timer) async {
+    log("object $timer");
     await localDataSource.saveTimer(TaskTimerModel.fromEntity(timer));
   }
 }

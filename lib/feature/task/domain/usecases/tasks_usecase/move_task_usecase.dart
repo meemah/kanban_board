@@ -4,18 +4,17 @@ import 'package:kanban_board/core/error/failures.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/repositories/task_repository.dart';
 import 'package:kanban_board/feature/task/domain/repositories/timer_repository.dart';
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
 
 import '../../../../../core/util/usecase/usecase.dart';
 
-class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskUsecase> {
+class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskParams> {
   final TaskRepository taskRepo;
   final TimerRepository timerRepo;
 
   MoveTaskUseCase({required this.taskRepo, required this.timerRepo});
 
   @override
-  Future<Either<Failure, TaskEntity>> call(MoveTaskUsecase params) async {
+  Future<Either<Failure, TaskEntity>> call(MoveTaskParams params) async {
     try {
       TaskEntity task = params.taskEntity;
       TaskStatus status = params.status;
@@ -26,7 +25,7 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskUsecase> {
           if (timer != null && timer.isRunning) {
             await timerRepo.pauseTimer(timer);
           }
-          return _updateTask(task, 1);
+          return Right(task);
 
         case TaskStatus.inprogess:
           if (timer == null || !timer.isRunning) {
@@ -37,7 +36,7 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskUsecase> {
             }
           }
 
-          return _updateTask(task, 2);
+          return Right(task);
 
         case TaskStatus.completed:
           if (timer != null) {
@@ -52,27 +51,13 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskUsecase> {
       return Left(ServerFailure(e.toString()));
     }
   }
-
-  Future<Either<Failure, TaskEntity>> _updateTask(
-    TaskEntity task,
-    int priority,
-  ) async {
-    return await taskRepo.updateTask(
-      upsertTaskParams: UpsertTaskParams(
-        content: task.content,
-        id: task.id,
-        priority: priority,
-        description: task.description,
-      ),
-    );
-  }
 }
 
-class MoveTaskUsecase extends Equatable {
+class MoveTaskParams extends Equatable {
   final TaskEntity taskEntity;
   final TaskStatus status;
 
-  const MoveTaskUsecase({required this.taskEntity, required this.status});
+  const MoveTaskParams({required this.taskEntity, required this.status});
 
   @override
   List<Object?> get props => [taskEntity, status];
