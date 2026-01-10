@@ -22,7 +22,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.backgroundLight,
       elevation: 0,
       centerTitle: false,
-      title: Text(title, style: AppTextstyle.bodySemibold()),
+      title: Text(title, style: AppTextStyle.bodySemibold()),
       leading: showBackButton
           ? IconButton(
               icon: const Icon(Icons.arrow_back),

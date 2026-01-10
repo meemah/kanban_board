@@ -35,7 +35,7 @@ class AppTextField extends StatelessWidget {
       children: [
         Text(
           textFieldTitle,
-          style: AppTextstyle.subtextSemibold(
+          style: AppTextStyle.subtextSemibold(
             color: AppColors.textGrayDark,
             fontWeight: FontWeight.w900,
           ),
@@ -48,7 +48,7 @@ class AppTextField extends StatelessWidget {
           onTap: onTap,
           onChanged: onChanged,
           validator: validator,
-          style: AppTextstyle.subtextSemibold(),
+          style: AppTextStyle.subtextSemibold(),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
               borderSide: BorderSide(color: AppColors.primary, width: 2),
@@ -59,7 +59,7 @@ class AppTextField extends StatelessWidget {
               vertical: maxLines > 1 ? 12.h : 0,
             ),
             prefixIcon: prefixIcon,
-            hintStyle: AppTextstyle.subtextSemibold().copyWith(
+            hintStyle: AppTextStyle.subtextSemibold().copyWith(
               color: AppColors.textGrayLight,
             ),
             hintText: hintText,

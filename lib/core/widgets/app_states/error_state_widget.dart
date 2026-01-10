@@ -23,7 +23,7 @@ class ErrorStateWidget extends StatelessWidget {
             Gap(12.h),
             Text(
               message,
-              style: AppTextstyle.bodyMedium(),
+              style: AppTextStyle.bodyMedium(),
               textAlign: TextAlign.center,
             ),
             if (onRetry != null) ...[

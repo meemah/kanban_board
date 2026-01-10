@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class AppTextstyle {
-  AppTextstyle._();
+class AppTextStyle {
+  AppTextStyle._();
   static TextStyle headingBold({
     double fontSize = 18,
     FontWeight fontWeight = FontWeight.w700,

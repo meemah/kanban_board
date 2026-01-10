@@ -43,7 +43,7 @@ class CompletedHistoryCard extends StatelessWidget {
                   children: [
                     Text(
                       taskEntity.content,
-                      style: AppTextstyle.captionSemibold(),
+                      style: AppTextStyle.captionSemibold(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -53,7 +53,7 @@ class CompletedHistoryCard extends StatelessWidget {
                         taskEntity.description ?? S.current.noDescription,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextstyle.captionRegular(
+                        style: AppTextStyle.captionRegular(
                           color: AppColors.textGrayDark,
                         ),
                       ),
@@ -77,7 +77,7 @@ class CompletedHistoryCard extends StatelessWidget {
                     ),
                     Text(
                       "1hr 20m",
-                      style: AppTextstyle.captionSemibold(
+                      style: AppTextStyle.captionSemibold(
                         color: AppColors.textGrayLight,
                       ),
                     ),

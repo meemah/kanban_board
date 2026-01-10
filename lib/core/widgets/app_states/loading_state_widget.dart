@@ -20,7 +20,7 @@ class LoadingStateWidget extends StatelessWidget {
             Gap(12.h),
             Text(
               message ?? S.current.loadingData,
-              style: AppTextstyle.bodyMedium(),
+              style: AppTextStyle.bodyMedium(),
               textAlign: TextAlign.center,
             ),
           ],

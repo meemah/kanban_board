@@ -85,7 +85,7 @@ class _TaskStopWatchCardState extends State<TaskStopWatchCard> {
                   children: [
                     Icon(Icons.schedule, size: 16.sp, color: Colors.grey),
                     Gap(3.w),
-                    Text('Total Time', style: AppTextstyle.captionSemibold()),
+                    Text('Total Time', style: AppTextStyle.captionSemibold()),
                   ],
                 ),
                 Row(
@@ -101,7 +101,7 @@ class _TaskStopWatchCardState extends State<TaskStopWatchCard> {
                     const SizedBox(width: 6),
                     Text(
                       _isRunning ? 'RUNNING' : 'PAUSED',
-                      style: AppTextstyle.captionSemibold(
+                      style: AppTextStyle.captionSemibold(
                         color: _isRunning ? AppColors.primary : Colors.orange,
                       ),
                     ),
@@ -124,7 +124,7 @@ class _TaskStopWatchCardState extends State<TaskStopWatchCard> {
                 );
                 return Text(
                   displayTime,
-                  style: AppTextstyle.headingSemibold(
+                  style: AppTextStyle.headingSemibold(
                     fontSize: 40,
                   ).copyWith(letterSpacing: 2),
                 );

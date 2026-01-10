@@ -54,7 +54,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               minLines: 1,
               maxLines: 5,
 
-              style: AppTextstyle.captionMedium(),
+              style: AppTextStyle.captionMedium(),
               decoration: InputDecoration(
                 suffixIcon: Container(
                   margin: EdgeInsets.only(right: 20.w),
@@ -122,14 +122,14 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                 ),
                 child: Text(
                   TaskStatus.inprogess.title.toUpperCase(),
-                  style: AppTextstyle.captionSemibold(
+                  style: AppTextStyle.captionSemibold(
                     color: AppColors.primary,
                     fontSize: 10,
                   ),
                 ),
               ),
               Gap(10.h),
-              Text(widget.task.content, style: AppTextstyle.headingBold()),
+              Text(widget.task.content, style: AppTextStyle.headingBold()),
               Gap(30.h),
               TaskStopWatchCard(
                 startDateTime: DateTime.now().subtract(
@@ -139,7 +139,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               Gap(30.h),
               Text(
                 S.current.description,
-                style: AppTextstyle.captionMedium(color: AppColors.textGray),
+                style: AppTextStyle.captionMedium(color: AppColors.textGray),
               ),
               const Gap(3),
               Text(
@@ -147,7 +147,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                         widget.task.description!.isEmpty
                     ? "N/A"
                     : widget.task.description!,
-                style: AppTextstyle.subtextRegular(
+                style: AppTextStyle.subtextRegular(
                   color: AppColors.textDark,
                 ).copyWith(height: 1.5),
               ),
@@ -160,7 +160,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                     children: [
                       Text(
                         S.current.comments,
-                        style: AppTextstyle.captionMedium(
+                        style: AppTextStyle.captionMedium(
                           color: AppColors.textGray,
                         ),
                       ),
@@ -169,7 +169,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                         if (state.comments.isEmpty) ...[
                           Text(
                             S.current.noCommentsYet,
-                            style: AppTextstyle.subtextRegular(
+                            style: AppTextStyle.subtextRegular(
                               color: AppColors.textDark,
                             ),
                           ),
@@ -193,7 +193,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                                       child: Text(
                                         commentEntity.content,
                                         maxLines: 3,
-                                        style: AppTextstyle.subtextSemibold(
+                                        style: AppTextStyle.subtextSemibold(
                                           color: AppColors.textDark,
                                         ),
                                       ),

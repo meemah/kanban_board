@@ -19,7 +19,7 @@ class EmptyStateWidget extends StatelessWidget {
           Gap(12.h),
           Text(
             message ?? S.current.noDataAvailable,
-            style: AppTextstyle.bodyMedium(),
+            style: AppTextStyle.bodyMedium(),
             textAlign: TextAlign.center,
           ),
         ],

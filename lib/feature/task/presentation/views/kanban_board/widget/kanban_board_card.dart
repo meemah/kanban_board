@@ -29,7 +29,7 @@ class KanbanBoardCard extends StatelessWidget {
               children: [
                 Text(
                   taskEntity.content,
-                  style: AppTextstyle.captionSemibold(),
+                  style: AppTextStyle.captionSemibold(),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -40,7 +40,7 @@ class KanbanBoardCard extends StatelessWidget {
                     taskEntity.description!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextstyle.captionSemibold(
+                    style: AppTextStyle.captionSemibold(
                       color: AppColors.textGray,
                     ),
                   ),
@@ -54,7 +54,7 @@ class KanbanBoardCard extends StatelessWidget {
                     const Gap(3),
                     Text(
                       "Oct 26",
-                      style: AppTextstyle.captionSemibold(
+                      style: AppTextStyle.captionSemibold(
                         color: AppColors.textGray,
                       ),
                     ),
