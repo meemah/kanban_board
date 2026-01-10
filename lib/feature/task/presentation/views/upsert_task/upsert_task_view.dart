@@ -99,7 +99,9 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
                   builder: (context, state) {
                     return AppButton(
                       isLoading: state is UpsertTaskLoading,
-                      title: S.current.createTask,
+                      title: S.current.upsertTaskPageTitle(
+                        isEditing ? S.current.update : S.current.add,
+                      ),
                       onTap: () {
                         if (!_formKey.currentState!.validate()) return;
                         context.read<UpsertTaskBloc>().add(

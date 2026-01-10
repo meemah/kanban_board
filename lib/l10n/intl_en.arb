@@ -30,7 +30,7 @@
   },
   "added": "Added",
   "updated": "Updated",
-  "upsertTaskPageTitle": "${action} Task",
+  "upsertTaskPageTitle": "{action} Task",
   "@upsertTaskPageTitle": {
     "placeholders": {
       "action": {

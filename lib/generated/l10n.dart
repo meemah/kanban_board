@@ -290,10 +290,10 @@ class S {
     );
   }
 
-  /// `${action} Task`
+  /// `{action} Task`
   String upsertTaskPageTitle(String action) {
     return Intl.message(
-      '\$$action Task',
+      '$action Task',
       name: 'upsertTaskPageTitle',
       desc: '',
       args: [action],

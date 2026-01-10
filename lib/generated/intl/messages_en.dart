@@ -22,7 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(action) => "Task ${action}";
 
-  static String m1(action) => "\$${action} Task";
+  static String m1(action) => "${action} Task";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
