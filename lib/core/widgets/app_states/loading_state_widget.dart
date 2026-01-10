@@ -14,7 +14,7 @@ class LoadingStateWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const CircularProgressIndicator(),
+          CircularProgressIndicator(strokeWidth: 2),
           if (message != null) ...[
             Gap(12.h),
             Text(

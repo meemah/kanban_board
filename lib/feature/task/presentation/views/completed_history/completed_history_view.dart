@@ -39,28 +39,40 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
                 return LoadingStateWidget(message: "Loading Completed Tasks");
               }
               if (state is CompletedHistoryFailure) {
-                return ErrorStateWidget(message: state.message);
+                return ErrorStateWidget(
+                  message: state.message,
+                  onRetry: () => context.read<CompletedHistoryBloc>().add(
+                    GetCompletedHistoryEvent(),
+                  ),
+                );
               }
               if (state is CompletedHistorySuccess) {
                 if (state.data.isEmpty) {
                   return EmptyStateWidget();
                 }
-                return GroupedListView<TaskEntity, String>(
-                  elements: state.data,
-                  groupBy: (task) => task.createdAt.formatCompletedDate,
-                  groupSeparatorBuilder: (String groupByValue) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      groupByValue,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                return RefreshIndicator.adaptive(
+                  onRefresh: () async {
+                    context.read<CompletedHistoryBloc>().add(
+                      GetCompletedHistoryEvent(),
+                    );
+                  },
+                  child: GroupedListView<TaskEntity, String>(
+                    elements: state.data,
+                    groupBy: (task) => task.createdAt.formatCompletedDate,
+                    groupSeparatorBuilder: (String groupByValue) => Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        groupByValue,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ),
+                    itemBuilder: (context, task) =>
+                        CompletedHistoryCard(taskEntity: task),
+                    itemComparator: (task1, task2) =>
+                        task1.createdAt.compareTo(task2.createdAt),
+                    useStickyGroupSeparators: true,
+                    order: GroupedListOrder.DESC,
                   ),
-                  itemBuilder: (context, task) =>
-                      CompletedHistoryCard(taskEntity: task),
-                  itemComparator: (task1, task2) =>
-                      task1.createdAt.compareTo(task2.createdAt),
-                  useStickyGroupSeparators: true,
-                  order: GroupedListOrder.DESC,
                 );
               }
               return Text(state.toString());

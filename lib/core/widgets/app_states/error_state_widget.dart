@@ -27,7 +27,7 @@ class ErrorStateWidget extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               Gap(20.h),
-              AppButton(title: "Retry", onTap: () => onRetry),
+              AppButton(title: "Retry", onTap: onRetry!),
             ],
           ],
         ),

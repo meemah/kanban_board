@@ -25,8 +25,7 @@ class CompletedHistoryBloc
         (error) => emit(CompletedHistoryFailure(message: error.message)),
         (data) => emit(
           CompletedHistorySuccess(
-            data: data,
-            //  data: data.where((item) => item.isCompleted).toList(),
+            data: data.where((item) => item.isCompleted).toList(),
           ),
         ),
       );
