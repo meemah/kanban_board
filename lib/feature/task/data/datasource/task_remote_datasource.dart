@@ -2,7 +2,7 @@ import 'package:kanban_board/core/network_service/api_constants.dart';
 import 'package:kanban_board/core/network_service/network_service.dart';
 import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart';
 
-import '../models/task_model.dart';
+import '../models/task_model/task_model.dart';
 
 abstract class TaskRemoteDataSource {
   Future<List<TaskModel>> getTasks();
@@ -30,7 +30,6 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final data = {
       'content': upsertTaskParams.content,
       'description': upsertTaskParams.description,
-      'priority': upsertTaskParams.priority,
     };
     data.removeWhere((key, value) => value == null);
     final response = await networkService.post(
@@ -47,7 +46,6 @@ class TaskRemoteDataSourceImpl implements TaskRemoteDataSource {
     final data = {
       'content': upsertTaskParams.content,
       'description': upsertTaskParams.description,
-      'priority': upsertTaskParams.priority,
     };
 
     data.removeWhere((key, value) => value == null);

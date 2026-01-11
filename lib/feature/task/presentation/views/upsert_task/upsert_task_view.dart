@@ -108,7 +108,6 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
                         context.read<UpsertTaskBloc>().add(
                           UpsertTask(
                             UpsertTaskParams(
-                              priority: widget.taskEntity?.priority ?? 1,
                               description: _descriptionController.text,
                               content: _titleController.text,
                               id: widget.taskEntity?.id,

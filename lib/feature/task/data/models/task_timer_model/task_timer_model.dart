@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:kanban_board/feature/task/data/models/task_model/task_model.dart';
 
 import '../../../domain/entities/task_timer.dart';
 
@@ -16,35 +17,20 @@ class TaskTimerModel extends Equatable {
   @HiveField(3)
   final bool isRunning;
 
+  @HiveField(4)
+  final TaskModel taskModel;
+
   const TaskTimerModel({
     required this.taskId,
     required this.totalSeconds,
     this.startTime,
     required this.isRunning,
+    required this.taskModel,
   });
-
-  factory TaskTimerModel.fromJson(Map<String, dynamic> json) {
-    return TaskTimerModel(
-      taskId: json['task_id'] as String,
-      totalSeconds: json['total_seconds'] as int,
-      startTime: json['start_time'] != null
-          ? DateTime.parse(json['start_time'] as String)
-          : null,
-      isRunning: json['is_running'] as bool,
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'task_id': taskId,
-      'total_seconds': totalSeconds,
-      'start_time': startTime?.toIso8601String(),
-      'is_running': isRunning,
-    };
-  }
 
   TaskTimerEntity toEntity() {
     return TaskTimerEntity(
+      taskEntity: taskModel.toEntity(),
       taskId: taskId,
       totalSeconds: totalSeconds,
       startTime: startTime,
@@ -54,6 +40,15 @@ class TaskTimerModel extends Equatable {
 
   factory TaskTimerModel.fromEntity(TaskTimerEntity timer) {
     return TaskTimerModel(
+      taskModel: TaskModel(
+        description: timer.taskEntity.description,
+        isCompleted: timer.taskEntity.isCompleted,
+        completedAt: timer.taskEntity.completedAt,
+        id: timer.taskId,
+        content: timer.taskEntity.content,
+        createdAt: timer.taskEntity.createdAt,
+      ),
+
       taskId: timer.taskId,
       totalSeconds: timer.totalSeconds,
       startTime: timer.startTime,
@@ -66,8 +61,10 @@ class TaskTimerModel extends Equatable {
     int? totalSeconds,
     DateTime? startTime,
     bool? isRunning,
+    TaskModel? taskModel,
   }) {
     return TaskTimerModel(
+      taskModel: taskModel ?? this.taskModel,
       taskId: taskId ?? this.taskId,
       totalSeconds: totalSeconds ?? this.totalSeconds,
       startTime: startTime ?? this.startTime,

@@ -1,25 +1,29 @@
 import 'package:equatable/equatable.dart';
+import 'package:hive/hive.dart';
 
-import '../../domain/entities/task.dart';
+import '../../../domain/entities/task.dart';
 
+part 'task_model.g.dart';
+
+@HiveType(typeId: 2)
 class TaskModel extends Equatable {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String content;
+  @HiveField(2)
   final String? description;
-  final int priority;
-  final String? projectId;
-  final List<String> labels;
+  @HiveField(3)
   final DateTime createdAt;
+  @HiveField(4)
   final DateTime? completedAt;
+  @HiveField(5)
   final bool isCompleted;
 
   const TaskModel({
     required this.id,
     required this.content,
     this.description,
-    required this.priority,
-    this.projectId,
-    required this.labels,
     required this.createdAt,
     this.completedAt,
     this.isCompleted = false,
@@ -31,9 +35,6 @@ class TaskModel extends Equatable {
       id: json['id'] as String,
       content: json['content'] as String,
       description: json['description'] as String?,
-      priority: json['priority'] as int,
-      projectId: json['project_id'] as String?,
-      labels: (json['labels'] as List<dynamic>?)?.cast<String>() ?? [],
       createdAt: DateTime.parse(json['created_at'] as String),
       completedAt: json['completed_at'] != null
           ? DateTime.parse(json['completed_at'] as String)
@@ -47,9 +48,6 @@ class TaskModel extends Equatable {
       'id': id,
       'content': content,
       'description': description,
-      'priority': priority,
-      'project_id': projectId,
-      'labels': labels,
       'created_at': createdAt.toIso8601String(),
       'completed_at': completedAt?.toIso8601String(),
       'is_completed': isCompleted,
@@ -61,9 +59,6 @@ class TaskModel extends Equatable {
       id: id,
       content: content,
       description: description,
-      priority: priority,
-      projectId: projectId,
-      labels: labels,
       createdAt: createdAt,
       completedAt: completedAt,
       isCompleted: isCompleted,
@@ -75,9 +70,6 @@ class TaskModel extends Equatable {
       id: task.id,
       content: task.content,
       description: task.description,
-      priority: task.priority,
-      projectId: task.projectId,
-      labels: task.labels,
       createdAt: task.createdAt,
       completedAt: task.completedAt,
       isCompleted: task.isCompleted,
@@ -88,9 +80,6 @@ class TaskModel extends Equatable {
     String? id,
     String? content,
     String? description,
-    int? priority,
-    String? projectId,
-    List<String>? labels,
     DateTime? createdAt,
     DateTime? completedAt,
     bool? isCompleted,
@@ -99,9 +88,6 @@ class TaskModel extends Equatable {
       id: id ?? this.id,
       content: content ?? this.content,
       description: description ?? this.description,
-      priority: priority ?? this.priority,
-      projectId: projectId ?? this.projectId,
-      labels: labels ?? this.labels,
       createdAt: createdAt ?? this.createdAt,
       completedAt: completedAt ?? this.completedAt,
       isCompleted: isCompleted ?? this.isCompleted,
@@ -113,9 +99,6 @@ class TaskModel extends Equatable {
     id,
     content,
     description,
-    priority,
-    projectId,
-    labels,
     createdAt,
     completedAt,
     isCompleted,

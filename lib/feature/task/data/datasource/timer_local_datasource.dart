@@ -6,6 +6,7 @@ abstract class TimerLocalDatasource {
   TaskTimerModel? getTimer(String taskId);
   Future<void> saveTimer(TaskTimerModel timer);
   Future<void> deleteTimer(String taskId);
+  List<TaskTimerModel?> getAllTimers();
 }
 
 class TimerLocalDatasourceImpl implements TimerLocalDatasource {
@@ -25,5 +26,11 @@ class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   Future<void> deleteTimer(String taskId) async {
     Box<TaskTimerModel?> box = Hive.box(DatabaseKey.taskTimerModel);
     await box.delete(taskId);
+  }
+
+  @override
+  List<TaskTimerModel?> getAllTimers() {
+    Box<TaskTimerModel?> box = Hive.box(DatabaseKey.taskTimerModel);
+    return box.values.toList();
   }
 }

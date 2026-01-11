@@ -3,7 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/core/util/usecase/usecase.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart'
     show TaskEntity, TaskStatus;
+import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
 import 'package:kanban_board/feature/task/domain/params/move_task_params.dart';
+import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_completed_tasks_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task_status_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_tasks_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/move_task_usecase.dart';
@@ -13,13 +15,15 @@ part 'kanban_board_event.dart';
 part 'kanban_board_state.dart';
 
 class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
-  final GetTasksUsecase _getTasksUsecase;
+  final GetActiveTasksUsecase _getTasksUsecase;
   final GetTaskStatusUsecase _getTaskStatusUsecase;
   final MoveTaskUseCase _moveTaskUseCase;
+  final GetCompletedTasksUsecase _completedTasksUsecase;
   KanbanBoardBloc(
     this._getTasksUsecase,
     this._getTaskStatusUsecase,
     this._moveTaskUseCase,
+    this._completedTasksUsecase,
   ) : super(KanbanBoardInitial()) {
     on<GetAllTaskEvent>(_onGetTasks);
     on<MoveTaskEvent>(_moveTask);
@@ -37,10 +41,15 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
       result.fold((failure) => emit(KanbanBoardFailure(failure.message)), (
         tasks,
       ) async {
+        List<TaskTimerEntity> completedTasksModel = _completedTasksUsecase
+            .call();
+        List<TaskEntity> completedTasks = completedTasksModel.map((item) {
+          return item.taskEntity;
+        }).toList();
         final Map<TaskStatus, List<TaskEntity>> tasksByStatus = {
           TaskStatus.todo: [],
-          TaskStatus.inprogess: [],
-          TaskStatus.completed: [],
+          TaskStatus.inProgress: [],
+          TaskStatus.completed: completedTasks,
         };
 
         for (final task in tasks) {
@@ -59,49 +68,40 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
     MoveTaskEvent event,
     Emitter<KanbanBoardState> emit,
   ) async {
-    if (state is! KanbanBoardSuccess) return;
+    try {
+      if (state is! KanbanBoardSuccess) return;
 
-    final currentState = state as KanbanBoardSuccess;
+      final currentState = state as KanbanBoardSuccess;
 
-    // 1. Optimistic update
-    final tasksByStatus = Map<TaskStatus, List<TaskEntity>>.from(
-      currentState.tasks,
-    );
+      final tasksByStatus = {
+        for (final entry in currentState.tasks.entries)
+          entry.key: List<TaskEntity>.from(entry.value),
+      };
 
-    // Remove from old status
-    tasksByStatus[event.oldStatus]?.removeWhere((t) => t.id == event.task.id);
+      final updatedTask = event.task.copyWith(
+        isCompleted: event.newStatus == TaskStatus.completed,
+        completedAt: event.newStatus == TaskStatus.completed
+            ? DateTime.now()
+            : null,
+      );
 
-    // Add to new status
+      tasksByStatus[event.oldStatus]!.removeWhere((t) => t.id == event.task.id);
 
-    tasksByStatus[event.newStatus]?.insert(0, event.task);
+      tasksByStatus[event.newStatus]!.insert(0, updatedTask);
 
-    emit(KanbanBoardSuccess(tasksByStatus));
+      emit(KanbanBoardSuccess(tasksByStatus));
 
-    // 2. Call backend
-    final result = await _moveTaskUseCase.call(
-      MoveTaskParams(taskEntity: event.task, status: event.newStatus),
-    );
+      final result = await _moveTaskUseCase(
+        MoveTaskParams(taskEntity: updatedTask, status: event.newStatus),
+      );
 
-    // 3. Rollback if failed
-    result.fold(
-      (failure) {
-        // Undo the move
-        tasksByStatus[event.newStatus]?.removeWhere(
-          (t) => t.id == event.task.id,
-        );
-        tasksByStatus[event.oldStatus]?.insert(0, event.task);
-        emit(KanbanBoardSuccess(tasksByStatus));
-
-        // Show error
-        // AppSnackBar.show(
-        //   context,
-        //   message: failure.message,
-        //   appSnackbarType: AppSnackbarType.failed,
-        // );
-      },
-      (_) {
-        // Success — nothing else needed, UI already updated
-      },
-    );
+      result.fold((_) {
+        final rollbackState = {
+          for (final entry in currentState.tasks.entries)
+            entry.key: List<TaskEntity>.from(entry.value),
+        };
+        emit(KanbanBoardSuccess(rollbackState));
+      }, (_) {});
+    } catch (e) {}
   }
 }

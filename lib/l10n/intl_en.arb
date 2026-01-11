@@ -43,5 +43,12 @@
   "oppsErrorOccured": "Opps, error occured",
   "settings": "Settings",
   "language": "Language",
-  "kanbanBoard": "Kanban Board"
+  "kanbanBoard": "Kanban Board",
+  "totalTime": "Total Time",
+  "running": "RUNNING",
+  "paused": "PAUSED",
+  "pause": "Pause",
+  "resume": "Resume",
+  "stop": "Stop",
+  "moveTicketToInprogressToStartTimer": "Move ticket to In-Progress to start timer"
 }

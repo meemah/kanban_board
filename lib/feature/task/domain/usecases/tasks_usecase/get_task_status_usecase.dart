@@ -15,7 +15,7 @@ class GetTaskStatusUsecase {
     if (timer == null) {
       return TaskStatus.todo;
     } else {
-      return TaskStatus.inprogess;
+      return TaskStatus.inProgress;
     }
   }
 }

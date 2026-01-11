@@ -1,44 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'task_timer_model.dart';
+part of 'task_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TaskTimerModelAdapter extends TypeAdapter<TaskTimerModel> {
+class TaskModelAdapter extends TypeAdapter<TaskModel> {
   @override
-  final int typeId = 1;
+  final int typeId = 2;
 
   @override
-  TaskTimerModel read(BinaryReader reader) {
+  TaskModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TaskTimerModel(
-      taskId: fields[0] as String,
-      totalSeconds: fields[1] as int,
-      startTime: fields[2] as DateTime?,
-      isRunning: fields[3] as bool,
-      taskModel: fields[4] as TaskModel,
+    return TaskModel(
+      id: fields[0] as String,
+      content: fields[1] as String,
+      description: fields[2] as String?,
+      createdAt: fields[3] as DateTime,
+      completedAt: fields[4] as DateTime?,
+      isCompleted: fields[5] as bool,
     );
   }
 
   @override
-  void write(BinaryWriter writer, TaskTimerModel obj) {
+  void write(BinaryWriter writer, TaskModel obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
-      ..write(obj.taskId)
+      ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.totalSeconds)
+      ..write(obj.content)
       ..writeByte(2)
-      ..write(obj.startTime)
+      ..write(obj.description)
       ..writeByte(3)
-      ..write(obj.isRunning)
+      ..write(obj.createdAt)
       ..writeByte(4)
-      ..write(obj.taskModel);
+      ..write(obj.completedAt)
+      ..writeByte(5)
+      ..write(obj.isCompleted);
   }
 
   @override
@@ -47,7 +50,7 @@ class TaskTimerModelAdapter extends TypeAdapter<TaskTimerModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TaskTimerModelAdapter &&
+      other is TaskModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

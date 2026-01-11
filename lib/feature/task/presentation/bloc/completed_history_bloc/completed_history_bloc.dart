@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:kanban_board/core/util/usecase/usecase.dart';
-import 'package:kanban_board/feature/task/domain/entities/task.dart';
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_tasks_usecase.dart';
+import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
+import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_completed_tasks_usecase.dart';
 import 'package:kanban_board/generated/l10n.dart';
 
 part 'completed_history_event.dart';
@@ -10,8 +9,8 @@ part 'completed_history_state.dart';
 
 class CompletedHistoryBloc
     extends Bloc<CompletedHistoryEvent, CompletedHistoryState> {
-  final GetTasksUsecase getTasksUsecase;
-  CompletedHistoryBloc(this.getTasksUsecase)
+  final GetCompletedTasksUsecase getCompletedTasksUsecase;
+  CompletedHistoryBloc(this.getCompletedTasksUsecase)
     : super(CompletedHistoryInitial()) {
     on<GetCompletedHistoryEvent>(_onGetCompletedEvent);
   }
@@ -21,15 +20,8 @@ class CompletedHistoryBloc
   ) async {
     try {
       emit(CompletedHistoryLoading());
-      var result = await getTasksUsecase.call(NoParams());
-      result.fold(
-        (error) => emit(CompletedHistoryFailure(errorMessage: error.message)),
-        (data) => emit(
-          CompletedHistorySuccess(
-            completedTasks: data.where((item) => item.isCompleted).toList(),
-          ),
-        ),
-      );
+      var result = getCompletedTasksUsecase.call();
+      emit(CompletedHistorySuccess(completedTasks: result));
     } catch (e) {
       emit(CompletedHistoryFailure(errorMessage: S.current.oppsErrorOccured));
     }

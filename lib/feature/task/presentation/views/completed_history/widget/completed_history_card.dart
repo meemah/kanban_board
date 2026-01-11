@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:kanban_board/core/extensions/int_extension.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/widgets/app_card.dart';
@@ -10,7 +11,12 @@ import 'package:kanban_board/generated/l10n.dart';
 
 class CompletedHistoryCard extends StatelessWidget {
   final TaskEntity taskEntity;
-  const CompletedHistoryCard({super.key, required this.taskEntity});
+  final int durationInSecs;
+  const CompletedHistoryCard({
+    super.key,
+    required this.taskEntity,
+    required this.durationInSecs,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +53,17 @@ class CompletedHistoryCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    if (taskEntity.description != null) ...[
-                      Gap(2.h),
-                      Text(
-                        taskEntity.description ?? S.current.noDescription,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.captionRegular(
-                          color: AppColors.textGrayDark,
-                        ),
+
+                    Text(
+                      (taskEntity.description ?? "").isNotEmpty
+                          ? taskEntity.description!
+                          : S.current.noDescription,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.captionRegular(
+                        color: AppColors.textGrayDark,
                       ),
-                    ],
+                    ),
                   ],
                 ),
               ),
@@ -76,7 +82,7 @@ class CompletedHistoryCard extends StatelessWidget {
                       color: AppColors.textGrayLight,
                     ),
                     Text(
-                      "1hr 20m",
+                      durationInSecs.formatDuration,
                       style: AppTextStyle.captionSemibold(
                         color: AppColors.textGrayLight,
                       ),

@@ -7,20 +7,15 @@ sealed class TaskDetailEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class GetCommentsEvent extends TaskDetailEvent {
-  final String taskId;
+final class InitializeTaskDetailEvent extends TaskDetailEvent {
+  final TaskEntity task;
 
-  const GetCommentsEvent({required this.taskId});
-
-  @override
-  List<Object> get props => [taskId];
-}
-
-final class AddCommentEvent extends TaskDetailEvent {
-  final AddCommentParams addCommentParams;
-
-  const AddCommentEvent({required this.addCommentParams});
+  const InitializeTaskDetailEvent({required this.task});
 
   @override
-  List<Object> get props => [addCommentParams];
+  List<Object> get props => [task];
 }
+
+class PauseTaskTimerEvent extends TaskDetailEvent {}
+
+class ResumeTaskTimerEvent extends TaskDetailEvent {}

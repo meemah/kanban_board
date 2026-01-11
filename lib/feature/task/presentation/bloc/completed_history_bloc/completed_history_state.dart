@@ -21,7 +21,7 @@ final class CompletedHistoryFailure extends CompletedHistoryState {
 }
 
 final class CompletedHistorySuccess extends CompletedHistoryState {
-  final List<TaskEntity> completedTasks;
+  final List<TaskTimerEntity?> completedTasks;
 
   const CompletedHistorySuccess({required this.completedTasks});
 

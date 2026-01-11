@@ -8,12 +8,15 @@ import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_bar.dart';
 import 'package:kanban_board/core/widgets/app_scaffold.dart';
-import 'package:kanban_board/feature/task/domain/entities/comment.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/params/add_comment_params.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/comment_bloc/comment_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
+import 'package:kanban_board/feature/task/presentation/views/task_detail/widget/task_comments_list.dart';
 import 'package:kanban_board/feature/task/presentation/views/task_detail/widget/task_stopwatch_card.dart';
 import 'package:kanban_board/generated/l10n.dart';
+
+import 'widget/inprogress_completed_timer_card.dart';
 
 class TaskDetailsView extends StatefulWidget {
   final TaskEntity task;
@@ -30,8 +33,9 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
   void initState() {
     super.initState();
     context.read<TaskDetailBloc>().add(
-      GetCommentsEvent(taskId: widget.task.id),
+      InitializeTaskDetailEvent(task: widget.task),
     );
+    context.read<CommentBloc>().add(GetCommentsEvent(taskId: widget.task.id));
   }
 
   @override
@@ -52,7 +56,6 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               textInputAction: TextInputAction.newline,
               minLines: 1,
               maxLines: 5,
-
               style: AppTextStyle.captionMedium(),
               decoration: InputDecoration(
                 suffixIcon: Container(
@@ -68,7 +71,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                       if (_commentController.text.trim().isEmpty) {
                         return;
                       }
-                      context.read<TaskDetailBloc>().add(
+                      context.read<CommentBloc>().add(
                         AddCommentEvent(
                           addCommentParams: AddCommentParams(
                             taskId: widget.task.id,
@@ -113,28 +116,7 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.r),
-                  color: AppColors.primary.withValues(alpha: 0.2),
-                ),
-                child: Text(
-                  TaskStatus.inprogess.title.toUpperCase(),
-                  style: AppTextStyle.captionSemibold(
-                    color: AppColors.primary,
-                    fontSize: 10,
-                  ),
-                ),
-              ),
-              Gap(10.h),
-              Text(widget.task.content, style: AppTextStyle.headingBold()),
-              Gap(30.h),
-              TaskStopWatchCard(
-                startDateTime: DateTime.now().subtract(
-                  const Duration(minutes: 5, seconds: 30),
-                ),
-              ),
+              TaskDetailTimer(task: widget.task),
               Gap(30.h),
               Text(
                 S.current.description.toUpperCase(),
@@ -151,67 +133,63 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                 ).copyWith(height: 1.5),
               ),
               Gap(30.h),
-
-              BlocBuilder<TaskDetailBloc, TaskDetailState>(
-                builder: (context, state) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        S.current.comments,
-                        style: AppTextStyle.captionMedium(
-                          color: AppColors.textGray,
-                        ),
-                      ),
-                      const Gap(3),
-                      if (state is GetCommentsSuccess) ...[
-                        if (state.comments.isEmpty) ...[
-                          Text(
-                            S.current.noCommentsYet,
-                            style: AppTextStyle.subtextRegular(
-                              color: AppColors.textDark,
-                            ),
-                          ),
-                        ] else ...[
-                          ListView.separated(
-                            reverse: true,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: state.comments.length,
-                            separatorBuilder: (context, index) => Gap(10.h),
-                            itemBuilder: (ctx, index) {
-                              CommentEntity commentEntity =
-                                  state.comments[index];
-                              return Opacity(
-                                opacity: commentEntity.isPending ? 0.5 : 1,
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(child: Icon(Icons.person)),
-                                    Gap(10),
-                                    Expanded(
-                                      child: Text(
-                                        commentEntity.content,
-                                        maxLines: 3,
-                                        style: AppTextStyle.subtextSemibold(
-                                          color: AppColors.textDark,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ],
-                      ],
-                    ],
-                  );
-                },
-              ),
+              TaskCommentList(),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class TaskDetailTimer extends StatelessWidget {
+  final TaskEntity task;
+  const TaskDetailTimer({super.key, required this.task});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TaskDetailBloc, TaskDetailState>(
+      builder: (context, state) {
+        if (state is! TaskDetailLoaded) return const SizedBox.shrink();
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50.r),
+                color: AppColors.primary.withValues(alpha: 0.2),
+              ),
+              child: Text(
+                state.status.title.toUpperCase(),
+                style: AppTextStyle.captionSemibold(
+                  color: AppColors.primary,
+                  fontSize: 10,
+                ),
+              ),
+            ),
+            Gap(10.h),
+            Text(task.content, style: AppTextStyle.headingBold()),
+            Gap(30.h),
+            if (state.status == TaskStatus.inProgress &&
+                state.timer != null) ...[
+              TaskStopWatchCard(
+                initialSeconds: state.timer!.currentElapsedSeconds,
+                isRunning: state.timer!.isRunning,
+                onPause: () =>
+                    context.read<TaskDetailBloc>().add(PauseTaskTimerEvent()),
+                onPlay: () =>
+                    context.read<TaskDetailBloc>().add(ResumeTaskTimerEvent()),
+              ),
+            ] else ...[
+              InprogressOrCompletedTimeCard(
+                seconds: state.timer?.currentElapsedSeconds ?? 0,
+                taskStatus: state.status,
+              ),
+            ],
+          ],
+        );
+      },
     );
   }
 }

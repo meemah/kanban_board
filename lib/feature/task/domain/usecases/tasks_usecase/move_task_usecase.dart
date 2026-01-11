@@ -20,33 +20,43 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskParams> {
       TaskStatus status = params.status;
       final timer = timerRepo.getTimer(task.id);
 
+      TaskEntity updatedTask = task;
+
       switch (status) {
         case TaskStatus.todo:
           if (timer != null && timer.isRunning) {
             await timerRepo.pauseTimer(timer);
           }
-          return Right(task);
+          // updatedTask = task.copyWith(isCompleted: false, completedAt: null);
+          break;
 
-        case TaskStatus.inprogess:
-          if (timer == null || !timer.isRunning) {
-            if (timer != null && !timer.isRunning) {
-              await timerRepo.resumeTimer(timer);
-            } else {
-              await timerRepo.startTimer(task.id);
-            }
+        case TaskStatus.inProgress:
+          if (timer == null) {
+            await timerRepo.startTimer(task);
+          } else {
+            await timerRepo.resumeTimer(timer);
           }
-
-          return Right(task);
+          // updatedTask = task.copyWith(isCompleted: false, completedAt: null);
+          break;
 
         case TaskStatus.completed:
           if (timer != null) {
             await timerRepo.stopTimer(timer);
           }
 
-          final result = await taskRepo.completeTask(task.id);
+          // updatedTask = task.copyWith(
+          //   isCompleted: true,
+          //   completedAt: DateTime.now(),
+          // );
 
-          return result.fold((failure) => Left(failure), (_) => Right(task));
+          final result = await taskRepo.completeTask(updatedTask.id);
+
+          return result.fold((failure) => Left(failure), (_) {
+            return Right(updatedTask);
+          });
       }
+
+      return Right(updatedTask);
     } on Exception catch (e) {
       return Left(ServerFailure(e.toString()));
     }

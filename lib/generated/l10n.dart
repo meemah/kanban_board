@@ -359,6 +359,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Total Time`
+  String get totalTime {
+    return Intl.message(
+      'Total Time',
+      name: 'totalTime',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RUNNING`
+  String get running {
+    return Intl.message(
+      'RUNNING',
+      name: 'running',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `PAUSED`
+  String get paused {
+    return Intl.message(
+      'PAUSED',
+      name: 'paused',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pause`
+  String get pause {
+    return Intl.message(
+      'Pause',
+      name: 'pause',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resume`
+  String get resume {
+    return Intl.message(
+      'Resume',
+      name: 'resume',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop`
+  String get stop {
+    return Intl.message(
+      'Stop',
+      name: 'stop',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Move ticket to In-Progress to start timer`
+  String get moveTicketToInprogressToStartTimer {
+    return Intl.message(
+      'Move ticket to In-Progress to start timer',
+      name: 'moveTicketToInprogressToStartTimer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

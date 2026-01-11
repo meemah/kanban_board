@@ -1,7 +1,6 @@
-import 'dart:developer';
-
 import 'package:kanban_board/feature/task/data/datasource/timer_local_datasource.dart';
 import 'package:kanban_board/feature/task/data/models/task_timer_model/task_timer_model.dart';
+import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
 import 'package:kanban_board/feature/task/domain/repositories/timer_repository.dart';
 
@@ -17,9 +16,10 @@ class TimerRepositoryImpl implements TimerRepository {
   }
 
   @override
-  Future<void> startTimer(String taskId) async {
+  Future<void> startTimer(TaskEntity taskEntity) async {
     final timer = TaskTimerEntity(
-      taskId: taskId,
+      taskEntity: taskEntity,
+      taskId: taskEntity.id,
       totalSeconds: 0,
       startTime: DateTime.now(),
       isRunning: true,
@@ -48,7 +48,15 @@ class TimerRepositoryImpl implements TimerRepository {
   }
 
   Future<void> _saveTimer(TaskTimerEntity timer) async {
-    log("object $timer");
     await localDataSource.saveTimer(TaskTimerModel.fromEntity(timer));
+  }
+
+  @override
+  List<TaskTimerEntity> getAllCompletedTimers() {
+    return localDataSource
+        .getAllTimers()
+        .where((t) => t != null && t.taskModel.isCompleted)
+        .map((t) => t!.toEntity())
+        .toList();
   }
 }

@@ -12,19 +12,8 @@ import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bl
 import 'package:kanban_board/feature/task/presentation/views/completed_history/widget/completed_history_card.dart';
 import 'package:kanban_board/generated/l10n.dart';
 
-class CompletedHistoryView extends StatefulWidget {
+class CompletedHistoryView extends StatelessWidget {
   const CompletedHistoryView({super.key});
-
-  @override
-  State<CompletedHistoryView> createState() => _CompletedHistoryViewState();
-}
-
-class _CompletedHistoryViewState extends State<CompletedHistoryView> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<CompletedHistoryBloc>().add(GetCompletedHistoryEvent());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +41,14 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
                 );
               }
               if (state is CompletedHistorySuccess) {
-                if (state.completedTasks.isEmpty) {
+                final completedTasks = state.completedTasks
+                    .where(
+                      (item) =>
+                          item != null && item.taskEntity.completedAt != null,
+                    )
+                    .map((item) => item!.taskEntity)
+                    .toList();
+                if (completedTasks.isEmpty) {
                   return EmptyStateWidget();
                 }
                 return RefreshIndicator.adaptive(
@@ -62,8 +58,8 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
                     );
                   },
                   child: GroupedListView<TaskEntity, String>(
-                    elements: state.completedTasks,
-                    groupBy: (task) => task.createdAt.formatCompletedDate,
+                    elements: completedTasks,
+                    groupBy: (task) => task.completedAt!.formatCompletedDate,
                     groupSeparatorBuilder: (String groupByValue) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -71,16 +67,22 @@ class _CompletedHistoryViewState extends State<CompletedHistoryView> {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    itemBuilder: (context, task) =>
-                        CompletedHistoryCard(taskEntity: task),
+                    itemBuilder: (context, task) => CompletedHistoryCard(
+                      taskEntity: task,
+                      durationInSecs:
+                          state.completedTasks
+                              .firstWhere((item) => item?.taskId == task.id)
+                              ?.totalSeconds ??
+                          0,
+                    ),
                     itemComparator: (task1, task2) =>
-                        task1.createdAt.compareTo(task2.createdAt),
+                        task1.completedAt!.compareTo(task2.completedAt!),
                     useStickyGroupSeparators: true,
                     order: GroupedListOrder.DESC,
                   ),
                 );
               }
-              return Text(state.toString());
+              return const SizedBox.shrink();
             },
           ),
         ),

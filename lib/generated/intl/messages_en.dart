@@ -41,6 +41,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "loadingCompletedTasks":
             MessageLookupByLibrary.simpleMessage("Loading Completed Tasks"),
         "loadingData": MessageLookupByLibrary.simpleMessage("Loading data.."),
+        "moveTicketToInprogressToStartTimer":
+            MessageLookupByLibrary.simpleMessage(
+                "Move ticket to In-Progress to start timer"),
         "noCommentsYet":
             MessageLookupByLibrary.simpleMessage("No comments yet...."),
         "noDataAvailable":
@@ -48,16 +51,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "noDescription": MessageLookupByLibrary.simpleMessage("No description"),
         "oppsErrorOccured":
             MessageLookupByLibrary.simpleMessage("Opps, error occured"),
+        "pause": MessageLookupByLibrary.simpleMessage("Pause"),
+        "paused": MessageLookupByLibrary.simpleMessage("PAUSED"),
+        "resume": MessageLookupByLibrary.simpleMessage("Resume"),
         "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+        "running": MessageLookupByLibrary.simpleMessage("RUNNING"),
         "settingUpYourTasks":
             MessageLookupByLibrary.simpleMessage("Setting up your tasks"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
+        "stop": MessageLookupByLibrary.simpleMessage("Stop"),
         "taskAction": m0,
         "taskDetails": MessageLookupByLibrary.simpleMessage("Task Details"),
         "taskTitle": MessageLookupByLibrary.simpleMessage("Task Title"),
         "taskTitleIsRequired":
             MessageLookupByLibrary.simpleMessage("Task title is required"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
+        "totalTime": MessageLookupByLibrary.simpleMessage("Total Time"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updated": MessageLookupByLibrary.simpleMessage("Updated"),

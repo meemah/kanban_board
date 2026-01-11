@@ -4,42 +4,51 @@ class TaskEntity extends Equatable {
   final String id;
   final String content;
   final String? description;
-  final int priority;
-  final String? projectId;
-  final List<String> labels;
   final DateTime createdAt;
-  final DateTime? completedAt;
   final bool isCompleted;
+  final DateTime? completedAt;
 
   const TaskEntity({
     required this.id,
     required this.content,
     this.description,
-    required this.priority,
-    this.projectId,
-    required this.labels,
     required this.createdAt,
-    this.completedAt,
     this.isCompleted = false,
+    this.completedAt,
   });
+
+  TaskEntity copyWith({
+    String? id,
+    String? content,
+    String? description,
+    DateTime? createdAt,
+    bool? isCompleted,
+    DateTime? completedAt,
+  }) {
+    return TaskEntity(
+      id: id ?? this.id,
+      content: content ?? this.content,
+      description: description ?? this.description,
+      createdAt: createdAt ?? this.createdAt,
+      isCompleted: isCompleted ?? this.isCompleted,
+      completedAt: completedAt ?? this.completedAt,
+    );
+  }
 
   @override
   List<Object?> get props => [
     id,
     content,
     description,
-    priority,
-    projectId,
-    labels,
     createdAt,
-    completedAt,
     isCompleted,
+    completedAt,
   ];
 }
 
 enum TaskStatus {
   todo("To Do"),
-  inprogess("In Progress"),
+  inProgress("In Progress"),
   completed("Completed");
 
   final String title;

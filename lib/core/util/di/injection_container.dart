@@ -11,11 +11,15 @@ import 'package:kanban_board/feature/task/domain/repositories/task_repository.da
 import 'package:kanban_board/feature/task/domain/repositories/timer_repository.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/add_coment_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/comments_usecase/get_comments_usecase.dart';
-import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/complete_tasks_usecase.dart';
+import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_completed_tasks_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task_status_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_tasks_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/move_task_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/upsert_task_usecase.dart';
+import 'package:kanban_board/feature/task/domain/usecases/timer_usecase/get_task_timer_usecase.dart';
+import 'package:kanban_board/feature/task/domain/usecases/timer_usecase/pause_timer_usecase.dart';
+import 'package:kanban_board/feature/task/domain/usecases/timer_usecase/resume_timer_usecase.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/comment_bloc/comment_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
@@ -26,9 +30,10 @@ final sl = GetIt.I;
 Future<void> setupServiceLocator({required String apiToken}) async {
   sl.registerLazySingleton(() => NetworkService(apiToken: apiToken));
 
-  sl.registerFactory(() => TaskDetailBloc(sl(), sl()));
+  sl.registerFactory(() => CommentBloc(sl(), sl()));
+  sl.registerFactory(() => TaskDetailBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => UpsertTaskBloc(sl()));
-  sl.registerFactory(() => KanbanBoardBloc(sl(), sl(), sl()));
+  sl.registerFactory(() => KanbanBoardBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => CompletedHistoryBloc(sl()));
 
   sl.registerLazySingleton<TaskRepository>(
@@ -55,9 +60,7 @@ Future<void> setupServiceLocator({required String apiToken}) async {
 
   sl.registerLazySingleton(() => GetCommentsUsecase(commentRepository: sl()));
 
-  sl.registerLazySingleton(() => CompleteTasksUsecase(sl()));
-
-  sl.registerLazySingleton(() => GetTasksUsecase(sl()));
+  sl.registerLazySingleton(() => GetActiveTasksUsecase(sl()));
 
   sl.registerLazySingleton(
     () => MoveTaskUseCase(taskRepo: sl(), timerRepo: sl()),
@@ -65,4 +68,10 @@ Future<void> setupServiceLocator({required String apiToken}) async {
   sl.registerLazySingleton(() => UpsertTaskUseCase(sl()));
 
   sl.registerLazySingleton(() => GetTaskStatusUsecase(sl()));
+
+  sl.registerLazySingleton(() => GetCompletedTasksUsecase(sl()));
+
+  sl.registerLazySingleton(() => ResumeTimerUseCase(timerRepo: sl()));
+  sl.registerLazySingleton(() => GetTaskTimerUsecase(timerRepo: sl()));
+  sl.registerLazySingleton(() => PauseTimerUseCase(sl()));
 }
