@@ -118,7 +118,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                     lists: TaskStatus.values.map((status) {
                       final tasks = state.getTasksByStatus(status);
                       return BoardList(
-                        headerBackgroundColor: AppColors.primary.withValues(
+                        headerBackgroundColor: status.color.withValues(
                           alpha: 0.3,
                         ),
                         backgroundColor: AppColors.gray50,
@@ -131,7 +131,7 @@ class _KanbanBoardViewState extends State<KanbanBoardView> {
                                 style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.primary,
+                                  color: status.color,
                                 ),
                               ),
                             ),

@@ -13,7 +13,7 @@ class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   @override
   TaskTimerModel? getTimer(String taskId) {
     try {
-      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      final box = Hive.box<TaskTimerModel?>(DatabaseKey.taskTimerModel);
       return box.get(taskId);
     } catch (e) {
       return null;
@@ -23,7 +23,8 @@ class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   @override
   Future<void> saveTimer(TaskTimerModel timer) async {
     try {
-      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      final box = Hive.box<TaskTimerModel?>(DatabaseKey.taskTimerModel);
+      print("object error saving ${timer.taskModel.id}");
       await box.put(timer.taskModel.id, timer);
     } catch (e) {
       rethrow;
@@ -33,7 +34,7 @@ class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   @override
   Future<void> deleteTimer(String taskId) async {
     try {
-      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      final box = Hive.box<TaskTimerModel?>(DatabaseKey.taskTimerModel);
       await box.delete(taskId);
     } catch (e) {
       rethrow;
@@ -43,7 +44,7 @@ class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   @override
   List<TaskTimerModel?> getAllTimers() {
     try {
-      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      final box = Hive.box<TaskTimerModel?>(DatabaseKey.taskTimerModel);
       return box.values.toList();
     } catch (e) {
       return [];

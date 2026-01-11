@@ -7,19 +7,17 @@ import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/widgets/app_card.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
 import 'package:kanban_board/generated/l10n.dart';
 
 class CompletedHistoryCard extends StatelessWidget {
-  final TaskEntity taskEntity;
-  final int durationInSecs;
-  const CompletedHistoryCard({
-    super.key,
-    required this.taskEntity,
-    required this.durationInSecs,
-  });
+  final TaskTimerEntity taskTimerEntity;
+
+  const CompletedHistoryCard({super.key, required this.taskTimerEntity});
 
   @override
   Widget build(BuildContext context) {
+    TaskEntity taskEntity = taskTimerEntity.taskEntity;
     return Container(
       margin: EdgeInsets.only(bottom: 10.h),
       child: AppCard(
@@ -33,11 +31,11 @@ class CompletedHistoryCard extends StatelessWidget {
                 width: 35.w,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primary.withValues(alpha: 0.1),
+                  color: AppColors.green.withValues(alpha: 0.1),
                 ),
                 child: Icon(
                   CupertinoIcons.check_mark,
-                  color: AppColors.primary,
+                  color: AppColors.green,
                   size: 16,
                 ),
               ),
@@ -71,20 +69,17 @@ class CompletedHistoryCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 2.h),
                 decoration: BoxDecoration(
-                  color: AppColors.textGrayLight.withValues(alpha: 0.1),
+                  color: AppColors.textGray,
                   borderRadius: BorderRadius.circular(2.r),
                 ),
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.timer,
-                      size: 12.sp,
-                      color: AppColors.textGrayLight,
-                    ),
+                    Icon(Icons.timer, size: 12.sp, color: AppColors.white),
+                    Gap(2.w),
                     Text(
-                      durationInSecs.formatDuration,
+                      taskTimerEntity.currentElapsedSeconds.formatDuration,
                       style: AppTextStyle.captionSemibold(
-                        color: AppColors.textGrayLight,
+                        color: AppColors.white,
                       ),
                     ),
                   ],

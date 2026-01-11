@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:kanban_board/core/theme/app_colors.dart';
 
 class TaskEntity extends Equatable {
   final String id;
@@ -46,10 +48,12 @@ class TaskEntity extends Equatable {
 }
 
 enum TaskStatus {
-  todo("To Do"),
-  inProgress("In Progress"),
-  completed("Completed");
+  todo("To Do", AppColors.primary),
+  inProgress("In Progress", AppColors.amber),
+  completed("Completed", AppColors.green);
 
   final String title;
-  const TaskStatus(this.title);
+  final Color color;
+
+  const TaskStatus(this.title, this.color);
 }

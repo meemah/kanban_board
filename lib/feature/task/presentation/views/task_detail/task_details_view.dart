@@ -158,12 +158,12 @@ class TaskDetailTimer extends StatelessWidget {
               padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 8.w),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(50.r),
-                color: AppColors.primary.withValues(alpha: 0.2),
+                color: state.status.color.withValues(alpha: 0.2),
               ),
               child: Text(
                 state.status.title.toUpperCase(),
                 style: AppTextStyle.captionSemibold(
-                  color: AppColors.primary,
+                  color: state.status.color,
                   fontSize: 10,
                 ),
               ),

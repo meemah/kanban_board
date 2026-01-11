@@ -7,7 +7,7 @@ import 'package:kanban_board/core/widgets/app_scaffold.dart';
 import 'package:kanban_board/core/widgets/app_states/empty_state_widget.dart';
 import 'package:kanban_board/core/widgets/app_states/error_state_widget.dart';
 import 'package:kanban_board/core/widgets/app_states/loading_state_widget.dart';
-import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/views/completed_history/widget/completed_history_card.dart';
 import 'package:kanban_board/generated/l10n.dart';
@@ -46,7 +46,7 @@ class CompletedHistoryView extends StatelessWidget {
                       (item) =>
                           item != null && item.taskEntity.completedAt != null,
                     )
-                    .map((item) => item!.taskEntity)
+                    .map((item) => item!)
                     .toList();
                 if (completedTasks.isEmpty) {
                   return EmptyStateWidget();
@@ -57,9 +57,10 @@ class CompletedHistoryView extends StatelessWidget {
                       GetCompletedHistoryEvent(),
                     );
                   },
-                  child: GroupedListView<TaskEntity, String>(
+                  child: GroupedListView<TaskTimerEntity, String>(
                     elements: completedTasks,
-                    groupBy: (task) => task.completedAt!.formatCompletedDate,
+                    groupBy: (task) =>
+                        task.taskEntity.completedAt!.formatCompletedDate,
                     groupSeparatorBuilder: (String groupByValue) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -67,18 +68,12 @@ class CompletedHistoryView extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    itemBuilder: (context, task) => CompletedHistoryCard(
-                      taskEntity: task,
-                      durationInSecs:
-                          state.completedTasks
-                              .firstWhere(
-                                (item) => item?.taskEntity.id == task.id,
-                              )
-                              ?.totalSeconds ??
-                          0,
-                    ),
-                    itemComparator: (task1, task2) =>
-                        task1.completedAt!.compareTo(task2.completedAt!),
+                    itemBuilder: (context, task) =>
+                        CompletedHistoryCard(taskTimerEntity: task),
+                    itemComparator: (task1, task2) => task1
+                        .taskEntity
+                        .completedAt!
+                        .compareTo(task2.taskEntity.completedAt!),
                     useStickyGroupSeparators: true,
                     order: GroupedListOrder.DESC,
                   ),
