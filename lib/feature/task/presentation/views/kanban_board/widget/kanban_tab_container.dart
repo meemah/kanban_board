@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
 import 'package:kanban_board/core/theme/app_textstyle.dart';
+import 'package:kanban_board/core/theme/font_family.dart';
 import 'package:kanban_board/core/widgets/app_states/empty_state_widget.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/kanban_bloc/kanban_bloc.dart';
@@ -34,9 +35,11 @@ class KanbanTabContainer extends StatelessWidget {
                     indicatorSize: TabBarIndicatorSize.tab,
                     labelColor: AppColors.white,
                     unselectedLabelColor: AppColors.black,
-                    labelStyle: AppTextStyle.subtextMedium(),
-                    unselectedLabelStyle: AppTextStyle.subtextMedium(),
-
+                    labelStyle: AppTextStyle.subtextSemibold().copyWith(
+                      fontFamily: FontFamily.worksans.value,
+                    ),
+                    unselectedLabelStyle: AppTextStyle.subtextSemibold()
+                        .copyWith(fontFamily: FontFamily.worksans.value),
                     tabs: TaskStatus.values
                         .map((status) => Tab(text: status.title))
                         .toList(),

@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
             builder: (context, locale) {
               return MaterialApp.router(
                 debugShowCheckedModeBanner: false,
-                title: 'Kanban Board',
+                title: 'Kanban Board by Maimunah Ibrahim',
                 theme: ThemeData(fontFamily: FontFamily.worksans.value),
                 routerConfig: appRouter,
                 locale: locale,

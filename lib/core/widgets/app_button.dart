@@ -40,10 +40,12 @@ class AppButton extends StatelessWidget {
         child: Center(
           child: isLoading
               ? SizedBox(
-                  height: 20.h,
-                  width: 20.w,
+                  height: 15.h,
+                  width: 15.w,
                   child: CircularProgressIndicator.adaptive(
-                    backgroundColor: AppColors.white,
+                    backgroundColor: Colors.white,
+                    valueColor: AlwaysStoppedAnimation<Color>(AppColors.white),
+                    strokeWidth: 1,
                   ),
                 )
               : Row(
