@@ -48,6 +48,7 @@ class AppTextField extends StatelessWidget {
           onTap: onTap,
           onChanged: onChanged,
           validator: validator,
+          textCapitalization: TextCapitalization.sentences,
           style: AppTextStyle.subtextSemibold(),
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(

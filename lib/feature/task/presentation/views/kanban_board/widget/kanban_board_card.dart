@@ -52,11 +52,21 @@ class KanbanBoardCard extends StatelessWidget {
                             color: AppColors.textGray,
                             borderRadius: BorderRadius.circular(2.r),
                           ),
-                          child: Text(
-                            S.current.move,
-                            style: AppTextStyle.captionSemibold(
-                              color: AppColors.white,
-                            ),
+                          child: Row(
+                            children: [
+                              Text(
+                                S.current.move,
+                                style: AppTextStyle.captionSemibold(
+                                  color: AppColors.white,
+                                ),
+                              ),
+                              Gap(1.w),
+                              Icon(
+                                Icons.chevron_right,
+                                color: AppColors.white,
+                                size: 18.sp,
+                              ),
+                            ],
                           ),
                         ),
                       ),

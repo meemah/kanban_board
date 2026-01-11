@@ -10,7 +10,7 @@ extension DateExtension on DateTime? {
     final completed = DateTime(this!.year, this!.month, this!.day);
 
     if (completed == today) {
-      return DateFormat("hh:mm a").format(this!);
+      return S.current.today;
     } else {
       return DateFormat("MMM dd, yyyy").format(this!);
     }
