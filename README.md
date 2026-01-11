@@ -3,6 +3,37 @@
 A Flutter-based Kanban task management application built using Clean Architecture and BLoC.  
 The app integrates the Todoist API for task management and uses Hive for local persistence of task timers and completed task history.
 
+## Demo Video
+
+https://github.com/user-attachments/assets/abcd-1234
+
+## Download APK
+
+[Download latest APK](https://github.com/USERNAME/REPO/releases/download/v1.0.0/app-release.apk)
+
+## Screenshots
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/57630513-b445-445a-b972-72407fe99ac0" width="180" />
+  <img src="https://github.com/user-attachments/assets/fc83b16a-f699-4b52-9972-19a24897c735" width="180" />
+  <img src="https://github.com/user-attachments/assets/2f17b73d-5749-4778-9497-f332b227f31e" width="180" />
+  <img src="https://github.com/user-attachments/assets/c7f341a0-0db9-474a-8007-90560ba20ae3" width="180" />
+  <img src="https://github.com/user-attachments/assets/8d02506b-a3a2-402f-a5c5-c7eff5701be9" width="180" />
+</p>
+
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/554bacb3-f51a-4991-b1a5-2a3993c17a2c" width="180" />
+  <img src="https://github.com/user-attachments/assets/401d5384-c360-4966-97b6-50613f03a436" width="180" />
+  <img src="https://github.com/user-attachments/assets/10e068bd-8bde-4fb6-b13f-79efa140d70a" width="180" />
+  <img src="https://github.com/user-attachments/assets/fdccaa44-a463-4146-ad34-571ab96ae28d" width="180" />
+  <img src="https://github.com/user-attachments/assets/2c89e8be-23ad-45ab-9445-806d20f24ef9" width="180" />
+</p>
+
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/fdccaa44-a463-4146-ad34-571ab96ae28d" width="180" />
+  <img src="https://github.com/user-attachments/assets/2c89e8be-23ad-45ab-9445-806d20f24ef9" width="180" />
+</p>
+
+
 ## Features
 
 - Kanban Board
