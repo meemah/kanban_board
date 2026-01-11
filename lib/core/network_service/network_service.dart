@@ -1,11 +1,40 @@
 import 'package:dio/dio.dart';
 import 'package:kanban_board/core/network_service/api_constants.dart';
 
-class NetworkService {
+abstract class NetworkService {
+  Future<Response<T>> get<T>(
+    String path, {
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  });
+
+  Future<Response<T>> post<T>(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  });
+
+  Future<Response<T>> put<T>(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  });
+
+  Future<Response<T>> delete<T>(
+    String path, {
+    dynamic data,
+    Map<String, dynamic>? queryParameters,
+    Options? options,
+  });
+}
+
+class NetworkServiceImpl extends NetworkService {
   late final Dio _dio;
   final String apiToken;
 
-  NetworkService({required this.apiToken}) {
+  NetworkServiceImpl({required this.apiToken}) {
     _dio = Dio(_baseOptions);
   }
 
@@ -19,6 +48,7 @@ class NetworkService {
     receiveTimeout: const Duration(seconds: 10),
   );
 
+  @override
   Future<Response<T>> get<T>(
     String path, {
     Map<String, dynamic>? queryParameters,
@@ -35,6 +65,7 @@ class NetworkService {
     }
   }
 
+  @override
   Future<Response<T>> post<T>(
     String path, {
     dynamic data,
@@ -53,6 +84,7 @@ class NetworkService {
     }
   }
 
+  @override
   Future<Response<T>> put<T>(
     String path, {
     dynamic data,
@@ -71,6 +103,7 @@ class NetworkService {
     }
   }
 
+  @override
   Future<Response<T>> delete<T>(
     String path, {
     dynamic data,

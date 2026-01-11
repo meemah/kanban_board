@@ -64,20 +64,6 @@ The project follows Clean Architecture principles:
   - Remote data source (Todoist API)
   - Local data source (Hive)
 
-Example structure:
-lib/
-├── core/
-│ ├── errors/
-│ ├── usecases/
-│ └── utils/
-├── features/
-│ ├── kanban/
-│ ├── upsert_task/
-│ ├── completed_history/
-│ └── settings/
-├── l10n/
-├── shared/
-└── main.dart
 
 ## Tech Stack
 
@@ -99,8 +85,7 @@ An example environment file is provided in .env.example
 ## Getting Started
 
 Requirements:
-- Flutter (stable channel)
-- Dart SDK
+- Flutter (stable channel). The app was built using  v3.32.5
 - Todoist account
 
 Steps:

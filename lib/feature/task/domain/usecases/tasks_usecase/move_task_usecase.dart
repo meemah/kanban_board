@@ -27,7 +27,7 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskParams> {
           if (timer != null && timer.isRunning) {
             await timerRepo.pauseTimer(timer);
           }
-          // updatedTask = task.copyWith(isCompleted: false, completedAt: null);
+
           break;
 
         case TaskStatus.inProgress:
@@ -36,18 +36,13 @@ class MoveTaskUseCase implements UseCase<TaskEntity, MoveTaskParams> {
           } else {
             await timerRepo.resumeTimer(timer);
           }
-          // updatedTask = task.copyWith(isCompleted: false, completedAt: null);
+
           break;
 
         case TaskStatus.completed:
           if (timer != null) {
             await timerRepo.stopTimer(timer);
           }
-
-          // updatedTask = task.copyWith(
-          //   isCompleted: true,
-          //   completedAt: DateTime.now(),
-          // );
 
           final result = await taskRepo.completeTask(updatedTask.id);
 

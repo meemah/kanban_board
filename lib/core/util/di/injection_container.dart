@@ -28,7 +28,9 @@ import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/ups
 final sl = GetIt.I;
 
 Future<void> setupServiceLocator({required String apiToken}) async {
-  sl.registerLazySingleton(() => NetworkService(apiToken: apiToken));
+  sl.registerLazySingleton<NetworkService>(
+    () => NetworkServiceImpl(apiToken: apiToken),
+  );
 
   sl.registerFactory(() => CommentBloc(sl(), sl()));
   sl.registerFactory(() => TaskDetailBloc(sl(), sl(), sl(), sl()));
