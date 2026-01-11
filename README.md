@@ -4,8 +4,8 @@ A Flutter-based Kanban task management application built using Clean Architectur
 The app integrates the Todoist API for task management and uses Hive for local persistence of task timers and completed task history.
 
 ## Demo Video
+https://github.com/user-attachments/assets/7738c5f1-0883-4ad9-a763-2ba0f3e999a7
 
-https://github.com/user-attachments/assets/abcd-1234
 
 ## Download APK
 
