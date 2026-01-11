@@ -40,6 +40,10 @@ class TaskDetailBloc extends Bloc<TaskDetailEvent, TaskDetailState> {
     );
   }
 
+  TaskStatus taskStatus(TaskEntity task) {
+    return _getTaskStatusUsecase.call(task);
+  }
+
   Future<void> _onPauseTaskTimer(
     PauseTaskTimerEvent event,
     Emitter<TaskDetailState> emit,

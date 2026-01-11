@@ -100,7 +100,7 @@ class KanbanBloc extends Bloc<KanbanEvent, KanbanState> {
         };
         emit(KanbanSuccess(rollbackState));
       }, (_) {});
-    } catch (e) {}
+    } catch (_) {}
   }
 
   _onTaskUpsert(TaskAddedOrUpdatedEvent event, Emitter<KanbanState> emit) {

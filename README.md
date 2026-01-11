@@ -12,7 +12,7 @@ The app integrates the Todoist API for task management and uses Hive for local p
 
 - Task Management
   - Create new tasks
-  - Update existing tasks
+  - Update existing tasks(However, completed cannot be updated)
   - Optimistic UI updates for smooth user experience
 
 - Task Status Logic
@@ -92,4 +92,6 @@ Steps:
 1. Copy `.env.example` to `.env`
 2. Obtain your API token from the Todoist application
 3. Paste the token into the `.env` file as `TODOIST_API_TOKEN`
+
+4. RUn `flutter pub run build_runner build`
 

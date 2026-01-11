@@ -459,6 +459,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Cannot Edit a completed task`
+  String get cannotEditACompletedTask {
+    return Intl.message(
+      'Cannot Edit a completed task',
+      name: 'cannotEditACompletedTask',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

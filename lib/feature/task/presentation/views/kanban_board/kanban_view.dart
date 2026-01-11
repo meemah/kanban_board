@@ -27,7 +27,9 @@ class _KanbanHomeViewState extends State<KanbanHomeView> {
   @override
   void initState() {
     super.initState();
-    context.read<KanbanBloc>().add(GetAllTaskEvent());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<KanbanBloc>().add(GetAllTaskEvent());
+    });
   }
 
   @override

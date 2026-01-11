@@ -66,8 +66,8 @@ class _KanbanBoardContainerState extends State<KanbanBoardContainer> {
     return BlocBuilder<KanbanBloc, KanbanState>(
       builder: (context, state) {
         if (state is KanbanSuccess) {
-          if (state.tasks.values.isEmpty) {
-            EmptyStateWidget(message: S.current.youHaveNoTaskYet);
+          if (state.tasks.values.expand((list) => list).toList().isEmpty) {
+            return EmptyStateWidget(message: S.current.youHaveNoTaskYet);
           }
           return RefreshIndicator(
             onRefresh: () async =>
@@ -110,14 +110,12 @@ class _KanbanBoardContainerState extends State<KanbanBoardContainer> {
                               AppSnackBar.show(
                                 context,
                                 message: S.current.youCanOnlyMoveTasksForward,
-                                appSnackbarType: AppSnackbarType.failed,
+                                appSnackbarType: AppSnackbarType.info,
                               );
 
-                              boardController.notifyDragEnd(
+                              boardController.notifyDragCancel(
                                 oldListIndex,
                                 oldItemIndex!,
-                                oldListIndex,
-                                oldItemIndex,
                               );
                               return;
                             }

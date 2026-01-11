@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
           child: BlocBuilder<LanguageCubit, Locale>(
             builder: (context, locale) {
               return MaterialApp.router(
+                debugShowCheckedModeBanner: false,
                 title: 'Kanban Board',
                 theme: ThemeData(fontFamily: FontFamily.worksans.value),
                 routerConfig: appRouter,

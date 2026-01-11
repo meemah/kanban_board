@@ -8,6 +8,7 @@ import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_bar.dart';
 import 'package:kanban_board/core/widgets/app_scaffold.dart';
+import 'package:kanban_board/core/widgets/app_snackbar.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/params/add_comment_params.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/comment_bloc/comment_bloc.dart';
@@ -32,10 +33,12 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
   @override
   void initState() {
     super.initState();
-    context.read<TaskDetailBloc>().add(
-      InitializeTaskDetailEvent(task: widget.task),
-    );
-    context.read<CommentBloc>().add(GetCommentsEvent(taskId: widget.task.id));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<TaskDetailBloc>().add(
+        InitializeTaskDetailEvent(task: widget.task),
+      );
+      context.read<CommentBloc>().add(GetCommentsEvent(taskId: widget.task.id));
+    });
   }
 
   @override
@@ -101,8 +104,18 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
         title: S.current.taskDetails,
         actions: [
           GestureDetector(
-            onTap: () =>
-                context.pushNamed(AppRouteName.taskUpsert, extra: widget.task),
+            onTap: () {
+              if (context.read<TaskDetailBloc>().taskStatus(widget.task) !=
+                  TaskStatus.completed) {
+                context.pushNamed(AppRouteName.taskUpsert, extra: widget.task);
+              } else {
+                AppSnackBar.show(
+                  context,
+                  message: S.current.cannotEditACompletedTask,
+                  appSnackbarType: AppSnackbarType.info,
+                );
+              }
+            },
             child: Container(
               margin: EdgeInsets.only(right: 10.w),
               child: Icon(Icons.edit, color: AppColors.primary, size: 20.sp),

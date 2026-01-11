@@ -31,6 +31,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "add": MessageLookupByLibrary.simpleMessage("Add"),
         "addAComment": MessageLookupByLibrary.simpleMessage("Add a comment.."),
         "added": MessageLookupByLibrary.simpleMessage("Added"),
+        "cannotEditACompletedTask": MessageLookupByLibrary.simpleMessage(
+            "Cannot Edit a completed task"),
         "comments": MessageLookupByLibrary.simpleMessage("COMMENTS"),
         "completedHistory":
             MessageLookupByLibrary.simpleMessage("Completed History"),
