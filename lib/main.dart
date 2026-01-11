@@ -10,7 +10,7 @@ import 'package:kanban_board/core/util/navigation/app_router.dart';
 import 'package:kanban_board/feature/settings/presentation/language_cubit.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/comment_bloc/comment_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
-import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/kanban_bloc/kanban_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 import 'package:kanban_board/generated/l10n.dart';
@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (_) => LanguageCubit()),
             BlocProvider(create: (_) => di.sl<UpsertTaskBloc>()),
             BlocProvider(create: (_) => di.sl<CommentBloc>()),
-            BlocProvider(create: (_) => di.sl<KanbanBoardBloc>()),
+            BlocProvider(create: (_) => di.sl<KanbanBloc>()),
             BlocProvider(create: (_) => di.sl<CompletedHistoryBloc>()),
             BlocProvider(create: (_) => di.sl<TaskDetailBloc>()),
           ],

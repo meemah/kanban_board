@@ -4,7 +4,7 @@ import 'package:kanban_board/core/widgets/app_bottom_navbar.dart';
 import 'package:kanban_board/feature/settings/presentation/settings_view.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/presentation/views/completed_history/completed_history_view.dart';
-import 'package:kanban_board/feature/task/presentation/views/kanban_board/kanban_board_view.dart';
+import 'package:kanban_board/feature/task/presentation/views/kanban_board/kanban_view.dart';
 import 'package:kanban_board/feature/task/presentation/views/task_detail/task_details_view.dart';
 import 'package:kanban_board/feature/task/presentation/views/upsert_task/upsert_task_view.dart';
 
@@ -21,7 +21,7 @@ final GoRouter appRouter = GoRouter(
             GoRoute(
               path: "/",
               name: AppRouteName.home,
-              builder: (context, state) => const KanbanBoardView(),
+              builder: (context, state) => const KanbanHomeView(),
             ),
           ],
         ),

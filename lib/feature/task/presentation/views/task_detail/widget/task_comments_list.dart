@@ -42,13 +42,16 @@ class TaskCommentList extends StatelessWidget {
                       opacity: commentEntity.isPending ? 0.5 : 1,
                       child: Row(
                         children: [
-                          CircleAvatar(child: Icon(Icons.person)),
+                          CircleAvatar(
+                            radius: 15,
+                            child: Icon(Icons.person, size: 14),
+                          ),
                           Gap(10),
                           Expanded(
                             child: Text(
                               commentEntity.content,
                               maxLines: 3,
-                              style: AppTextStyle.subtextSemibold(
+                              style: AppTextStyle.captionSemibold(
                                 color: AppColors.textDark,
                               ),
                             ),

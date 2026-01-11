@@ -24,7 +24,6 @@ class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   Future<void> saveTimer(TaskTimerModel timer) async {
     try {
       final box = Hive.box<TaskTimerModel?>(DatabaseKey.taskTimerModel);
-      print("object error saving ${timer.taskModel.id}");
       await box.put(timer.taskModel.id, timer);
     } catch (e) {
       rethrow;

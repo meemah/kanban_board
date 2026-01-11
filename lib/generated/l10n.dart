@@ -429,6 +429,36 @@ class S {
       args: [],
     );
   }
+
+  /// `You can only move tasks forward`
+  String get youCanOnlyMoveTasksForward {
+    return Intl.message(
+      'You can only move tasks forward',
+      name: 'youCanOnlyMoveTasksForward',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tasks in {status}`
+  String noTasksInStatus(Object status) {
+    return Intl.message(
+      'No tasks in $status',
+      name: 'noTasksInStatus',
+      desc: 'Message shown when there are no tasks in a particular status',
+      args: [status],
+    );
+  }
+
+  /// `Move`
+  String get move {
+    return Intl.message(
+      'Move',
+      name: 'move',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -1,15 +1,15 @@
-part of 'kanban_board_bloc.dart';
+part of 'kanban_bloc.dart';
 
-sealed class KanbanBoardEvent extends Equatable {
-  const KanbanBoardEvent();
+sealed class KanbanEvent extends Equatable {
+  const KanbanEvent();
 
   @override
   List<Object> get props => [];
 }
 
-final class GetAllTaskEvent extends KanbanBoardEvent {}
+final class GetAllTaskEvent extends KanbanEvent {}
 
-class MoveTaskEvent extends KanbanBoardEvent {
+class MoveTaskEvent extends KanbanEvent {
   final TaskEntity task;
   final TaskStatus oldStatus;
   final TaskStatus newStatus;

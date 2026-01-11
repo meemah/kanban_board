@@ -50,5 +50,14 @@
   "pause": "Pause",
   "resume": "Resume",
   "stop": "Stop",
-  "moveTicketToInprogressToStartTimer": "Move ticket to In-Progress to start timer"
+  "moveTicketToInprogressToStartTimer": "Move ticket to In-Progress to start timer",
+  "youCanOnlyMoveTasksForward": "You can only move tasks forward",
+  "noTasksInStatus": "No tasks in {status}",
+  "@noTasksInStatus": {
+    "description": "Message shown when there are no tasks in a particular status",
+    "placeholders": {
+      "status": {}
+    }
+  },
+  "move": "Move"
 }

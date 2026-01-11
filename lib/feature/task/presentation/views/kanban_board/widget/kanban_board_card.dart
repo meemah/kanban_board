@@ -8,10 +8,12 @@ import 'package:kanban_board/core/theme/app_textstyle.dart';
 import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_card.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
+import 'package:kanban_board/generated/l10n.dart';
 
 class KanbanBoardCard extends StatelessWidget {
   final TaskEntity taskEntity;
-  const KanbanBoardCard({super.key, required this.taskEntity});
+  final VoidCallback? onMove;
+  const KanbanBoardCard({super.key, required this.taskEntity, this.onMove});
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +30,38 @@ class KanbanBoardCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  taskEntity.content,
-                  style: AppTextStyle.captionSemibold(),
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      taskEntity.content,
+                      style: AppTextStyle.captionSemibold(),
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (onMove != null) ...[
+                      const Gap(4),
+                      GestureDetector(
+                        onTap: onMove,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.w,
+                            vertical: 2.h,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.textGray,
+                            borderRadius: BorderRadius.circular(2.r),
+                          ),
+                          child: Text(
+                            S.current.move,
+                            style: AppTextStyle.captionSemibold(
+                              color: AppColors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
                 ),
                 if (taskEntity.description != null &&
                     taskEntity.description!.isNotEmpty) ...[

@@ -10,39 +10,36 @@ import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/move_task_usecase.dart';
 import 'package:kanban_board/generated/l10n.dart';
 
-part 'kanban_board_event.dart';
-part 'kanban_board_state.dart';
+part 'kanban_event.dart';
+part 'kanban_state.dart';
 
-class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
+class KanbanBloc extends Bloc<KanbanEvent, KanbanState> {
   final GetActiveTasksUsecase _getTasksUsecase;
   final GetTaskStatusUsecase _getTaskStatusUsecase;
   final MoveTaskUseCase _moveTaskUseCase;
   final GetCompletedTasksUsecase _completedTasksUsecase;
-  KanbanBoardBloc(
+  KanbanBloc(
     this._getTasksUsecase,
     this._getTaskStatusUsecase,
     this._moveTaskUseCase,
     this._completedTasksUsecase,
-  ) : super(KanbanBoardInitial()) {
+  ) : super(KanbanInitial()) {
     on<GetAllTaskEvent>(_onGetTasks);
     on<MoveTaskEvent>(_moveTask);
   }
 
-  Future<void> _onGetTasks(
-    KanbanBoardEvent event,
-    Emitter<KanbanBoardState> emit,
-  ) async {
+  Future<void> _onGetTasks(KanbanEvent event, Emitter<KanbanState> emit) async {
     try {
-      emit(KanbanBoardLoading());
+      emit(KanbanLoading());
 
       final result = await _getTasksUsecase.call(NoParams());
 
-      result.fold((failure) => emit(KanbanBoardFailure(failure.message)), (
+      result.fold((failure) => emit(KanbanFailure(failure.message)), (
         tasks,
       ) async {
         var result = _completedTasksUsecase.call();
         result.fold(
-          (error) => emit(KanbanBoardFailure(S.current.oppsErrorOccured)),
+          (error) => emit(KanbanFailure(S.current.oppsErrorOccured)),
           (data) {
             List<TaskEntity> completedTasks = data.map((item) {
               return item.taskEntity;
@@ -58,23 +55,20 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
               tasksByStatus[status]!.add(task);
             }
 
-            emit(KanbanBoardSuccess(tasksByStatus));
+            emit(KanbanSuccess(tasksByStatus));
           },
         );
       });
     } catch (e) {
-      emit(KanbanBoardFailure(S.current.oppsErrorOccured));
+      emit(KanbanFailure(S.current.oppsErrorOccured));
     }
   }
 
-  Future<void> _moveTask(
-    MoveTaskEvent event,
-    Emitter<KanbanBoardState> emit,
-  ) async {
+  Future<void> _moveTask(MoveTaskEvent event, Emitter<KanbanState> emit) async {
     try {
-      if (state is! KanbanBoardSuccess) return;
+      if (state is! KanbanSuccess) return;
 
-      final currentState = state as KanbanBoardSuccess;
+      final currentState = state as KanbanSuccess;
 
       final tasksByStatus = {
         for (final entry in currentState.tasks.entries)
@@ -92,7 +86,7 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
 
       tasksByStatus[event.newStatus]!.insert(0, updatedTask);
 
-      emit(KanbanBoardSuccess(tasksByStatus));
+      emit(KanbanSuccess(tasksByStatus));
 
       final result = await _moveTaskUseCase(
         MoveTaskParams(taskEntity: updatedTask, status: event.newStatus),
@@ -103,7 +97,7 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
           for (final entry in currentState.tasks.entries)
             entry.key: List<TaskEntity>.from(entry.value),
         };
-        emit(KanbanBoardSuccess(rollbackState));
+        emit(KanbanSuccess(rollbackState));
       }, (_) {});
     } catch (e) {}
   }

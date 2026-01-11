@@ -21,7 +21,7 @@ import 'package:kanban_board/feature/task/domain/usecases/timer_usecase/pause_ti
 import 'package:kanban_board/feature/task/domain/usecases/timer_usecase/resume_timer_usecase.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/comment_bloc/comment_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/completed_history_bloc/completed_history_bloc.dart';
-import 'package:kanban_board/feature/task/presentation/bloc/kanban_board_bloc/kanban_board_bloc.dart';
+import 'package:kanban_board/feature/task/presentation/bloc/kanban_bloc/kanban_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/task_detail_bloc/task_detail_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 
@@ -33,7 +33,7 @@ Future<void> setupServiceLocator({required String apiToken}) async {
   sl.registerFactory(() => CommentBloc(sl(), sl()));
   sl.registerFactory(() => TaskDetailBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => UpsertTaskBloc(sl()));
-  sl.registerFactory(() => KanbanBoardBloc(sl(), sl(), sl(), sl()));
+  sl.registerFactory(() => KanbanBloc(sl(), sl(), sl(), sl()));
   sl.registerFactory(() => CompletedHistoryBloc(sl()));
 
   sl.registerLazySingleton<TaskRepository>(

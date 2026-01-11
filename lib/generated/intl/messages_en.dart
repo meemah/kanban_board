@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(action) => "Task ${action}";
+  static String m0(status) => "No tasks in ${status}";
 
-  static String m1(action) => "${action} Task";
+  static String m1(action) => "Task ${action}";
+
+  static String m2(action) => "${action} Task";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -41,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "loadingCompletedTasks":
             MessageLookupByLibrary.simpleMessage("Loading Completed Tasks"),
         "loadingData": MessageLookupByLibrary.simpleMessage("Loading data.."),
+        "move": MessageLookupByLibrary.simpleMessage("Move"),
         "moveTicketToInprogressToStartTimer":
             MessageLookupByLibrary.simpleMessage(
                 "Move ticket to In-Progress to start timer"),
@@ -49,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noDataAvailable":
             MessageLookupByLibrary.simpleMessage("No data available"),
         "noDescription": MessageLookupByLibrary.simpleMessage("No description"),
+        "noTasksInStatus": m0,
         "oppsErrorOccured":
             MessageLookupByLibrary.simpleMessage("Opps, error occured"),
         "pause": MessageLookupByLibrary.simpleMessage("Pause"),
@@ -60,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Setting up your tasks"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "stop": MessageLookupByLibrary.simpleMessage("Stop"),
-        "taskAction": m0,
+        "taskAction": m1,
         "taskDetails": MessageLookupByLibrary.simpleMessage("Task Details"),
         "taskTitle": MessageLookupByLibrary.simpleMessage("Task Title"),
         "taskTitleIsRequired":
@@ -70,9 +74,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updated": MessageLookupByLibrary.simpleMessage("Updated"),
-        "upsertTaskPageTitle": m1,
+        "upsertTaskPageTitle": m2,
         "whatNeedsToBeDone":
             MessageLookupByLibrary.simpleMessage("What needs to be done?"),
+        "youCanOnlyMoveTasksForward": MessageLookupByLibrary.simpleMessage(
+            "You can only move tasks forward"),
         "youHaveNoTaskYet":
             MessageLookupByLibrary.simpleMessage("You have no task yet")
       };

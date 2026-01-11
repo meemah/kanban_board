@@ -48,7 +48,7 @@ class TaskEntity extends Equatable {
 }
 
 enum TaskStatus {
-  todo("To Do", AppColors.primary),
+  todo("To Do", AppColors.textGray),
   inProgress("In Progress", AppColors.amber),
   completed("Completed", AppColors.green);
 
