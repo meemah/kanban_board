@@ -11,7 +11,7 @@ class ResumeTimerUseCase {
   Future<Either<Failure, TaskTimerEntity>> call(TaskTimerEntity timer) async {
     try {
       await timerRepo.resumeTimer(timer);
-      return Right(timerRepo.getTimer(timer.taskId)!);
+      return Right(timerRepo.getTimer(timer.taskEntity.id)!);
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

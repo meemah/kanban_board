@@ -8,20 +8,16 @@ part 'task_timer_model.g.dart';
 
 @HiveType(typeId: 1)
 class TaskTimerModel extends Equatable {
-  @HiveField(0)
-  final String taskId;
   @HiveField(1)
   final int totalSeconds;
   @HiveField(2)
   final DateTime? startTime;
   @HiveField(3)
   final bool isRunning;
-
   @HiveField(4)
   final TaskModel taskModel;
 
   const TaskTimerModel({
-    required this.taskId,
     required this.totalSeconds,
     this.startTime,
     required this.isRunning,
@@ -31,7 +27,6 @@ class TaskTimerModel extends Equatable {
   TaskTimerEntity toEntity() {
     return TaskTimerEntity(
       taskEntity: taskModel.toEntity(),
-      taskId: taskId,
       totalSeconds: totalSeconds,
       startTime: startTime,
       isRunning: isRunning,
@@ -44,12 +39,10 @@ class TaskTimerModel extends Equatable {
         description: timer.taskEntity.description,
         isCompleted: timer.taskEntity.isCompleted,
         completedAt: timer.taskEntity.completedAt,
-        id: timer.taskId,
+        id: timer.taskEntity.id,
         content: timer.taskEntity.content,
         createdAt: timer.taskEntity.createdAt,
       ),
-
-      taskId: timer.taskId,
       totalSeconds: timer.totalSeconds,
       startTime: timer.startTime,
       isRunning: timer.isRunning,
@@ -57,7 +50,6 @@ class TaskTimerModel extends Equatable {
   }
 
   TaskTimerModel copyWith({
-    String? taskId,
     int? totalSeconds,
     DateTime? startTime,
     bool? isRunning,
@@ -65,7 +57,6 @@ class TaskTimerModel extends Equatable {
   }) {
     return TaskTimerModel(
       taskModel: taskModel ?? this.taskModel,
-      taskId: taskId ?? this.taskId,
       totalSeconds: totalSeconds ?? this.totalSeconds,
       startTime: startTime ?? this.startTime,
       isRunning: isRunning ?? this.isRunning,
@@ -73,5 +64,5 @@ class TaskTimerModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [taskId, totalSeconds, startTime, isRunning];
+  List<Object?> get props => [taskModel, totalSeconds, startTime, isRunning];
 }

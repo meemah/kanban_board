@@ -21,7 +21,12 @@ class CompletedHistoryBloc
     try {
       emit(CompletedHistoryLoading());
       var result = getCompletedTasksUsecase.call();
-      emit(CompletedHistorySuccess(completedTasks: result));
+      result.fold(
+        (error) => emit(
+          CompletedHistoryFailure(errorMessage: S.current.oppsErrorOccured),
+        ),
+        (data) => emit(CompletedHistorySuccess(completedTasks: data)),
+      );
     } catch (e) {
       emit(CompletedHistoryFailure(errorMessage: S.current.oppsErrorOccured));
     }

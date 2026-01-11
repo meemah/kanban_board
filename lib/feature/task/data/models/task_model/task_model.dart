@@ -77,7 +77,6 @@ class TaskModel extends Equatable {
   }
 
   TaskModel copyWith({
-    String? id,
     String? content,
     String? description,
     DateTime? createdAt,
@@ -85,7 +84,7 @@ class TaskModel extends Equatable {
     bool? isCompleted,
   }) {
     return TaskModel(
-      id: id ?? this.id,
+      id: id,
       content: content ?? this.content,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,

@@ -71,7 +71,9 @@ class CompletedHistoryView extends StatelessWidget {
                       taskEntity: task,
                       durationInSecs:
                           state.completedTasks
-                              .firstWhere((item) => item?.taskId == task.id)
+                              .firstWhere(
+                                (item) => item?.taskEntity.id == task.id,
+                              )
                               ?.totalSeconds ??
                           0,
                     ),

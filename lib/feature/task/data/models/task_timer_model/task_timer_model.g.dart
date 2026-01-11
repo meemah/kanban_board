@@ -17,7 +17,6 @@ class TaskTimerModelAdapter extends TypeAdapter<TaskTimerModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TaskTimerModel(
-      taskId: fields[0] as String,
       totalSeconds: fields[1] as int,
       startTime: fields[2] as DateTime?,
       isRunning: fields[3] as bool,
@@ -28,9 +27,7 @@ class TaskTimerModelAdapter extends TypeAdapter<TaskTimerModel> {
   @override
   void write(BinaryWriter writer, TaskTimerModel obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.taskId)
+      ..writeByte(4)
       ..writeByte(1)
       ..write(obj.totalSeconds)
       ..writeByte(2)

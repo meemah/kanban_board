@@ -2,14 +2,12 @@ import 'package:equatable/equatable.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 
 class TaskTimerEntity extends Equatable {
-  final String taskId;
   final int totalSeconds;
   final DateTime? startTime;
   final bool isRunning;
   final TaskEntity taskEntity;
 
   const TaskTimerEntity({
-    required this.taskId,
     required this.totalSeconds,
     this.startTime,
     required this.isRunning,
@@ -27,13 +25,11 @@ class TaskTimerEntity extends Equatable {
     DateTime? startTime,
     bool? isRunning,
     TaskEntity? taskEntity,
-    DateTime? stateTime,
   }) {
     return TaskTimerEntity(
       taskEntity: taskEntity ?? this.taskEntity,
-      taskId: taskId,
       totalSeconds: totalSeconds ?? this.totalSeconds,
-      startTime: startTime,
+      startTime: startTime ?? this.startTime,
       isRunning: isRunning ?? this.isRunning,
     );
   }
@@ -59,5 +55,5 @@ class TaskTimerEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [taskId, totalSeconds, startTime, isRunning];
+  List<Object?> get props => [taskEntity, totalSeconds, startTime, isRunning];
 }

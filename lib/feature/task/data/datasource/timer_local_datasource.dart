@@ -12,25 +12,41 @@ abstract class TimerLocalDatasource {
 class TimerLocalDatasourceImpl implements TimerLocalDatasource {
   @override
   TaskTimerModel? getTimer(String taskId) {
-    Box<TaskTimerModel?> box = Hive.box(DatabaseKey.taskTimerModel);
-    return box.get(taskId);
+    try {
+      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      return box.get(taskId);
+    } catch (e) {
+      return null;
+    }
   }
 
   @override
   Future<void> saveTimer(TaskTimerModel timer) async {
-    Box<TaskTimerModel?> box = Hive.box(DatabaseKey.taskTimerModel);
-    await box.put(timer.taskId, timer);
+    try {
+      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      await box.put(timer.taskModel.id, timer);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   Future<void> deleteTimer(String taskId) async {
-    Box<TaskTimerModel?> box = Hive.box(DatabaseKey.taskTimerModel);
-    await box.delete(taskId);
+    try {
+      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      await box.delete(taskId);
+    } catch (e) {
+      rethrow;
+    }
   }
 
   @override
   List<TaskTimerModel?> getAllTimers() {
-    Box<TaskTimerModel?> box = Hive.box(DatabaseKey.taskTimerModel);
-    return box.values.toList();
+    try {
+      final box = Hive.box<TaskTimerModel>(DatabaseKey.taskTimerModel);
+      return box.values.toList();
+    } catch (e) {
+      return [];
+    }
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kanban_board/core/util/usecase/usecase.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart'
     show TaskEntity, TaskStatus;
-import 'package:kanban_board/feature/task/domain/entities/task_timer.dart';
 import 'package:kanban_board/feature/task/domain/params/move_task_params.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_completed_tasks_usecase.dart';
 import 'package:kanban_board/feature/task/domain/usecases/tasks_usecase/get_task_status_usecase.dart';
@@ -41,23 +40,27 @@ class KanbanBoardBloc extends Bloc<KanbanBoardEvent, KanbanBoardState> {
       result.fold((failure) => emit(KanbanBoardFailure(failure.message)), (
         tasks,
       ) async {
-        List<TaskTimerEntity> completedTasksModel = _completedTasksUsecase
-            .call();
-        List<TaskEntity> completedTasks = completedTasksModel.map((item) {
-          return item.taskEntity;
-        }).toList();
-        final Map<TaskStatus, List<TaskEntity>> tasksByStatus = {
-          TaskStatus.todo: [],
-          TaskStatus.inProgress: [],
-          TaskStatus.completed: completedTasks,
-        };
+        var result = _completedTasksUsecase.call();
+        result.fold(
+          (error) => emit(KanbanBoardFailure(S.current.oppsErrorOccured)),
+          (data) {
+            List<TaskEntity> completedTasks = data.map((item) {
+              return item.taskEntity;
+            }).toList();
+            final Map<TaskStatus, List<TaskEntity>> tasksByStatus = {
+              TaskStatus.todo: [],
+              TaskStatus.inProgress: [],
+              TaskStatus.completed: completedTasks,
+            };
 
-        for (final task in tasks) {
-          final status = _getTaskStatusUsecase.call(task);
-          tasksByStatus[status]!.add(task);
-        }
+            for (final task in tasks) {
+              final status = _getTaskStatusUsecase.call(task);
+              tasksByStatus[status]!.add(task);
+            }
 
-        emit(KanbanBoardSuccess(tasksByStatus));
+            emit(KanbanBoardSuccess(tasksByStatus));
+          },
+        );
       });
     } catch (e) {
       emit(KanbanBoardFailure(S.current.oppsErrorOccured));

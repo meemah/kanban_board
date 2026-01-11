@@ -18,7 +18,6 @@ class TaskEntity extends Equatable {
   });
 
   TaskEntity copyWith({
-    String? id,
     String? content,
     String? description,
     DateTime? createdAt,
@@ -26,7 +25,7 @@ class TaskEntity extends Equatable {
     DateTime? completedAt,
   }) {
     return TaskEntity(
-      id: id ?? this.id,
+      id: id,
       content: content ?? this.content,
       description: description ?? this.description,
       createdAt: createdAt ?? this.createdAt,
