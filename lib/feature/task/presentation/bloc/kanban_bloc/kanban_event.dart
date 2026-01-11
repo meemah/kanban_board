@@ -23,3 +23,12 @@ class MoveTaskEvent extends KanbanEvent {
   @override
   List<Object> get props => [task, oldStatus, newStatus];
 }
+
+class TaskAddedOrUpdatedEvent extends KanbanEvent {
+  final TaskEntity task;
+
+  const TaskAddedOrUpdatedEvent(this.task);
+
+  @override
+  List<Object> get props => [task];
+}

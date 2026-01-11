@@ -26,6 +26,7 @@ class KanbanBloc extends Bloc<KanbanEvent, KanbanState> {
   ) : super(KanbanInitial()) {
     on<GetAllTaskEvent>(_onGetTasks);
     on<MoveTaskEvent>(_moveTask);
+    on<TaskAddedOrUpdatedEvent>(_onTaskUpsert);
   }
 
   Future<void> _onGetTasks(KanbanEvent event, Emitter<KanbanState> emit) async {
@@ -100,5 +101,25 @@ class KanbanBloc extends Bloc<KanbanEvent, KanbanState> {
         emit(KanbanSuccess(rollbackState));
       }, (_) {});
     } catch (e) {}
+  }
+
+  _onTaskUpsert(TaskAddedOrUpdatedEvent event, Emitter<KanbanState> emit) {
+    final currentState = state;
+    if (currentState is KanbanSuccess) {
+      final tasksByStatus = {
+        for (final entry in currentState.tasks.entries)
+          entry.key: List<TaskEntity>.from(entry.value),
+      };
+
+      for (var status in tasksByStatus.keys) {
+        tasksByStatus[status]?.removeWhere((t) => t.id == event.task.id);
+      }
+
+      final taskStatus = _getTaskStatusUsecase.call(event.task);
+
+      tasksByStatus[taskStatus]?.insert(0, event.task);
+
+      emit(KanbanSuccess(tasksByStatus));
+    }
   }
 }

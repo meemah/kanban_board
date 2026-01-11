@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kanban_board/core/theme/app_colors.dart';
+import 'package:kanban_board/core/util/navigation/app_routes.dart';
 import 'package:kanban_board/core/widgets/app_bar.dart';
 import 'package:kanban_board/core/widgets/app_button.dart';
 import 'package:kanban_board/core/widgets/app_scaffold.dart';
@@ -11,6 +13,7 @@ import 'package:kanban_board/core/widgets/app_textfield.dart';
 import 'package:kanban_board/feature/task/domain/entities/task.dart';
 import 'package:kanban_board/feature/task/domain/params/upsert_task_params.dart'
     show UpsertTaskParams;
+import 'package:kanban_board/feature/task/presentation/bloc/kanban_bloc/kanban_bloc.dart';
 import 'package:kanban_board/feature/task/presentation/bloc/upsert_task_bloc/upsert_task_bloc.dart';
 import 'package:kanban_board/generated/l10n.dart';
 
@@ -56,6 +59,9 @@ class _UpsertTaskViewState extends State<UpsertTaskView> {
             ),
             appSnackbarType: AppSnackbarType.success,
           );
+          context.read<KanbanBloc>().add(TaskAddedOrUpdatedEvent(state.task));
+
+          context.goNamed(AppRouteName.home);
         }
         if (state is UpsertTaskFailure) {
           AppSnackBar.show(
